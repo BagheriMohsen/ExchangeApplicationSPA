@@ -11,6 +11,7 @@ use Laravel\Lumen\Auth\Authorizable;
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
+   
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'FullName',
+        'phoneNumber',
+        'role_id',
+        'freeTime',
+        'language'
     ];
 
     /**
