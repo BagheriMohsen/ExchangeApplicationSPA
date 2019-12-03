@@ -13,5 +13,14 @@ class Article extends Model
         'subCategory_id',
         'body'
     ];
+    /*
+    |--------------------------------------------------------------------------
+    | Releate with SubCategory Model
+    |--------------------------------------------------------------------------
+    */
+    public function SubCategory(){
+        return $this->belongsTo('App\SubCategory','subCategory_id','id');
+    }
+
 
 }

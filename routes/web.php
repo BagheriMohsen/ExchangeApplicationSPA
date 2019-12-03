@@ -24,6 +24,22 @@ $router->group(['prefix' => '/admin/','middleware'=>'auth','as'=>'admin.'], func
 });
 /*
 |--------------------------------------------------------------------------
+| Article And Category Routes
+|--------------------------------------------------------------------------
+*/
+$router->group(['prefix' => '/categories/','as'=>'articles.'], function () use ($router) {
+    $router->get('', 'ArticleAndCategoryController@index');
+    $router->get('{id}/AllSubCategoriesList', 'ArticleAndCategoryController@AllSubCategoriesList');
+    $router->get('AllSubCategoryList','ArticleAndCategoryController@AllSubCategoryList');
+});
+$router->group(['prefix' => '/admin/articles/','as'=>'admin.articles.'], function () use ($router) {
+    $router->post('ArticleStore', 'ArticleAndCategoryController@ArticleStore');
+    $router->get('{id}/ArticleEdit', 'ArticleAndCategoryController@ArticleEdit');
+    $router->post('{id}/ArticleUpdate', 'ArticleAndCategoryController@ArticleUpdate');
+
+});
+/*
+|--------------------------------------------------------------------------
 | User Panel Routes
 |--------------------------------------------------------------------------
 */

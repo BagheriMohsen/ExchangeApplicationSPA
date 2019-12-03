@@ -11,5 +11,13 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+    /*
+    |--------------------------------------------------------------------------
+    | Releate with SubCategory Model
+    |--------------------------------------------------------------------------
+    */
+    public function SubCategories(){
+        return $this->hasMany('App\SubCategory');
+    }
 
 }

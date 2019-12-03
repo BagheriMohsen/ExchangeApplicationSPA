@@ -12,5 +12,20 @@ class SubCategory extends Model
         'name',
         'category_id'
     ];
-
+    /*
+    |--------------------------------------------------------------------------
+    | Releate with SubCategory Model
+    |--------------------------------------------------------------------------
+    */
+    public function articles(){
+        return $this->hasMany('App\Article','subCategory_id','id');
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Releate with SubCategory Model
+    |--------------------------------------------------------------------------
+    */
+    public function category(){
+        return $this->belongsTo('App\Category');
+    }
 }
