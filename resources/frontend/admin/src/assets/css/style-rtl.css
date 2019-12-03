@@ -1,0 +1,29 @@
+
+/* Add persian fonts */
+@font-face {
+    font-family: BYekan;
+    src: url(../fonts/Yekan.woff),
+    url(../fonts/Yekan.ttf);
+}
+/* Set persian fonts */
+h1,h2,h3,h4,h5,h6,p,span,div,a,li{
+    font-family: BYekan;
+}
+/* Customizing for rtl */
+.nav-link i {
+    text-align: right;
+}
+*{
+    padding-inline-start:0;
+}
+@media (max-width: 767.98px){
+    .navbar-collapse .collapse-close {
+        text-align: left;
+    }
+}
+.dropdown-menu .dropdown-item > i, .dropdown-menu .dropdown-item > svg {
+    margin-left: 1rem;
+}
+body{
+    text-align: right;
+}

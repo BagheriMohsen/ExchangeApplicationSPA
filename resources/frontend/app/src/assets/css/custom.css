@@ -1,0 +1,39 @@
+@font-face {
+    font-family: Yekan;
+    src:  url(../fonts/Yekan.woff) format('woff'), url(../fonts/Yekan.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
+h1,h2,h3,h4,h5,h6,p,span,a,button,div{
+    font-family:Yekan,sans-serif!important;
+}
+html { overflow-y: auto }
+.bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url( '../img/background.jpg') no-repeat center center;
+    background-size: cover;
+    background-color: red;
+    transform: scale(1.1);
+  }
+  .back {
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+  }
+  #inspire {
+    background: none;
+  }
+  .v-bottom-navigation{
+    background: #2a74a5!important;
+    box-shadow: none;
+  }
+  .v-app-bar{
+    background: rgba(42, 116, 165, 0.52)!important;
+    box-shadow: none;
+  }
+  .bg-unique{
+    background: rgba(42, 116, 165, 0.52)!important;
+  }

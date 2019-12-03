@@ -44,6 +44,9 @@ $router->group(['prefix' => '/admin/articles/','as'=>'admin.articles.'], functio
 |--------------------------------------------------------------------------
 */
 $router->get('/', function () use ($router) {
-    return view('index');
+    return view('app');
+});
+$router->get('/admin', function () use ($router) {
+    return view('admin');
 });
 
