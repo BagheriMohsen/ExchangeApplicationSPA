@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 
 class ArticleAndCategoryController extends Controller
 {
@@ -90,6 +90,31 @@ class ArticleAndCategoryController extends Controller
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($categories,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Article Single
+    |--------------------------------------------------------------------------
+    */
+    public function ArticleSingle($id){
+        $article = 'App\Article'::with(array('SubCategory'=>function($query){
+            $query->select('id','name');
+        }))->findOrFail($id);
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($article,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Article Delete
+    |--------------------------------------------------------------------------
+    */
+    public function ArticleDelete($id){
+
+        $article = 'App\Article'::destroy($id);
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json('مقاله با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
 }

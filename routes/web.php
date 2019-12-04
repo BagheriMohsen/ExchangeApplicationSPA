@@ -31,12 +31,13 @@ $router->group(['middleware'=>'cors','prefix' => '/categories/','as'=>'articles.
     $router->get('', 'ArticleAndCategoryController@index');
     $router->get('{id}/AllSubCategoriesList', 'ArticleAndCategoryController@AllSubCategoriesList');
     $router->get('AllSubCategoryList','ArticleAndCategoryController@AllSubCategoryList');
+    $router->get('ArticleSingle/{id}','ArticleAndCategoryController@ArticleSingle');
 });
 $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin.articles.'], function () use ($router) {
     $router->post('ArticleStore', 'ArticleAndCategoryController@ArticleStore');
     $router->get('{id}/ArticleEdit', 'ArticleAndCategoryController@ArticleEdit');
     $router->post('{id}/ArticleUpdate', 'ArticleAndCategoryController@ArticleUpdate');
-
+    $router->get('ArticleDelete/{id}','ArticleAndCategoryController@ArticleDelete');
 });
 /*
 |--------------------------------------------------------------------------
