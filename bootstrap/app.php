@@ -46,6 +46,8 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -65,6 +67,9 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 
+$app->routeMiddleware([
+    'cors' => App\Http\Middleware\CorsMiddleware::class,
+]);
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
