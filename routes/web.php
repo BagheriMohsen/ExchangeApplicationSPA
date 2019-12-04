@@ -43,7 +43,16 @@ $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin
 | User Panel Routes
 |--------------------------------------------------------------------------
 */
+<<<<<<< HEAD
 $router->get('/', ['middleware' => 'cors', function () {
     return view('index');
 }]);
+=======
+$router->get('/', function () use ($router) {
+    return view('app');
+});
+$router->get('/admin', function () use ($router) {
+    return view('admin');
+});
+>>>>>>> 051cb4d02bc5d33adf79e0b66c89d6cd3b447517
 

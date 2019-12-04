@@ -1,0 +1,26 @@
+/* Customizing theme */
+
+.navbar-vertical .navbar-nav .nav-link > i {
+    font-size: 1.3rem;
+}
+.dropdown-item img{
+    width: 50px;
+    height: 50px;
+}
+.dropdown img{
+    width: 30px;
+    height: 30px;
+}
+.icon-shape i, .icon-shape svg {
+    font-size: 2.25rem;
+}
+.avatar{
+    width: 40px;
+    height: 40px;
+}
+.bg-gradient-exchange{
+    background: linear-gradient(87deg, #213fa7 0, #68a5ff 100%) !important;
+}
+.table thead th {
+    font-size: .8 rem;
+}
