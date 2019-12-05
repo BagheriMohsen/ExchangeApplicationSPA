@@ -37,3 +37,9 @@ html { overflow-y: auto }
   .bg-unique{
     background: rgba(42, 116, 165, 0.52)!important;
   }
+  .v-slide-group__prev{
+    display: none!important;
+  }
+  .v-tab{
+    min-width: initial!important;
+  }

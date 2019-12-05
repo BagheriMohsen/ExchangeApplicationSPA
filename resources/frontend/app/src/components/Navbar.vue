@@ -5,7 +5,7 @@
             <v-spacer></v-spacer>
             <v-img left
                 class="mx-2"
-                src="/assets/img/logo-for-splash-screen.png"
+                src="/img/logo-for-splash-screen.png"
                 max-height="40"
                 max-width="40"
                 contain
@@ -30,7 +30,7 @@
             temporary>
             <v-img
                 class="my-4 mx-auto"
-                src="/assets/img/logo-for-splash-screen.png"
+                src="/img/logo-for-splash-screen.png"
                 max-height="100"
                 max-width="100"
                 contain
@@ -68,7 +68,7 @@ export default {
             items: [
                 { title: 'درباره ی ما', icon: 'info',route:'/about' },
                 { title: 'تماس با ما', icon: 'contacts', route:'contact' },
-                { title: 'خرید اکانت', icon: 'assignment_turned_in', route:'/buy_account'}
+                { title: 'عضویت ', icon: 'assignment_turned_in', route:'/register'}
             ],
             drawer: false
         }

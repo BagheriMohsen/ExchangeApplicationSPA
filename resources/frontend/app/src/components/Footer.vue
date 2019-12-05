@@ -15,7 +15,7 @@
 
             <v-btn  
             value="tutorial"
-            router :to='"/tutorial"'>
+            router :to='"/"'>
                 <span>آموزش</span>
                 <v-icon>account_balance</v-icon>
             </v-btn>
