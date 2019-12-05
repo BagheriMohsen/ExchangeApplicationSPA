@@ -116,5 +116,22 @@ class ArticleAndCategoryController extends Controller
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('مقاله با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
+    /*
+    |--------------------------------------------------------------------------
+    | Show All Articles
+    |--------------------------------------------------------------------------
+    */
+    public function showAllArticles(){
+        $articles = 'App\Article'::with([
+            'SubCategory'=>function($query){
+                $query->select('id','name','category_id')
+                ->with(array('category'=>function($query){
+                    $query->select('id','name');
+                }));
+            }
+        ])->get();
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($articles,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
 
 }

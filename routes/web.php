@@ -38,6 +38,7 @@ $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin
     $router->get('{id}/ArticleEdit', 'ArticleAndCategoryController@ArticleEdit');
     $router->post('{id}/ArticleUpdate', 'ArticleAndCategoryController@ArticleUpdate');
     $router->get('ArticleDelete/{id}','ArticleAndCategoryController@ArticleDelete');
+    $router->get('','ArticleAndCategoryController@showAllArticles');
 });
 /*
 |--------------------------------------------------------------------------
