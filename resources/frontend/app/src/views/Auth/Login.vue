@@ -1,60 +1,77 @@
 <template>
     <section>
         <v-container>
-            <v-row :justify="'center'">
+            <v-row dark :justify="'center'">
                 <v-col
-                    sm="6"
+                    cols="12"
                     :class="'text-center'">
                     
-                    <v-form
+                    <v-form 
+                    
                     ref="form"
                     v-model="valid"
                     lazy-validation
                 >
                     <v-text-field
+                    dark
                     v-model="phone"
+                    :rules="phoneRules"
                     :counter="11"
-                    :rules="nameRules"
                     label="شماره همراه"
                     required
                     ></v-text-field>
 
                     <v-btn
+                    dark
                     :disabled="!valid"
-                    color="success"
-                    class="mr-4"
-                    @click="validate"
+                    color="info"
+                    class="mt-3"
+                    @click="submit"
                     >
-                    ارسال کد 
+                    ورود
                     </v-btn>
+                </v-form>
+                </v-col>
+                <v-col
+                    cols="12"
+                    :class="'text-center'">
+                    
+                    <v-form v-if="submitDone" >
 
                     <v-text-field
+                    dark
                     v-model="code"
+                    label="کد ارسالی را وارد نمایید"
                     :counter="5"
-                    :rules="nameRules"
-                    label="کد ارسالی"
                     required
                     ></v-text-field>
-                    
+                    <v-btn
+                    dark
+                    color="success"
+                    class="mt-3"
+                    @click.prevent="validateCode"
+                    >
+                    ارسال کد  
+                    </v-btn>
                 </v-form>
                 </v-col>
                 
                 
             </v-row>
-             <v-row :justify="'center'">
-                <v-col sm="6" :class="'text-center'">
-                    <v-btn
-                    color="secondary"
-                    class="mr-4">
+             <!-- <v-row :justify="'center'">
+                <v-col cols="12" :class="'text-center'">
+                    <v-btn router :to="'/'"
+                    color=""
+                    class="">
                      ورود به عنوان کاربر مهمان
                     </v-btn>
                 </v-col>
-               
-                
-            </v-row>
-            <v-row :justify="'center'">
-                <v-col sm="6" :class="'text-center'">
-                   <router-link to="/register">هنوز ثبت نام نکرده اید؟ اینجا کلیک کنید</router-link>
+            </v-row> -->
+             <v-row :justify="'center'">
+                <v-col cols="12" :class="'text-center'">
+                    <router-link color="white" to="/register">
+                      <span class="white--text"> هنوز ثبت نام نکرده اید؟ لطفا اینجا کلیک کنید</span>
+                    </router-link>
                 </v-col>
             </v-row>
         </v-container>
@@ -64,38 +81,21 @@
   export default {
     data: () => ({
       valid: true,
-      name: '',
-      nameRules: [
-        v => !!v || 'نام و نام خانوادگی الزامی است',
-        v => (v && v.length <= 20) || 'نام و نام خانوادگی بایستی کمتر از 20 کاراکتر',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
-      checkbox: false,
+      submitDone: false,
+      phone: '',
+      phoneRules: [
+        v => !!v || 'شماره همراه الزامی است',
+        v => /^[0-9]*$/.test(v) || 'شماره همراه معتبر نیست',
+        v => (v && v.length == 11) || 'شماره همراه بایستی 11 رقمی باشد',
+      ]
     }),
 
     methods: {
-      validate () {
-        if (this.$refs.form.validate()) {
-          this.snackbar = true
+      submit(){
+        if(this.$refs.form.validate()){
+          this.submitDone = true;
         }
-      },
-      reset () {
-        this.$refs.form.reset()
-      },
-      resetValidation () {
-        this.$refs.form.resetValidation()
-      },
+      }
     },
   }
 </script>

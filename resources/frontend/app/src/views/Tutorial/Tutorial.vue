@@ -14,7 +14,7 @@
           class="align-end mx-auto"
           height="25vw"
           width="25vw"
-          src="/assets/img/graph.png"
+          src="/img/graph.png"
         >
           </v-img>
           <v-card-text class="text-center pa-0">
@@ -36,7 +36,7 @@
           class="white--text align-end mx-auto"
           height="25vw"
           width="25vw"
-          src="/assets/img/money-growth.png"
+          src="/img/money-growth.png"
         >
           </v-img>
           <v-card-text class="text-center pa-0 ">

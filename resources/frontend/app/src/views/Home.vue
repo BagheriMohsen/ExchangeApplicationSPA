@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <p >
-    </p>
+    <p >sadfaf
+    dsafdasfa</p>
   </div>
 </template>
 

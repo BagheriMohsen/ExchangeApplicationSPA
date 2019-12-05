@@ -1,5 +1,6 @@
 <template>
     <section>
+      {{articles}}
       <v-tabs 
         show-arrows 
         dark 
@@ -9,23 +10,23 @@
       >
       <v-tabs-slider></v-tabs-slider>
         <v-tab class="pa-0 ma-0 caption"
-          v-for="item in items"
-          :key="item.tag"
+          v-for="articleTag in articleTags"
+          :key="articleTag.id"
         >
-          {{ item.tag }}
+          {{ articleTag.name }}
         </v-tab>
       </v-tabs>
 
       <v-tabs-items class="mt-1"  v-model="tab" style="background:none">
         <v-tab-item
-          v-for="item in items"
-          :key="item.tag"
+          v-for="articleTag in articleTags"
+          :key="articleTag.id"
         >
         <v-container fluid class="pa-0">
           <v-row dense>
             <v-col
-              v-for=" content in item.content"
-              :key="content.id"
+              v-for=" article in articleTag.articles"
+              :key="article.title"
               cols="12"
             >
               <v-card class="mx-1 bg-unique" 
@@ -36,11 +37,11 @@
                     size="10%"
                     tile
                   >
-                    <v-img :src="'/assets/img/' + content.imgUrl"></v-img>
+                    <v-img :src="'/img/' + 'graph.png'"></v-img>
                   </v-avatar>
                     <v-card-title style="color:white"
-                      class="ma-0 pa-0 pl-1"
-                      v-text="content.title"
+                      class="ma-0 pa-0 px-1"
+                      v-text="article.title"
                     ></v-card-title>
                 </div>
               </v-card>
@@ -56,79 +57,17 @@
   export default {
     data () {
       return {
-        info:null,
         tab: null,
-        items: [
-          {
-            tag:'وریفای',
-            content: [
-              {
-                id:'1',
-                title:' لورم ساز، تولید کننده لورم ایپسوم فارسی و انگلیسی برای   ',
-                body:'1متن مقاله',
-                tag:'1دسته مقاله',
-                imgUrl:'graph.png',
-                url:''
-              },
-              {
-                id:'2',
-                title:'2اسم مقاله',
-                body:'2متن مقاله',
-                tag:'2دسته مقاله',
-                imgUrl:'graph.png',
-                url:''
-              },{
-                id:'2',
-                title:'2اسم مقاله',
-                body:'2متن مقاله',
-                tag:'2دسته مقاله',
-                imgUrl:'graph.png',
-                url:''
-              },{
-                id:'2',
-                title:'2اسم مقاله',
-                body:'2متن مقاله',
-                tag:'2دسته مقاله',
-                imgUrl:'graph.png',
-                url:''
-              },{
-                id:'2',
-                title:'2اسم مقاله',
-                body:'2متن مقاله',
-                tag:'2دسته مقاله',
-                imgUrl:'graph.png',
-                url:''
-              }
-            ]
-          },
-          {
-            tag:'متاتریدر',
-            content: []
-          },
-          {
-            tag:'اصطلاحات',
-            content: []
-          },
-          {
-            tag:'معاملات',
-            content: []
-          }
-        ],
-        articles : [
-          {
-            id:'1',
-            title:'اسم مقاله',
-            body:'متن مقاله',
-            tag:'دسته مقاله',
-            imgUrl:'graph.png'
-          }
-        ]
+        articleTags:[]
       }
     },
-    mounted () {
+    methods:{
+      
+    },
+    created () {
       this.$http
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then(response => (this.info = response))
+        .get('http://localhost:8000/categories/2/AllSubCategoriesList')
+        .then((response) => this.articleTags = response.data)
     }
   }
 </script>

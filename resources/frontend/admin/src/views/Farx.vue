@@ -15,37 +15,52 @@
                       <div class="row justify-content-center">
                           <div class="col-12">
                             <form @submit.prevent="postNotif()">
-                              <div class="form-row">
+                              <div class="form-row flex-nowrap">
                                  <div class="form-group">
-                                    <label for="currency">جفت ارز </label>
-                                    <input v-model="notif.currency" type="text" class="form-control" id="currency">
+                                    <!-- <label for="currency">جفت ارز </label> -->
+                                    <input v-model="notif.currency" type="text" class="form-control" id="currency" placeholder="ارز">
                                 </div>
                                 <div class="form-group">
-                                    <label for="currency"> قیمت شروع </label>
-                                    <input v-model="notif.startPrice" type="text" class="form-control" id="">
+                                    <!-- <label for="currency"> قیمت شروع </label> -->
+                                    <input v-model="notif.startPrice" type="text" class="form-control" id="" placeholder="قیمت شروع">
                                 </div>
                                 <div class=" form-group">
-                                  <label for="currency">حالت</label>
-                                  <select v-model="notif.type" class="form-control" id="">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                  <!-- <label for="currency">حالت</label> -->
+                                  <select @change="optionChanged" v-model="notif.type" class="form-control" id="">
+                                    <option value="1">Pending-1</option>
+                                    <option value="2">Pending-2</option>
+                                    <option value="3">Pending-3</option>
+                                    <option value="4">Pending-4</option>
+                                    <option value="5">Market-execution</option>
                                   </select>
                                 </div>
                                 <div class="form-group">
-                                  <label for="currency">عدد SL </label>
-                                  <input v-model="notif.sl" type="text" class="form-control" id="">
+                                  <!-- <label for="currency">عدد SL </label> -->
+                                  <input v-model="notif.sl" type="text" class="form-control" id="" placeholder="عدد SL">
                                 </div>
                                 <div class="form-group">
-                                    <label for="currency">عدد TP </label>
-                                    <input v-model="notif.tp" type="text" class="form-control" id="">
+                                    <!-- <label for="currency">عدد TP </label> -->
+                                    <input v-model="notif.tp" type="text" class="form-control" id="" placeholder="عدد TP">
                                 </div>
-                                <div class="form-group mt-4">
+                                <div v-if="notif.showBuySell" class="form-group mr-2">
+                                    <div class="radio">
+                                      
+                                      <input type="radio" value="buy" v-model="notif.buySell" checked>
+                                      <label>خرید</label>
+                                    </div>
+                                    <div class="radio">
+                                      
+                                      <input type="radio" value="sell" v-model="notif.buySell">
+                                      <label>فروش</label>
+                                    </div>
+                                </div>
+                                <div class="">
                                   <button type="submit" class="btn btn-success">Send</button>
                                 </div>
-                                <div class="form-group mt-4">
+                                <div class="">
                                   <button @click="notif.expire = !notif.expire" class="btn btn-danger">Expire</button>
                                 </div>
-                                <div class="form-group mt-4">
+                                <div class="">
                                   <button @click="notif.close = !notif.close" class="btn btn-warning">Close</button>
                                 </div>
                               </div>
@@ -72,19 +87,36 @@
           sl:'',
           tp:'',
           expire:false,
-          close:false
-        }
+          close:false,
+          buySell:false,
+          showBuySell:false
+        },
+        
       };
     },
     methods: {
       saveNotif(){
-        this.$http.post(`http://jsonplaceholder.typicode.com/posts`, {
-          body: this.notif
+        this.$http.post(``, {
+          currency : this.notif.currency,
+          startPrice : this.notif.startPrice,
+          type : this.notif.type,
+          sl : this.notif.sl,
+          tp : this.notif.tp,
+          expire : this.notif.expire,
+          close : this.notif.close,
+          buySell : this.notif.buySell
         })
         .then(response => console.log(response))
         .catch(e => {
           this.errors.push(e)
         })
+      },
+      optionChanged(){
+        if(this.notif.type == '5'){
+          this.notif.showBuySell = true;
+        }else{
+          this.notif.showBuySell = false;
+        }
       }
     },
     mounted() {
@@ -92,4 +124,8 @@
     }
   };
 </script>
-<style></style>
+<style scoped>
+.form-group{
+  width: 150px;
+}
+</style>

@@ -13,6 +13,7 @@
               </div>
             </div>
             <form @submit.prevent="saveArticle">
+              <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="row">
                 <div class="col-md-4 form-group">
                   <div class="form-group">
@@ -32,7 +33,7 @@
                 <div class="col-md-4 form-group">
                   <div class="form-group">
                     <label for="tag">زیردسته مقاله</label>
-                    <select v-model="article.tag" class="form-control" id="tag">
+                    <select v-model="article.subCategory_id" class="form-control" id="tag">
                       <option value="1">اصطلاحات</option>
                     </select>
                   </div>
@@ -100,7 +101,7 @@
           id:'',
           title:'',
           category:'',
-          tag:'',
+          subCategory_id:'',
           body:''
         },
         edit:false
@@ -110,10 +111,10 @@
       this.fetchArticles();
     },
     methods: {
-      fetchArticles(page_url){
-        let vm = this;
-        page_url = page_url || 'articles';
-        fetch(page_url)
+      fetchArticles(){
+        // let vm = this;
+        // page_url = page_url || 'articles';
+        this.$http.get('http://localhost:8000/categories/1/AllSubCategoriesList')
             .then(res=>res.json())
             .then(res=>{
                 this.articles = res.data;
@@ -138,35 +139,39 @@
       },
       saveArticle(){
           if(this.edit === false){
-              fetch('articles',{
-                  method: 'post',
-                  body: JSON.stringify(this.article),
-                  headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                  'content-type':'application/json'
-              }
+              this.$http.post('http://localhost:8000/admin/articles/ArticleStore',{
+                title : this.article.title,
+                body : this.article.body,
+                sub_category : this.article.subCategory_id
+                  // body: JSON.stringify(this.article),
+                  // headers: {
+                  // // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                  // 'content-type':'application/json'
               }).then(res => res.json())
               .then(data => {
-                  this.article.title = '';
-                  this.article.description = '';
+                  this.article.title = '',
+                  this.article.category = '',
+                  this.article.tag = '',
+                  this.article.body = ''
                   alert('Article saved');
-                  this.fetchArticles();
+                  // this.fetchArticles();
               });
           }else{
-              let article_id = 'articles/'+this.article.id;
-              fetch(article_id,{
+              let article_id = 'http://localhost:8000/admin/articles/' + this.article.id + '/ArticleUpdate/';
+              this.$http.post(article_id,{
                   method:'put',
-                  body:JSON.stringify(this.article),
-                  headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                  'content-type':'application/json'
-              }
+                  title : this.article.title,
+                  body : this.article.body,
+                  subCategory_id : this.article.subCategory_id
+                  // headers: {
+                  // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                  // 'content-type':'application/json'
               }).then(res => res.json())
               .then(data => {
                   this.article.title = '';
                   this.article.description = '';
                   alert('Article updated!');
-                  this.fetchArticles();
+                  // this.fetchArticles();
               });
           }
       },

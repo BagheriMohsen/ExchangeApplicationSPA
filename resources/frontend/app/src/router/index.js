@@ -1,18 +1,44 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
+import Layout from '@/layout/Layout.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: Home
-  // },
+  {
+    path: '/',
+    name: 'home',
+    component: Layout,
+    children: [
+      {
+        path: '/',
+        name: 'آموزش',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Tutorial/Tutorial.vue')
+      },
+      {
+        path: '/tutorial/farx',
+        name: 'آموزش فارکس',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Tutorial/TutorialFarx.vue')
+      },
+      {
+        path: '/tutorial/binary',
+        name: 'آموزش باینری',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Tutorial/TutorialBinary.vue')
+      }
+    ]
+  },
   {
     path: '/register',
-    name: 'register',
+    name: 'عضویت',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -20,49 +46,18 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'login',
+    name: 'ورود',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "login" */ '../views/Auth/Login.vue')
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/',
-    name: 'tutorial',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tutorial" */ '../views/Tutorial/Tutorial.vue')
-  },
-  {
-    path: '/tutorial/farx',
-    name: 'tutorialFarx',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tutorial" */ '../views/Tutorial/TutorialFarx.vue')
-  },
-  {
-    path: '/tutorial/binary',
-    name: 'tutorialBinary',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tutorial" */ '../views/Tutorial/TutorialBinary.vue')
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  // mode: 'history',
+  base: '/',
+  linkExactActiveClass: 'active',
   routes
 })
 

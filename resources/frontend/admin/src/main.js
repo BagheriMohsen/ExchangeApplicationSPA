@@ -28,7 +28,7 @@ import axios from 'axios'
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
-
+// Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('content');
 Vue.use(ArgonDashboard)
 // Vue.use(BootstrapVue)
 new Vue({
