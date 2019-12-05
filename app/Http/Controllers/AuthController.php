@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Auth;
 class AuthController extends Controller
 {
+    
     /**
      * Create a new controller instance.
      *
@@ -35,7 +36,15 @@ class AuthController extends Controller
     }
 
     public function login(){
-        return response()->json('login');
+        
+        // $user = 'App\User'::where('email', $request->input('email'))->first();
+        $_SESSION["userLoginStatus"] = 'ok';
+        // $apikey = uniqid();
+
+        // 'App\User'::where('phoneNumber','09102222222')->update(['api_key' => "$apikey"]);;
+        
+        // return response()->json(['status' => 'success','api_key' => $apikey]);
+           
     }
 
     public function logout(){
