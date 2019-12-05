@@ -42,7 +42,7 @@ $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin
 });
 /*
 |--------------------------------------------------------------------------
-| Article And Category Routes
+| Forex
 |--------------------------------------------------------------------------
 */
 $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], function () use ($router) {
@@ -53,6 +53,19 @@ $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], func
     $router->get('forexExpire', 'ForexController@forexExpire');
     $router->get('forexClose', 'ForexController@forexClose');
     $router->get('forexDelete/{id}', 'ForexController@forexDelete');
+});
+/*
+|--------------------------------------------------------------------------
+| Binary Option
+|--------------------------------------------------------------------------
+*/
+$router->group(['middleware'=>'cors','prefix' => '/binaries/','as'=>'binaries.'], function () use ($router) {
+    $router->get('', 'ForexController@index');
+    $router->post('store', 'ForexController@store');
+    $router->get('edit/{id}', 'ForexController@edit');
+    $router->post('update/{id}', 'ForexController@update');
+    $router->get('delete/{id}', 'ForexController@delete');
+    $router->get('close', 'ForexController@close');
 });
 /*
 |--------------------------------------------------------------------------
