@@ -46,14 +46,14 @@ class StartingSeeder extends Seeder
         #2.Create Normal User
         'App\User'::create([
             'FullName'      => 'کاربر عادی',
-            'phoneNumber'   =>  '09102222222',
+            'phoneNumber'   =>  '09102222502',
             'role_id'       =>  2,
             'freeTime'      =>  null,
         ]);
         #3.Create Free Trial User
         'App\User'::create([
             'FullName'      => 'کاربر با اشتراک رایگان',
-            'phoneNumber'   =>  '09102222222',
+            'phoneNumber'   =>  '09102226022',
             'role_id'       =>  3,
             'freeTime'      =>  null,
         ]);
@@ -170,8 +170,16 @@ class StartingSeeder extends Seeder
             'body'              =>  'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.'
         ]);
 
-
-
-
+        /*
+        |--------------------------------------------------------------------------
+        | Create Forex Category
+        |--------------------------------------------------------------------------
+        */
+        'App\ForexCategory'::create(['name'=>'default']);
+        'App\ForexCategory'::create(['name'=>'pending 1']);
+        'App\ForexCategory'::create(['name'=>'pending 2']);
+        'App\ForexCategory'::create(['name'=>'pending 3']);
+        'App\ForexCategory'::create(['name'=>'pending 4']);
+        'App\ForexCategory'::create(['name'=>'marketed execution']);
     }
 }

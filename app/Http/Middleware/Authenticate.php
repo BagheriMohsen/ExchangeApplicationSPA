@@ -36,7 +36,12 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            return response('شما عضو نیستید', 401);
+
+            $header = ['Content-Type' => 'application/json;charset=utf8'];
+            return response()->json([
+                'You Are Not Login' => 'شما عضو نیستید'
+            ],401, array($header),JSON_UNESCAPED_UNICODE);
+            
         }
 
         return $next($request);

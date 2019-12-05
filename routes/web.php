@@ -5,7 +5,7 @@
 | Auth Routes
 |--------------------------------------------------------------------------
 */
-$router->group(['middleware'=>'cors','as'=>'auth.'], function () use ($router) {
+$router->group(['middleware'=>['cors'],'as'=>'auth.'], function () use ($router) {
     $router->get('/register', 'AuthController@register');
     $router->get('/login', 'AuthController@login');
 });
@@ -38,6 +38,20 @@ $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin
     $router->get('{id}/ArticleEdit', 'ArticleAndCategoryController@ArticleEdit');
     $router->post('{id}/ArticleUpdate', 'ArticleAndCategoryController@ArticleUpdate');
     $router->get('ArticleDelete/{id}','ArticleAndCategoryController@ArticleDelete');
+});
+/*
+|--------------------------------------------------------------------------
+| Article And Category Routes
+|--------------------------------------------------------------------------
+*/
+$router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], function () use ($router) {
+    $router->get('forexCategories', 'ForexController@forexCategories');
+    $router->post('forexStore', 'ForexController@forexCategoforexStoreries');
+    $router->get('forexEdit/{id}', 'ForexController@forexEdit');
+    $router->post('forexUpdate/{id}', 'ForexController@forexUpdate');
+    $router->get('forexExpire', 'ForexController@forexExpire');
+    $router->get('forexClose', 'ForexController@forexClose');
+    $router->get('forexDelete/{id}', 'ForexController@forexDelete');
 });
 /*
 |--------------------------------------------------------------------------
