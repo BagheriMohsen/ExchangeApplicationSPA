@@ -47,7 +47,7 @@ $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin
 */
 $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], function () use ($router) {
     $router->get('forexCategories', 'ForexController@forexCategories');
-    $router->post('forexStore', 'ForexController@forexCategoforexStoreries');
+    $router->post('forexStore', 'ForexController@forexStore');
     $router->get('forexEdit/{id}', 'ForexController@forexEdit');
     $router->post('forexUpdate/{id}', 'ForexController@forexUpdate');
     $router->get('forexExpire', 'ForexController@forexExpire');
