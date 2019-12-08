@@ -9,13 +9,15 @@
         <sidebar-item
           :link="{
             name: 'پیشخوان',
-            icon: 'ni ni-tv-2 text-primary',
+            icon: 'fas fa-home text-dark',
             path: '/dashboard'
           }"
         />
 
-        <sidebar-item :link="{name: 'فارکس', icon: 'ni ni-money-coins text-blue', path: '/farx'}"/>
-        <sidebar-item :link="{name: 'مقالات', icon: 'ni ni-shop text-orange', path: '/articles'}"/>
+        <sidebar-item :link="{name: 'فارکس', icon: 'fas fa-coins text-dark', path: '/farx'}"/>
+        <sidebar-item :link="{name: 'باینری آپشن', icon: 'fas fa-money-check-alt text-dark', path: '/binary'}"/>
+        <sidebar-item :link="{name: 'مقالات', icon: 'fas fa-newspaper text-dark', path: '/articles'}"/>
+        <sidebar-item :link="{name: 'لیست ارزها', icon: 'fas fa-list text-dark', path: '/add-currency'}"/>
         <!-- <sidebar-item :link="{name: 'تیکت ها', icon: 'ni ni-support-16 text-yellow', path: '/tickets'}"/>
         <sidebar-item :link="{name: 'حساب کاربری', icon: 'ni ni-circle-08 text-red', path: '/profile'}"/>
         <sidebar-item :link="{name: 'حساب های بانکی', icon: 'ni ni-credit-card text-green', path: '/bank'}"/> -->

@@ -1,7 +1,6 @@
 <template>
   <div>
     <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-exchange">
-        <!-- Articles -->
     </base-header>
     <div class="container-fluid mt--7">
       <div class="row">
@@ -23,25 +22,26 @@
                 </div>
                 <div class="col-md-4 form-group">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">دسته مقاله</label>
+                    <label for="category">دسته مقاله</label>
                     <select v-model="article.category" class="form-control" id="category">
-                      <option value="farx">فارکس</option>
-                      <option value="binary">باینری</option>
+                      <option value=""> انتخاب دسته</option>
+                      <option v-for="category in categories" v-bind:key="category.id" v-bind:value="category.id">{{category.name}}</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-4 form-group">
                   <div class="form-group">
                     <label for="tag">زیردسته مقاله</label>
-                    <select v-model="article.subCategory_id" class="form-control" id="tag">
-                      <option value="1">اصطلاحات</option>
+                    <select @click="fetchSubCategories" v-model="article.subCategory_id" class="form-control" id="tag">
+                      <option value=""> انتخاب زیردسته</option>
+                      <option v-for="subCategory in subCategories" v-bind:key="subCategory.id" v-bind:value="subCategory.id">{{subCategory.name}}</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-12 form-group">
                   <div class="form-group">
                     <label for="body">متن مقاله</label>
-                    <textarea v-model="article.body" class="form-control" rows="5" id="body"></textarea>
+                    <textarea v-model="article.body" class="form-control" rows="10" id="body"></textarea>
                   </div>
                 </div>
               </div>
@@ -60,7 +60,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">نام مقاله</th>
+                    <th scope="col">عنوان</th>
                     <th scope="col">دسته</th>
                     <th scope="col">زیردسته</th>
                     <th scope="col">عملیات</th>
@@ -69,16 +69,17 @@
                 <tbody>
                   <tr v-for="article in articles" v-bind:key="article.id">
                     <th scope="row">{{article.title}}</th>
-                    <td>{{article.category}}</td>
-                    <td>{{article.tag}}</td>
+                    <td>{{article.sub_category.category.name}}</td>
+                    <td>{{article.sub_category.name}}</td>
                     <td>
-                      <a @click.prevent="updateArticle(article)">
-                        <i class="ni ni-settings-gear-65"></i>
+                      <a @click.prevent="updateArticle(article)" class="m-1">
+                        <i class="fas fa-pen-square text-info"></i>
                       </a>
-                      <a @click.prevent="deleteArticle(article.id)">
-                        <i class="ni ni-fat-remove"></i>
+                      <a @click.prevent="deleteArticle(article.id)" class="m-1">
+                        <i class="fas fa-trash text-danger"></i>
                       </a>
                     </td>
+                    
                   </tr>
                 </tbody>
               </table>
@@ -96,6 +97,8 @@
     },
     data() {
       return {
+        subCategories:[],
+        categories:[],
         articles:'',
         article:{
           id:'',
@@ -109,30 +112,38 @@
     },
     created() {
       this.fetchArticles();
+      this.fetchCategories();
     },
     methods: {
+      fetchSubCategories(){
+        this.$http.get('http://localhost:8000/categories/' + this.article.category + '/AllSubCategoriesList')
+          .then(res => {
+            this.subCategories = res.data;
+            console.log(this.categories);
+          })
+          .cath(err => console.log(err));
+      },
+      fetchCategories(){
+        this.$http.get('http://localhost:8000/categories')
+          .then(res => {
+            this.categories = res.data;
+            console.log(this.subCategories);
+          })
+          .catch(err => console.log(err));
+      },
       fetchArticles(){
-        // let vm = this;
-        // page_url = page_url || 'articles';
-        this.$http.get('http://localhost:8000/categories/1/AllSubCategoriesList')
-            .then(res=>res.json())
+        this.$http.get('http://localhost:8000//admin/articles')
             .then(res=>{
                 this.articles = res.data;
+                console.log(this.articles);
             })
             .catch(err =>console.log(err));
 
       },
       deleteArticle(id){
-          let article_id = 'articles/'+id;
-          // console.log(article_id);
-          fetch(article_id,{
-              method:'delete',
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-          }).then(res =>res.json())
-          .then(data =>{
-              alert('Article deleted!');
+          this.$http.get('http://localhost:8000/admin/articles/ArticleDelete/' + id)
+            .then(data =>{
+              alert('مقاله حذف شد');
               this.fetchArticles();
           }).catch((err)=>console.error(err));
           
@@ -143,43 +154,37 @@
                 title : this.article.title,
                 body : this.article.body,
                 sub_category : this.article.subCategory_id
-                  // body: JSON.stringify(this.article),
-                  // headers: {
-                  // // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                  // 'content-type':'application/json'
-              }).then(res => res.json())
-              .then(data => {
+              }).then(data => {
                   this.article.title = '',
                   this.article.category = '',
-                  this.article.tag = '',
-                  this.article.body = ''
-                  alert('Article saved');
-                  // this.fetchArticles();
+                  this.article.body = '',
+                  this.article.subCategory_id = ''
+                  alert('مقاله اضافه شد');
+                  this.fetchArticles();
               });
           }else{
-              let article_id = 'http://localhost:8000/admin/articles/' + this.article.id + '/ArticleUpdate/';
-              this.$http.post(article_id,{
-                  method:'put',
+              this.edit = true;
+              let actionUrl = 'http://localhost:8000/admin/articles/' + this.article.id + '/ArticleUpdate';
+              this.$http.post(actionUrl,{
                   title : this.article.title,
                   body : this.article.body,
-                  subCategory_id : this.article.subCategory_id
-                  // headers: {
-                  // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                  // 'content-type':'application/json'
-              }).then(res => res.json())
-              .then(data => {
-                  this.article.title = '';
-                  this.article.description = '';
-                  alert('Article updated!');
-                  // this.fetchArticles();
+                  sub_category : this.article.subCategory_id
+              }).then(data => {
+                  this.article.title = '',
+                  this.article.category = '',
+                  this.article.body = '',
+                  this.article.subCategory_id = ''
+                  alert('مقاله آپدیت شد');
+                  this.fetchArticles();
               });
           }
       },
       updateArticle(article){
           this.edit = true;
           this.article.title = article.title;
-          this.article.description = article.description;
+          this.article.body = article.body;
           this.article.id = article.id;
+          this.subCategory_id = article.subCategory_id;
       }
     }
   };
@@ -187,6 +192,9 @@
 <style scoped>
  i{
    font-size: 1.3rem;
+ }
+ .form-control{
+   padding: .4rem .75rem;
  }
 </style>
  

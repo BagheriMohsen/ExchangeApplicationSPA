@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import DashboardLayout from '@/layout/DashboardLayout'
-import AuthLayout from '@/layout/AuthLayout'
 Vue.use(Router)
 
 export default new Router({
@@ -27,9 +26,9 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/Farx.vue')
         },
         {
-          path: '/add-article',
-          name: 'افزودن مقاله',
-          component: () => import(/* webpackChunkName: "demo" */ './views/AddArticle.vue')
+          path: '/binary',
+          name: 'باینری آپشن ',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Binary.vue')
         },
         {
           path: '/articles',
@@ -37,44 +36,9 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/AddArticle.vue')
         },
         {
-          path: '/profile',
-          name: ' حساب کاربری ',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Profile.vue')
-        },
-        {
-          path: '/bank',
-          name: ' حساب های بانکی ',
-          component: () => import(/* webpackChunkName: "demo" */ './views/BankAccount.vue')
-        },
-        {
-          path: '/addticket',
-          name: 'ارسال تیکت',
-          component: () =>import('./views/AddTicket')
-        },{
-          path: '/editprofile',
-          name: 'ویرایش حساب کاربری',
-          component:() =>import('./views/EditProfile')
-        },{
-          path: '/addbankaccount',
-          name: 'افزودن حساب بانکی',
-          component:() =>import('./views/AddBankAccount')
-        }
-      ]
-    },
-    {
-      path: '/',
-      redirect: 'login',
-      component: AuthLayout,
-      children: [
-        {
-          path: '/login',
-          name: 'login',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Login.vue')
-        },
-        {
-          path: '/register',
-          name: 'register',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Register.vue')
+          path: '/add-currency',
+          name: ' افزودن ارز ',
+          component: () => import(/* webpackChunkName: "demo" */ './views/AddCurrency.vue')
         }
       ]
     }
