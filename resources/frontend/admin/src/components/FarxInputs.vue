@@ -31,7 +31,6 @@
                             <label class="mr-1">خرید</label>
                         </div>
                         <div class="radio">
-                            
                             <input type="radio" value="sell" v-model="notif.buy_sell">
                             <label class="mr-2">فروش</label>
                         </div>
@@ -42,9 +41,9 @@
             <div class="col-4">
                 <div class="">
                     <button type="submit" class="btn mx-1">Send</button>
-                    <button @click="notif.expire = !notif.expire" class="btn btn-danger mx-1">Expire</button>
-                    <button @click="notif.close = !notif.close" class="btn btn-warning mx-1">Close</button>
-                    <button v-if="notif.close || notif.expire" @click="notif.reset = !notif.reset" class="btn mx-1">
+                    <button @click="expireNotif" class="btn btn-danger mx-1">Expire</button>
+                    <button @click="closeNotif" class="btn btn-warning mx-1">Close</button>
+                    <button v-if="notif.close || notif.expire" @click="resetNotif" class="btn mx-1">
                         <i class="fas fa-recycle fa-lg"></i>
                     </button>
                 </div>
@@ -78,6 +77,15 @@
         },
         sendNotif(){
             this.$emit('postNotif', this.notif);
+        },
+        expireNotif(){
+            this.$emit('expireNotif', this.notif);
+        },
+        closeNotif(){
+            this.$emit('closeNotif', this.notif);
+        },
+        resetNotif(){
+            this.$emit('resetNotif', this.notif);
         }
     },
     mounted() {

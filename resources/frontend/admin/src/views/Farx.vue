@@ -7,7 +7,16 @@
                 <div class="col-xl-12 mb-5 mb-xl-0">
                     <card shadow type="secondary">
                       <div class="row justify-content-center">
-                        <farx-inputs v-for="notifInput in notifInputs" v-bind:key="notifInput.pair" :notifInput="notifInput" @postNotif="postNotif"></farx-inputs>
+                        <farx-inputs 
+                          v-for="notifInput in notifInputs"
+                          v-bind:key="notifInput.pair" 
+                          :notifInput="notifInput" 
+                          @postNotif="postNotif"
+                          @expireNotif="expireNotif"
+                          @closeNotif="closeNotif"
+                          @resetNotif="resetNotif"
+                          >
+                        </farx-inputs>
                       </div>
                     </card>
                 </div>
@@ -51,6 +60,11 @@
       };
     },
     methods: {
+      fetchNotifs(){
+        this.$http.get('')
+          .then(res => this.notifInputs)
+          .catch(e =>this.errors.push(e));
+      },
       postNotif(value){
         this.$http.post('http://localhost:8000/forex/forexStore', {
           pair : value.pair,
@@ -65,16 +79,37 @@
         .then(response => console.log(response))
         .catch(e => {
           this.errors.push(e)
-        })
-      }
+        });
+        // fetchNotifs();
+      },
+      expireNotif(value){
+        this.$http.get('http://localhost:8000/forex/forexExpire' + value.id)
+          .then(response => console.log(response.data))
+          .catch(e => this.errors.push(e));
+        fetchNotifs();
+      },
+      closeNotif(value){
+        this.$http.get('http://localhost:8000/forex/forexClose' + value.id)
+          .then(response => console.log(response.data))
+          .catch(e => this.errors.push(e));
+        // fetchNotifs();
+      },
+      closeNotif(value){
+        this.$http.get('' + value.id)
+          .then(response => console.log(response.data))
+          .catch(e => this.errors.push(e));
+        // fetchNotifs();
+      },
+
     },
-    mounted() {
-     
+    created() {
+      this.fetchNotifs();
     }
   };
 </script>
+
 <style scoped>
-.form-group{
-  width: 150px;
-}
+  .form-group{
+    width: 150px;
+  }
 </style>

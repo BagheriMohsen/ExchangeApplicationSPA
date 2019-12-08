@@ -11,7 +11,7 @@
                 <h3 class="mb-0">افزودن مقاله</h3>
               </div>
             </div>
-            <form @submit.prevent="saveArticle">
+            <form @submit.prevent="saveArticle" id="form">
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="row">
                 <div class="col-md-4 form-group">
@@ -23,7 +23,7 @@
                 <div class="col-md-4 form-group">
                   <div class="form-group">
                     <label for="category">دسته مقاله</label>
-                    <select v-model="article.category" class="form-control" id="category">
+                    <select @change="fetchSubCategories" v-model="article.category_id" class="form-control" id="category">
                       <option value=""> انتخاب دسته</option>
                       <option v-for="category in categories" v-bind:key="category.id" v-bind:value="category.id">{{category.name}}</option>
                     </select>
@@ -32,7 +32,7 @@
                 <div class="col-md-4 form-group">
                   <div class="form-group">
                     <label for="tag">زیردسته مقاله</label>
-                    <select @click="fetchSubCategories" v-model="article.subCategory_id" class="form-control" id="tag">
+                    <select  v-model="article.subCategory_id" class="form-control" ref="subCategory">
                       <option value=""> انتخاب زیردسته</option>
                       <option v-for="subCategory in subCategories" v-bind:key="subCategory.id" v-bind:value="subCategory.id">{{subCategory.name}}</option>
                     </select>
@@ -46,7 +46,8 @@
                 </div>
               </div>
               <div class="col-12">
-                 <button type="submit" class="btn btn-primary mb-2">ارسال مقاله</button>
+                 <button type="submit" class="btn btn-primary mb-2 mx-1">ارسال مقاله</button>
+                 <button type="button" v-show="edit" @click="cancelEdit" class="btn btn-danger mb-2 mx-1">لغو</button>
               </div>
             </form>
           </card>
@@ -72,14 +73,13 @@
                     <td>{{article.sub_category.category.name}}</td>
                     <td>{{article.sub_category.name}}</td>
                     <td>
-                      <a @click.prevent="updateArticle(article)" class="m-1">
+                      <a href="javascript:void(0)" @click.prevent="updateArticle(article)" class="m-1">
                         <i class="fas fa-pen-square text-info"></i>
                       </a>
-                      <a @click.prevent="deleteArticle(article.id)" class="m-1">
+                      <a href="javascript:void(0)" @click.prevent="deleteArticle(article.id)" class="m-1">
                         <i class="fas fa-trash text-danger"></i>
                       </a>
                     </td>
-                    
                   </tr>
                 </tbody>
               </table>
@@ -103,7 +103,7 @@
         article:{
           id:'',
           title:'',
-          category:'',
+          category_id:'',
           subCategory_id:'',
           body:''
         },
@@ -113,21 +113,21 @@
     created() {
       this.fetchArticles();
       this.fetchCategories();
+     
     },
     methods: {
       fetchSubCategories(){
-        this.$http.get('http://localhost:8000/categories/' + this.article.category + '/AllSubCategoriesList')
+        this.$http.get('http://localhost:8000/categories/' + this.article.category_id + '/AllSubCategoriesList')
           .then(res => {
             this.subCategories = res.data;
-            console.log(this.categories);
           })
-          .cath(err => console.log(err));
+          .catch(err => console.log(err));
       },
       fetchCategories(){
         this.$http.get('http://localhost:8000/categories')
           .then(res => {
             this.categories = res.data;
-            console.log(this.subCategories);
+            console.log(this.categories);
           })
           .catch(err => console.log(err));
       },
@@ -138,15 +138,15 @@
                 console.log(this.articles);
             })
             .catch(err =>console.log(err));
-
       },
       deleteArticle(id){
-          this.$http.get('http://localhost:8000/admin/articles/ArticleDelete/' + id)
+          if(confirm('آیا از حذف این آیتم اطمینان دارید؟')){
+            this.$http.get('http://localhost:8000/admin/articles/ArticleDelete/' + id)
             .then(data =>{
               alert('مقاله حذف شد');
               this.fetchArticles();
-          }).catch((err)=>console.error(err));
-          
+              }).catch((err)=>console.error(err));
+          }
       },
       saveArticle(){
           if(this.edit === false){
@@ -180,11 +180,21 @@
           }
       },
       updateArticle(article){
-          this.edit = true;
-          this.article.title = article.title;
-          this.article.body = article.body;
-          this.article.id = article.id;
-          this.subCategory_id = article.subCategory_id;
+        window.scrollTo(0,0);
+        this.edit = true;
+        this.article.title = article.title;
+        this.article.body = article.body;
+        this.article.id = article.id;
+        this.article.category_id = article.sub_category.category.id;
+        this.article.subCategory_id = article.subCategory_id;
+      },
+      cancelEdit(){
+        this.edit = !this.edit;
+        this.article.title = '';
+        this.article.body = '';
+        this.article.id = '';
+        this.article.category_id = '';
+        this.article.subCategory_id = '';
       }
     }
   };
