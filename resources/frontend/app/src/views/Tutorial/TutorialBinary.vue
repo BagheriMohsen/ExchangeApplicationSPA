@@ -28,7 +28,7 @@
               :key="article.title"
               cols="12"
             >
-              <v-card class="mx-1 bg-unique" 
+              <v-card class="mx-1 bg-unique" router :to="'/tutorial/single/' + article.id"
               >
                 <div class="d-flex flex-no-wrap" >
                      <v-avatar

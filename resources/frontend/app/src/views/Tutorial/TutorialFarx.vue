@@ -1,6 +1,6 @@
 <template>
     <section>
-      {{articles}}
+      <!-- {{articles}} -->
       <v-tabs 
         show-arrows 
         dark 
@@ -29,9 +29,9 @@
               :key="article.title"
               cols="12"
             >
-              <v-card class="mx-1 bg-unique" 
+              <v-card class="mx-1 bg-unique" router :to="'/tutorial/single/' + article.id"
               >
-                <div class="d-flex flex-no-wrap" >
+                <div class="d-flex flex-no-wrap">
                      <v-avatar
                     class="ma-2"
                     size="10%"
@@ -58,16 +58,19 @@
     data () {
       return {
         tab: null,
-        articleTags:[]
+        articleTags:[],
+        id:'6'
       }
     },
     methods:{
-      
+      fetchArticleTags(){
+        this.$http
+          .get('http://localhost:8000/categories/2/AllSubCategoriesList')
+          .then((response) =>{ this.articleTags = response.data;console.log(response.data)})
+      }
     },
     created () {
-      this.$http
-        .get('http://localhost:8000/categories/2/AllSubCategoriesList')
-        .then((response) => this.articleTags = response.data)
+      this.fetchArticleTags();
     }
   }
 </script>

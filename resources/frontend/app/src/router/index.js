@@ -35,12 +35,28 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Tutorial/TutorialBinary.vue')
       },
       {
+        path: '/tutorial/single/:id',
+        name: 'مقاله آموزشی',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Tutorial/SingleTutorial.vue')
+      },
+      {
         path: '/farx',
         name: 'فارکس',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "demo" */ '../views/Farx.vue')
+      },
+      {
+        path: '/binary',
+        name: 'باینری آپشن',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Binary.vue')
       }
     ]
   },

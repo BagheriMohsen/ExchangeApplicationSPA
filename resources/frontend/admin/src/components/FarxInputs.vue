@@ -43,9 +43,9 @@
                     <button type="submit" class="btn mx-1">Send</button>
                     <button @click="expireNotif" class="btn btn-danger mx-1">Expire</button>
                     <button @click="closeNotif" class="btn btn-warning mx-1">Close</button>
-                    <button v-if="notif.close || notif.expire" @click="resetNotif" class="btn mx-1">
+                    <!-- <button v-if="notif.close || notif.expire" @click="resetNotif" class="btn mx-1">
                         <i class="fas fa-recycle fa-lg"></i>
-                    </button>
+                    </button> -->
                 </div>
             </div>
             
@@ -84,9 +84,9 @@
         closeNotif(){
             this.$emit('closeNotif', this.notif);
         },
-        resetNotif(){
-            this.$emit('resetNotif', this.notif);
-        }
+        // resetNotif(){
+        //     this.$emit('resetNotif', this.notif);
+        // }
     },
     mounted() {
      

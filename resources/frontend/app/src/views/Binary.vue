@@ -1,10 +1,11 @@
 <template>
     <section>
+        <!-- v-for="notif in notifs" v-bind:key="notif.pair" -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive" style="background:white">
-                         <table class="table text-center">
+                         <table class="table mx-auto">
                             <thead>
                                 <tr>
                                     <th>ارز</th>
@@ -16,6 +17,11 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <!-- <td>{{notif.pair}}</td>
+                                    <td>{{notif.startingPrice}}</td>
+                                    <td>{{notif.forex_category_id}}</td>
+                                    <td>{{notif.sl}}</td>
+                                    <td>{{notif.tl}}</td> -->
                                     <td>sdfa</td>
                                     <td>sdfafds</td>
                                     <td>sdfafd</td>
@@ -38,30 +44,20 @@
       }
     },
     methods:{
-      fetchNotif(){
-        this.$http.get('')
-          .then(res => {
-            this.notifs = res.data;
-            console.log(this.notifs);
-          })
-          .catch(err => console.log(err));
-      }
+    //   fetchNotif(){
+    //     this.$http.get('')
+    //       .then(res => {
+    //         this.notifs = res.data;
+    //         console.log(this.notifs);
+    //       })
+    //       .catch(err => console.log(err));
+    //   }
     },
     created () {
         this.fetchNotif();
     }
   }
 </script>
+ <style scoped>
 
-<style scoped>
-  table td,table th{
-    font-size: .75rem;
-  }
-  table thead {
-    background: #2a74a5;
-    color: #f3f3f3;
-  }
-  table{
-    width: 100%;
-  }
  </style>

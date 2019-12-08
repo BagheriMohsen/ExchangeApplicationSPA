@@ -14,7 +14,6 @@
                           @postNotif="postNotif"
                           @expireNotif="expireNotif"
                           @closeNotif="closeNotif"
-                          @resetNotif="resetNotif"
                           >
                         </farx-inputs>
                       </div>
@@ -43,7 +42,6 @@
             expire:false,
             close:false,
             buy_sell:false,
-            reset:false
           },
           {
             pair:'EUR/USE',
@@ -54,7 +52,6 @@
             expire:false,
             close:false,
             buy_sell:false,
-            reset:false
           },
         ]
       };
