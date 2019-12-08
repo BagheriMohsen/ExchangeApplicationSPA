@@ -60,12 +60,12 @@ $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], func
 |--------------------------------------------------------------------------
 */
 $router->group(['middleware'=>'cors','prefix' => '/binaries/','as'=>'binaries.'], function () use ($router) {
-    $router->get('', 'ForexController@index');
-    $router->post('store', 'ForexController@store');
-    $router->get('edit/{id}', 'ForexController@edit');
-    $router->post('update/{id}', 'ForexController@update');
-    $router->get('delete/{id}', 'ForexController@delete');
-    $router->get('close', 'ForexController@close');
+    $router->get('', 'BinaryController@index');
+    $router->post('store', 'BinaryController@store');
+    $router->get('edit/{id}', 'BinaryController@edit');
+    $router->post('update/{id}', 'BinaryController@update');
+    $router->get('delete/{id}', 'BinaryController@delete');
+    $router->get('close', 'BinaryController@close');
 });
 /*
 |--------------------------------------------------------------------------
