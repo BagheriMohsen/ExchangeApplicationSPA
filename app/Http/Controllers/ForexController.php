@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Event;
 class ForexController extends Controller
 {
     /*
@@ -108,6 +108,16 @@ class ForexController extends Controller
        
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('عملیات حذف با موفقیت انجام شد',200, array($header),JSON_UNESCAPED_UNICODE);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Forex Event
+    |--------------------------------------------------------------------------
+    */
+    public function forexEvent(){
+        $Forex = 'App\Forex'::latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
+       
     }
 
 }

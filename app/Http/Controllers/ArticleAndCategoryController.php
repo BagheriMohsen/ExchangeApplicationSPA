@@ -67,11 +67,11 @@ class ArticleAndCategoryController extends Controller
     */
     public function AllSubCategoriesList($id){
         
-        $category = 'App\Category'::findOrFail($id);
+        $category = 'App\ArticleCategory'::findOrFail($id);
         $subCategories = $category->SubCategories;
 
         $subCategories = 'App\SubCategory'::with(array('articles'=>function($query){
-            $query->select('subCategory_id','title');
+            $query->select('subCategory_id','id','title');
         }))->where('category_id',$id)->get(['id','name']);
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
@@ -83,11 +83,11 @@ class ArticleAndCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function AllSubCategoryList(){
-
-        $categories = 'App\Category'::with(array('SubCategories'=>function($query){
+       
+        $categories = 'App\ArticleCategory'::with(array('SubCategories'=>function($query){
             $query->select('category_id','name');
         }))->latest()->get(['id','name']);
-
+       
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($categories,200, array($header),JSON_UNESCAPED_UNICODE);
     }

@@ -5,5 +5,5 @@ use Illuminate\Http\Request;
 
 class CurrencyController extends Controller
 {
-
+    
 }

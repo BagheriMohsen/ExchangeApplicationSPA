@@ -5,19 +5,19 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Category extends Model
+class CurrnecyType extends Model
 {
-    protected $table = 'categories';
-    protected $fillable = [
-        'name',
+    protected $table = 'currency_types';
+
+    protected $fillable =[
+        'name'
     ];
     /*
     |--------------------------------------------------------------------------
-    | Releate with SubCategory Model
+    | Releate with Currency Model
     |--------------------------------------------------------------------------
     */
-    public function SubCategories(){
-        return $this->hasMany('App\SubCategory');
+    public function currency(){
+        return $this->hasMany('App\Currency');
     }
-
 }

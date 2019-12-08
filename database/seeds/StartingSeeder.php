@@ -63,11 +63,11 @@ class StartingSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         #1.Binary
-        'App\Category'::create([
+        'App\ArticleCategory'::create([
             'name'  =>  'باینری آپشن'
         ]);
         #2.Forex
-        'App\Category'::create([
+        'App\ArticleCategory'::create([
             'name'  =>  'فارکس'
         ]);
         /*

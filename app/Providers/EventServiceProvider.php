@@ -14,7 +14,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\ExampleEvent' => [
             'App\Listeners\ExampleListener',
-            'App\Listeners\NotifListener',
+            
+        ],
+        'App\Events\ForexNotifEvent' => [
+            'App\Listeners\ForexNotifListener',
         ],
     ];
 }

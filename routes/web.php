@@ -53,6 +53,7 @@ $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], func
     $router->get('forexExpire', 'ForexController@forexExpire');
     $router->get('forexClose', 'ForexController@forexClose');
     $router->get('forexDelete/{id}', 'ForexController@forexDelete');
+    $router->get('forexEvent','ForexController@forexEvent');
 });
 /*
 |--------------------------------------------------------------------------
