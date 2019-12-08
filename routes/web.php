@@ -46,6 +46,7 @@ $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin
 |--------------------------------------------------------------------------
 */
 $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], function () use ($router) {
+    $router->get('','ForexController@index');
     $router->get('forexCategories', 'ForexController@forexCategories');
     $router->post('forexStore', 'ForexController@forexStore');
     $router->get('forexEdit/{id}', 'ForexController@forexEdit');
@@ -67,6 +68,18 @@ $router->group(['middleware'=>'cors','prefix' => '/binaries/','as'=>'binaries.']
     $router->post('update/{id}', 'BinaryController@update');
     $router->get('delete/{id}', 'BinaryController@delete');
     $router->get('close', 'BinaryController@close');
+});
+/*
+|--------------------------------------------------------------------------
+| Currency Routes
+|--------------------------------------------------------------------------
+*/
+$router->group(['middleware'=>'cors','prefix' => '/currency/','as'=>'currency.'], function () use ($router) {
+    $router->get('', 'CurrencyController@index');
+    $router->get('store/{id}', 'CurrencyController@store');
+    $router->get('edit/{id}', 'CurrencyController@edit');
+    $router->get('update/{id}', 'CurrencyController@update');
+    $router->get('destroy/{id}', 'CurrencyController@destroy');
 });
 /*
 |--------------------------------------------------------------------------

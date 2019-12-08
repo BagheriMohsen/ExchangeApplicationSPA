@@ -5,6 +5,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 class ForexController extends Controller
 {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Forex Index
+    |--------------------------------------------------------------------------
+    */
+    public function index(){
+
+        $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
+       
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
     /*
     |--------------------------------------------------------------------------
     | Forex Categories

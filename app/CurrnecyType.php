@@ -18,6 +18,6 @@ class CurrnecyType extends Model
     |--------------------------------------------------------------------------
     */
     public function currency(){
-        return $this->hasMany('App\Currency');
+        return $this->hasMany('App\Currency','type_id','id');
     }
 }

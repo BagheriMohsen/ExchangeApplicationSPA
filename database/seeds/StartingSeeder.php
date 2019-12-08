@@ -175,11 +175,32 @@ class StartingSeeder extends Seeder
         | Create Forex Category
         |--------------------------------------------------------------------------
         */
-        'App\ForexCategory'::create(['name'=>'default']);
-        'App\ForexCategory'::create(['name'=>'pending 1']);
-        'App\ForexCategory'::create(['name'=>'pending 2']);
-        'App\ForexCategory'::create(['name'=>'pending 3']);
-        'App\ForexCategory'::create(['name'=>'pending 4']);
-        'App\ForexCategory'::create(['name'=>'marketed execution']);
+        'App\ForexCategory'::create(['name'=>'Market Exeqution']);
+        'App\ForexCategory'::create(['name'=>'Buy Limit']);
+        'App\ForexCategory'::create(['name'=>'Sell Limit']);
+        'App\ForexCategory'::create(['name'=>'Buy Stop']);
+        'App\ForexCategory'::create(['name'=>'Sell Stop']);
+        /*
+        |--------------------------------------------------------------------------
+        | Currnecy Type
+        |--------------------------------------------------------------------------
+        */
+        'App\CurrnecyType'::create(['name'=>'باینری']);
+        'App\CurrnecyType'::create(['name'=>'فارکس']);
+
+        'App\Currency'::create(['name'=>'eu-us','type_id'=>1]);
+        'App\Currency'::create(['name'=>'eu-fa','type_id'=>1]);
+        'App\Currency'::create(['name'=>'eu-rus','type_id'=>1]);
+        'App\Currency'::create(['name'=>'eu-ok','type_id'=>1]);
+        'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
+        'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
+        'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
+        'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
+
+
+       
+        
     }
+    
+
 }

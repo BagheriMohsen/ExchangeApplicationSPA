@@ -56,7 +56,7 @@ class ArticleAndCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function index(){
-        $categories = 'App\Category'::latest()->get();
+        $categories = 'App\ArticleCategory'::latest()->get();
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($categories,200, array($header),JSON_UNESCAPED_UNICODE);
     }

@@ -12,4 +12,12 @@ class Currency extends Model
         'name',
         'currency_type_id'
     ];
+    /*
+    |--------------------------------------------------------------------------
+    | Releate with CurrnecyType Model
+    |--------------------------------------------------------------------------
+    */
+    public function type(){
+        return $this->belongsTo('App\CurrnecyType','type_id','id');
+    }
 }
