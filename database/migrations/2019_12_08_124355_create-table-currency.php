@@ -20,11 +20,11 @@ class CreateTableCurrency extends Migration
         });
         Schema::create('currency', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('currency_type_id')->unsigned();
+            $table->bigInteger('type_id')->unsigned();
             $table->string('name');
             $table->timestamps();
 
-            $table->foreign('currency_type_id')->references('id')->on('currency_types')
+            $table->foreign('type_id')->references('id')->on('currency_types')
             ->onDelete('cascade')->onUpdate('cascade');
         });
     }
