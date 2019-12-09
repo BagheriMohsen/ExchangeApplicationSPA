@@ -97,7 +97,7 @@ class ForexController extends Controller
     */
     public function forexExpire(Request $request,$id){
         $forex = 'App\Forex'::findOrFail($id);
-        $forex->update(['expire'=>$request->expire]);
+        $forex->update(['expire'=>1]);
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('منقضی شد',200, array($header),JSON_UNESCAPED_UNICODE);
@@ -109,7 +109,7 @@ class ForexController extends Controller
     */
     public function forexClose(Request $request,$id){
         $forex = 'App\Forex'::findOrFail($id);
-        $forex->update(['close'=>$request->close]);
+        $forex->update(['close'=>1]);
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('بسته شد',200, array($header),JSON_UNESCAPED_UNICODE);
