@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Events;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class ForexNotifEvent extends Event implements ShouldBroadcast
 {
+    use Dispatchable, InteractsWithSockets, SerializesModels;
     public $Forex;
 
     /**
@@ -23,6 +22,6 @@ class ForexNotifEvent extends Event implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('ForexNotif');
+        return ['ForexNotif'];
     }
 }
