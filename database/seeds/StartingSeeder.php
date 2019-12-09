@@ -180,6 +180,58 @@ class StartingSeeder extends Seeder
         'App\ForexCategory'::create(['name'=>'Sell Limit']);
         'App\ForexCategory'::create(['name'=>'Buy Stop']);
         'App\ForexCategory'::create(['name'=>'Sell Stop']);
+
+
+        'App\Forex'::create([
+            'forex_category_id' =>  1,
+            'pair'              =>  'eu-fa',
+            'startingPrice'     =>  2500,
+            'tp'                =>  500,
+            'sl'                =>  3500,
+            'buy_sell'          =>  null,
+            'expire'            =>  0,
+            'close'             =>  0
+        ]);
+        'App\Forex'::create([
+            'forex_category_id' =>  1,
+            'pair'              =>  'eu-fa',
+            'startingPrice'     =>  2500,
+            'tp'                =>  500,
+            'sl'                =>  3500,
+            'buy_sell'          =>  null,
+            'expire'            =>  0,
+            'close'             =>  0
+        ]);
+        'App\Forex'::create([
+            'forex_category_id' =>  2,
+            'pair'              =>  'eu-rus',
+            'startingPrice'     =>  2500,
+            'tp'                =>  500,
+            'sl'                =>  3500,
+            'buy_sell'          =>  null,
+            'expire'            =>  0,
+            'close'             =>  0
+        ]);
+        'App\Forex'::create([
+            'forex_category_id' =>  3,
+            'pair'              =>  'eu-us',
+            'startingPrice'     =>  2500,
+            'tp'                =>  500,
+            'sl'                =>  3500,
+            'buy_sell'          =>  null,
+            'expire'            =>  0,
+            'close'             =>  0
+        ]);
+        'App\Forex'::create([
+            'forex_category_id' =>  4,
+            'pair'              =>  'us-fa',
+            'startingPrice'     =>  2500,
+            'tp'                =>  500,
+            'sl'                =>  3500,
+            'buy_sell'          =>  null,
+            'expire'            =>  0,
+            'close'             =>  0
+        ]);
         /*
         |--------------------------------------------------------------------------
         | Currnecy Type
