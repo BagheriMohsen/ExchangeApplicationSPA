@@ -1,6 +1,6 @@
 <template>
     <div class="col-12">
-        <form @submit.prevent="sendNotif" class="row">
+        <form @submit.prevent="updateNotif" class="row">
             <div class="col-sm-8">
                 <div class="form-row flex-nowrap">
                     <div class="form-group">
@@ -43,12 +43,8 @@
                     <button type="submit" class="btn mx-1">Send</button>
                     <button @click="expireNotif" type="button" class="btn btn-danger mx-1">Expire</button>
                     <button @click="closeNotif" type="button" class="btn btn-warning mx-1">Close</button>
-                    <!-- <button v-if="notif.close || notif.expire" @click="resetNotif" class="btn mx-1">
-                        <i class="fas fa-recycle fa-lg"></i>
-                    </button> -->
                 </div>
             </div>
-            
         </form>
     </div>
 </template>
@@ -75,8 +71,8 @@
                 this.showBuySell = false;
             }
         },
-        sendNotif(){
-            this.$emit('postNotif', this.notif);
+        updateNotif(){
+            this.$emit('updateNotif', this.notif);
         },
         expireNotif(){
             this.$emit('expireNotif', this.notif.id);
@@ -84,9 +80,6 @@
         closeNotif(){
             this.$emit('closeNotif', this.notif.id);
         },
-        // resetNotif(){
-        //     this.$emit('resetNotif', this.notif);
-        // }
     },
     mounted() {
      
