@@ -15,8 +15,13 @@ class ForexController extends Controller
 
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest()->get();
-        event(new \App\Events\ForexNotifEvent($Forex));
+        }))
+        ->where([
+            ['close','=',0],
+            ['expire','=',0]
+        ])
+        ->latest()->get();
+        
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($Forex,200, array($header),JSON_UNESCAPED_UNICODE);
@@ -152,6 +157,12 @@ class ForexController extends Controller
     |--------------------------------------------------------------------------
     */
     public function close_expire_list(){
+
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
+        
         $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))
@@ -162,10 +173,7 @@ class ForexController extends Controller
             ['close','=',1],
         ])->latest()->get();
        
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
-            $query->select('id','name');
-        }))->latest()->get();
-        event(new \App\Events\ForexNotifEvent($Forex));
+        
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
     }
