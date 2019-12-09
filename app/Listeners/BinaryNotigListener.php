@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\ForexNotifEvent;
+use App\Events\BinaryNotif;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class ForexNotifListener
+class BinaryNotigListener
 {
     /**
      * Create the event listener.
@@ -21,11 +21,11 @@ class ForexNotifListener
     /**
      * Handle the event.
      *
-     * @param  ForexNotifEvent  $event
+     * @param  BinaryNotif  $event
      * @return void
      */
-    public function handle(ForexNotifEvent $event)
+    public function handle(BinaryNotif $event)
     {
-        return $event->Forex;
+        return $event->Binary;
     }
 }
