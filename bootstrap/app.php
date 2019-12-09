@@ -86,6 +86,19 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 
+
+
+// config/broadcasting
+$app->singleton(
+    Illuminate\Broadcasting\BroadcastManager::class,
+    Illuminate\Contracts\Broadcasting\Broadcaster::class,
+    Illuminate\Broadcasting\BroadcastManager::class
+);
+
+$app->configure('broadcasting');
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
