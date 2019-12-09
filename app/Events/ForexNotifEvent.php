@@ -7,11 +7,10 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
-use App\Forex;
-class ForexNotifEvent extends Event 
+class ForexNotifEvent extends Event implements ShouldBroadcast
 {
-    use SerializesModels;
     public $Forex;
+
     /**
      * Create a new event instance.
      *
@@ -24,6 +23,6 @@ class ForexNotifEvent extends Event
 
     public function broadcastOn()
     {
-       return $this->Forex;
+        return new PrivateChannel('ForexNotif');
     }
 }
