@@ -25,7 +25,7 @@
                                 <tr>
                                     <td>{{notif.pair}}</td>
                                     <td>{{notif.startingPrice}}</td>
-                                    <td>{{notif.forex_category.name}}</td>
+                                    <!-- <td>{{notif.forex_category.name}}</td> -->
                                     <td>{{notif.sl}}</td>
                                     <td>{{notif.tp}}</td>
                                 </tr>
@@ -35,13 +35,15 @@
                 </div>
             </div>
         </div>
+        {{notifs}}
     </section>
 </template>
 <script>
+  import Pusher from 'pusher-js'
   export default {
     data () {
       return {
-       notifs:[]
+        notifs:[],
       }
     },
     methods:{
@@ -51,10 +53,18 @@
             this.notifs = res.data;
           })
           .catch(err => console.log(err));
+      },
+      subscribe(){
+        let pusher = new Pusher('0b6db206a7be0ce7e956', { cluster: 'ap2' })
+        pusher.subscribe('ForexNotif')
+        pusher.bind('App\\Events\\ForexNotifEvent', data => {
+          this.notifs = data.Forex;
+        })
       }
     },
     created () {
-        this.fetchNotif();
+      this.fetchNotif();
+      this.subscribe();
     }
   }
 </script>

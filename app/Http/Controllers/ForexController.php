@@ -53,7 +53,8 @@ class ForexController extends Controller
             'sl'                =>  $request->sl,
             'buy_sell'          =>  $request->buy_sell,
         ]);
-
+        $Forex = 'App\Forex'::latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
