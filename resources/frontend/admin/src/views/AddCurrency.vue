@@ -9,7 +9,7 @@
                         <div class="row justify-content-center">
                             <div class="col-12">
                                 <h4 class="text-center d-block">لیست ارز فارکس</h4>
-                                <form class="mt-4" @submit.prevent="addCurrency(farx_currency)">
+                                <form class="mt-4" @submit.prevent="addCurrency(2)">
                                     <div class="input-group flex-row-reverse">
                                         <button type="submit" class="input-group-addon btn btn-info">ثبت</button>
                                         <input v-model="farx_currency" class="form-control" type="text" placeholder="نام ارز را وارد کنید">
@@ -23,7 +23,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="currency in binary_currencies" v-bind:key="currency.id">
+                                        <tr v-for="currency in currencies[1].currency" v-bind:key="currency.id">
                                             <td>{{currency.name}}</td>
                                             <td>
                                                 <a href="javascript:void(0)" @click="removeCurrency(currency.id)">
@@ -42,7 +42,7 @@
                       <div class="row justify-content-center">
                            <div class="col-12">
                                 <h4 class="text-center d-block">لیست ارز باینری آپشن</h4>
-                                <form class="mt-4" @submit.prevent="addCurrency(binary_currency,binary_actionUrl)">
+                                <form class="mt-4" @submit.prevent="addCurrency(1)">
                                     <div class="input-group flex-row-reverse">
                                         <button type="submit" class="input-group-addon btn btn-info">ثبت</button>
                                         <input v-model="binary_currency" class="form-control" type="text" placeholder="نام ارز را وارد کنید">
@@ -56,7 +56,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="currency in binary_currencies" v-bind:key="currency.id">
+                                        <tr v-for="currency in currencies[0].currency" v-bind:key="currency.id">
                                             <td>{{currency.name}}</td>
                                             <td>
                                                 <a href="javascript:void(0)" @click="removeCurrency(currency.id)">
@@ -81,67 +81,44 @@
     },
     data() {
       return {
-        farx_currencies:[{id:'2',name:'USD/EUR'}],
-        binary_currencies:[{id:'2',name:'EUR/USD'}],
         binary_currency:'',
-        binary_actionUrl:'',
         farx_currency:'',
-        farx_actionUrl:''
-
+        currencies:[]
       };
     },
     methods: {
-        // fetchFarxCurrency(){
-        //     this.$http.get('')
-        //         .then(response => this.farx_currencies = response.data)
-        //         .catch(e => this.errors.push(e));
-        // },
-        // fetchBinaryCurrency(){
-        //     this.$http.get('')
-        //         .then(response => this.binary_currencies = response.data)
-        //         .catch(e => this.errors.push(e));
-        // },
-        addFarxCurrency(currency){
-            this.$http.post( '' , {
-                currency_name: currency
-            })
-            .then(response => console.log(response))
-            .catch(e => {
-                this.errors.push(e)
-            });
-            this.fetchFarxCurrency()
-        },
-        addBinaryCurrency(currency){
-            this.$http.post( '' , {
-                currency_name: currency
-            })
-            .then(response => console.log(response))
-            .catch(e => {
-                this.errors.push(e)
-            });
-            this.fetchBinaryCurrency()
-        },
-        removeBinaryCurrency(id){
-            this.$http.get(''+id)
-                .then(response => alert('ارز با موفقیت حذف شد'))
+        fetchCurrency(){
+            this.$http.get('http://localhost:8000/currency/')
+                .then(response => {this.currencies = response.data;console.log(response.data)})
                 .catch(e => this.errors.push(e));
         },
-        removeFarxCurrency(id){
-            this.$http.get(''+id)
-                .then(response => alert('ارز با موفقیت حذف شد'))
-                .catch(e => this.errors.push(e));
-            this.fetchFarxCurrency();
+        addCurrency(id){
+            if(id == 1){
+                this.$http.post('http://localhost:8000/currency/store/'+id , {
+                name: this.binary_currency
+                }).then(response => console.log(response))
+                .catch(e => {
+                    this.errors.push(e)
+                });
+            }else if(id == 2){
+                this.$http.post('http://localhost:8000/currency/store/'+id , {
+                name: this.farx_currency
+                }).then(response => console.log(response))
+                .catch(e => {
+                    this.errors.push(e)
+                });
+            }
+            this.fetchCurrency();
         },
-        removeBinaryCurrency(id){
-            this.$http.get(''+id)
+        removeCurrency(id){
+            this.$http.get('http://localhost:8000/currency/destroy/'+id)
                 .then(response => alert('ارز با موفقیت حذف شد'))
                 .catch(e => this.errors.push(e));
-            this.fetchBinaryCurrency();
-        }
+            this.fetchCurrency();
+        },
     },
     created() {
-        this.fetchFarxCurrency();
-        this.fetchBinaryCurrency();
+         this.fetchCurrency();
     }
   };
 </script>

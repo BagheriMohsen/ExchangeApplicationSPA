@@ -9,7 +9,7 @@
                       <div class="row justify-content-center">
                         <farx-inputs 
                           v-for="notifInput in notifInputs"
-                          v-bind:key="notifInput.pair" 
+                          v-bind:key="notifInput.id" 
                           :notifInput="notifInput" 
                           @postNotif="postNotif"
                           @expireNotif="expireNotif"
@@ -32,34 +32,13 @@
     },
     data() {
       return {
-        notifInputs:[
-          {
-            pair:'EUR/USE',
-            startingPrice:'1000',
-            forex_category_id:'2',
-            sl:'11',
-            tp:'12',
-            expire:false,
-            close:false,
-            buy_sell:false,
-          },
-          {
-            pair:'EUR/USE',
-            startingPrice:'1000',
-            forex_category_id:'2',
-            sl:'11',
-            tp:'12',
-            expire:false,
-            close:false,
-            buy_sell:false,
-          },
-        ]
+        notifInputs:[]
       };
     },
     methods: {
       fetchNotifs(){
-        this.$http.get('')
-          .then(res => this.notifInputs)
+        this.$http.get('http://localhost:8000/forex/')
+          .then(res => {this.notifInputs = res.data;console.log(res.data)})
           .catch(e =>this.errors.push(e));
       },
       postNotif(value){
@@ -77,27 +56,20 @@
         .catch(e => {
           this.errors.push(e)
         });
-        // fetchNotifs();
+        this.fetchNotifs();
       },
-      expireNotif(value){
-        this.$http.get('http://localhost:8000/forex/forexExpire' + value.id)
+      expireNotif(id){
+        this.$http.get('http://localhost:8000/forex/forexExpire/' + id)
           .then(response => console.log(response.data))
           .catch(e => this.errors.push(e));
-        fetchNotifs();
+        // this.fetchNotifs();
       },
-      closeNotif(value){
-        this.$http.get('http://localhost:8000/forex/forexClose' + value.id)
+      closeNotif(id){
+        this.$http.get('http://localhost:8000/forex/forexClose/' + id)
           .then(response => console.log(response.data))
           .catch(e => this.errors.push(e));
-        // fetchNotifs();
+        // this.fetchNotifs();
       },
-      closeNotif(value){
-        this.$http.get('' + value.id)
-          .then(response => console.log(response.data))
-          .catch(e => this.errors.push(e));
-        // fetchNotifs();
-      },
-
     },
     created() {
       this.fetchNotifs();
