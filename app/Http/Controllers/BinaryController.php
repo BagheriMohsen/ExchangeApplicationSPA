@@ -79,7 +79,7 @@ class BinaryController extends Controller
     | Binary close
     |--------------------------------------------------------------------------
     */
-    public function close(Request $request){
+    public function close(Request $request,$id){
         $binary = 'App\Binary'::destroy($id);
         $binary->update(['close'=>1]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
