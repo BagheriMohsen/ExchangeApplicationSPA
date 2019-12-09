@@ -81,7 +81,7 @@ class BinaryController extends Controller
     */
     public function close(Request $request){
         $binary = 'App\Binary'::destroy($id);
-        $binary->update(['close'=>$request->close]);
+        $binary->update(['close'=>1]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
         
