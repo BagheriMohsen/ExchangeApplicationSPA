@@ -28,6 +28,20 @@ class ForexController extends Controller
     }
     /*
     |--------------------------------------------------------------------------
+    | All Forex
+    |--------------------------------------------------------------------------
+    */
+    public function AllForex(){
+
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))>latest()->get();
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($Forex,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
+    /*
+    |--------------------------------------------------------------------------
     | Forex Categories
     |--------------------------------------------------------------------------
     */
