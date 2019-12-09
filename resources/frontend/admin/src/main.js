@@ -24,11 +24,13 @@ import ArgonDashboard from './plugins/argon-dashboard'
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 import axios from 'axios'
+// import Pusher from 'pusher-js'
 
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('content');
+// Vue.use(Pusher)
 Vue.use(ArgonDashboard)
 // Vue.use(BootstrapVue)
 new Vue({

@@ -69,6 +69,17 @@
     </div>
 </template>
 <script>
+// Pusher.logToConsole = true;
+
+//     var pusher = new Pusher('0b6db206a7be0ce7e956', {
+//       cluster: 'ap2',
+//       forceTLS: true
+//     });
+
+//     var channel = pusher.subscribe('my-channel');
+//     channel.bind('my-event', function(data) {
+//       alert(JSON.stringify(data));
+//     });
   import FarxInputs from '@/components/FarxInputs.vue';
   export default {
    
