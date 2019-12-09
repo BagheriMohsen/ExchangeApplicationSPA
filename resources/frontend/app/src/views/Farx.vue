@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
                     <div class="d-flex white">
-                      <div class="px-2 ml-auto">{{notif.created_at}}</div>
+                      <div class="px-2 ml-auto">{{notif.updated_at}}</div>
                       <div v-show="notif.buy_sell" class="px-2 bg-success white--text">{{notif.buy_sell}}</div>
                       <div v-if="!notif.close && !notif.expire" class="px-1 bg-info white--text">فعال</div>
                       <div v-if="notif.close" class="px-2 bg-danger white--text">Close</div>
@@ -25,7 +25,7 @@
                                 <tr>
                                     <td>{{notif.pair}}</td>
                                     <td>{{notif.startingPrice}}</td>
-                                    <!-- <td>{{notif.forex_category.name}}</td> -->
+                                    <td>{{notif.forex_category_id}}</td>
                                     <td>{{notif.sl}}</td>
                                     <td>{{notif.tp}}</td>
                                 </tr>
@@ -35,7 +35,6 @@
                 </div>
             </div>
         </div>
-        {{notifs}}
     </section>
 </template>
 <script>
@@ -59,6 +58,7 @@
         pusher.subscribe('ForexNotif')
         pusher.bind('App\\Events\\ForexNotifEvent', data => {
           this.notifs = data.Forex;
+          console.log(this.notifs); 
         })
       }
     },

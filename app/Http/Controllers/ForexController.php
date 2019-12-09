@@ -19,7 +19,7 @@ class ForexController extends Controller
         event(new \App\Events\ForexNotifEvent($Forex));
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($Forex,200, array($header),JSON_UNESCAPED_UNICODE);
     }
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +117,10 @@ class ForexController extends Controller
     public function forexClose(Request $request,$id){
         $forex = 'App\Forex'::findOrFail($id);
         $forex->update(['close'=>1]);
-
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('بسته شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }

@@ -96,9 +96,4 @@ $router->get('/admin', ['middleware' => 'cors', function () {
    
     return view('admin');
 }]);
-// $router->get('/pusher', ['middleware' => 'cors', function () {
-//     $Forex = 'App\Forex'::latest()->get();
-//     event(new \App\Events\ForexNotifEvent($Forex));
-//     return view('pusher');
-// }]);
 
