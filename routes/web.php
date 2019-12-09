@@ -55,6 +55,7 @@ $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], func
     $router->get('forexClose/{id}', 'ForexController@forexClose');
     $router->get('forexDelete/{id}', 'ForexController@forexDelete');
     $router->get('forexEvent','ForexController@forexEvent');
+    $router->get('close-expire-list','ForexController@close_expire_list');
 });
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,8 @@ $router->group(['middleware'=>'cors','prefix' => '/binaries/','as'=>'binaries.']
     $router->post('update/{id}', 'BinaryController@update');
     $router->get('delete/{id}', 'BinaryController@delete');
     $router->get('close/{id}', 'BinaryController@close');
+    $router->get('closeBinaries', 'BinaryController@closeBinaries');
+
 });
 /*
 |--------------------------------------------------------------------------

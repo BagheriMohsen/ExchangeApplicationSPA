@@ -11,7 +11,9 @@ class BinaryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function index(){
-        $binaries = 'App\Binary'::latest()->get();
+        $binaries = 'App\Binary'::where([
+            ['close','=',0]
+        ])->latest()->get();
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);
@@ -80,11 +82,23 @@ class BinaryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function close(Request $request,$id){
-        $binary = 'App\Binary'::destroy($id);
+        $binary = 'App\Binary'::findOrFail($id);
         $binary->update(['close'=>1]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
-        
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | List of binary close
+    |--------------------------------------------------------------------------
+    */
+    public function closeBinaries(){
+        $binaries = 'App\Binary'::where([
+            ['close','=',1]
+        ])->latest()->get();
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
 }
