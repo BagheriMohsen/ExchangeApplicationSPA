@@ -1,6 +1,6 @@
 <template>
     <div class="col-12">
-        <form @submit.prevent="sendNotif" class="row">
+        <form @submit.prevent="updateNotif" class="row">
             <div class="col-sm-8">
                 <div class="form-row flex-nowrap">
                     <div class="form-group">
@@ -48,8 +48,8 @@
       };
     },
     methods: {
-        sendNotif(){
-            this.$emit('postNotif', this.notif);
+        updateNotif(){
+            this.$emit('updateNotif', this.notif);
         },
         closeNotif(){
             this.$emit('closeNotif', this.notif.id);
