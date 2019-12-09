@@ -23,7 +23,7 @@
                 <div class="col-md-4 form-group">
                   <div class="form-group">
                     <label for="category">دسته مقاله</label>
-                    <select @change="fetchSubCategories" v-model="article.category_id" class="form-control" id="category">
+                    <select v-model="article.category_id" class="form-control" id="category">
                       <option value=""> انتخاب دسته</option>
                       <option v-for="category in categories" v-bind:key="category.id" v-bind:value="category.id">{{category.name}}</option>
                     </select>
@@ -32,9 +32,19 @@
                 <div class="col-md-4 form-group">
                   <div class="form-group">
                     <label for="tag">زیردسته مقاله</label>
-                    <select  v-model="article.subCategory_id" class="form-control" ref="subCategory">
+                    <select v-if="article.category_id == 1"  v-model="article.subCategory_id" class="form-control" ref="subCategory">
                       <option value=""> انتخاب زیردسته</option>
-                      <option v-for="subCategory in subCategories" v-bind:key="subCategory.id" v-bind:value="subCategory.id">{{subCategory.name}}</option>
+                      <option value="1">وریفای</option>
+                      <option value="2">متاتریدر</option>
+                      <option value="3">اصلاحات</option>
+                      <option value="4">معاملات</option>
+                    </select>
+                    <select v-if="article.category_id == 2"  v-model="article.subCategory_id" class="form-control" ref="subCategory">
+                      <option value=""> انتخاب زیردسته</option>
+                      <option value="5">وریفای</option>
+                      <option value="6">متاتریدر</option>
+                      <option value="7">اصلاحات</option>
+                      <option value="8">معاملات</option>
                     </select>
                   </div>
                 </div>
@@ -84,6 +94,7 @@
                 </tbody>
               </table>
             </div>
+            {{article}}
           </card>
         </div>
       </div>
@@ -113,15 +124,17 @@
     created() {
       this.fetchArticles();
       this.fetchCategories();
-     
+      this.fetchSubCategories();
     },
     methods: {
       fetchSubCategories(){
-        this.$http.get('http://localhost:8000/categories/' + this.article.category_id + '/AllSubCategoriesList')
+         this.$http.get('http://localhost:8000/categories/AllSubCategoryList')
           .then(res => {
             this.subCategories = res.data;
+            console.log(this.subCategories);
           })
           .catch(err => console.log(err));
+
       },
       fetchCategories(){
         this.$http.get('http://localhost:8000/categories')
