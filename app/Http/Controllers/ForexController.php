@@ -15,7 +15,12 @@ class ForexController extends Controller
 
         $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest()->get();
+        }))
+        ->where([
+            ['expire','=',0],
+            ['close','=',0]
+        ])
+        ->latest()->get();
        
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
@@ -47,8 +52,6 @@ class ForexController extends Controller
             'tp'                =>  $request->tp,
             'sl'                =>  $request->sl,
             'buy_sell'          =>  $request->buy_sell,
-            'expire'            =>  $request->expire,
-            'close'             =>  $request->close
         ]);
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
@@ -134,6 +137,26 @@ class ForexController extends Controller
         $Forex = 'App\Forex'::latest()->get();
         event(new \App\Events\ForexNotifEvent($Forex));
        
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | close and expire Forex list
+    |--------------------------------------------------------------------------
+    */
+    public function close_expire_list(){
+        $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))
+        ->where([
+            ['expire','=',1],
+        ])
+        ->orWhere([
+            ['close','=',1],
+        ])->latest()->get();
+       
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
 }
