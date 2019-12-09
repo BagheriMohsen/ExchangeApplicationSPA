@@ -21,7 +21,7 @@ class ForexNotifListener
     /**
      * Handle the event.
      *
-     * @param  ForexNotifEvent  $event
+     * @param  ForexNotifListener  $event
      * @return void
      */
     public function handle(ForexNotifEvent $event)
