@@ -31,7 +31,7 @@ html { overflow-y: auto }
     box-shadow: none;
   }
   .v-app-bar{
-    background: rgba(42, 116, 165, 0.52)!important;
+    background: rgba(42, 116, 165, 1)!important;
     box-shadow: none;
   }
   .bg-unique{

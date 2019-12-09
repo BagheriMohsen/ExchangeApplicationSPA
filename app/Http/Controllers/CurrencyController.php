@@ -29,11 +29,11 @@ class CurrencyController extends Controller
     public function store(Request $request,$id){
 
         Currency::create([
-            'name'      =>  $request->name,
+            'name'      =>  $request->name ,
             'type_id'   =>  $id,
         ]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json('با موفقیت ذخیر شد',200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json('موفقیت آمیز بود ',200, array($header),JSON_UNESCAPED_UNICODE);
     }
     /*
     |--------------------------------------------------------------------------

@@ -76,9 +76,9 @@ $router->group(['middleware'=>'cors','prefix' => '/binaries/','as'=>'binaries.']
 */
 $router->group(['middleware'=>'cors','prefix' => '/currency/','as'=>'currency.'], function () use ($router) {
     $router->get('', 'CurrencyController@index');
-    $router->get('store/{id}', 'CurrencyController@store');
+    $router->post('store/{id}', 'CurrencyController@store');
     $router->get('edit/{id}', 'CurrencyController@edit');
-    $router->get('update/{id}', 'CurrencyController@update');
+    $router->post('update/{id}', 'CurrencyController@update');
     $router->get('destroy/{id}', 'CurrencyController@destroy');
 });
 /*

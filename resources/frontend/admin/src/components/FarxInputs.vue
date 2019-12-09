@@ -41,8 +41,8 @@
             <div class="col-4">
                 <div class="">
                     <button type="submit" class="btn mx-1">Send</button>
-                    <button @click="expireNotif" class="btn btn-danger mx-1">Expire</button>
-                    <button @click="closeNotif" class="btn btn-warning mx-1">Close</button>
+                    <button @click="expireNotif" type="button" class="btn btn-danger mx-1">Expire</button>
+                    <button @click="closeNotif" type="button" class="btn btn-warning mx-1">Close</button>
                     <!-- <button v-if="notif.close || notif.expire" @click="resetNotif" class="btn mx-1">
                         <i class="fas fa-recycle fa-lg"></i>
                     </button> -->
@@ -79,10 +79,10 @@
             this.$emit('postNotif', this.notif);
         },
         expireNotif(){
-            this.$emit('expireNotif', this.notif);
+            this.$emit('expireNotif', this.notif.id);
         },
         closeNotif(){
-            this.$emit('closeNotif', this.notif);
+            this.$emit('closeNotif', this.notif.id);
         },
         // resetNotif(){
         //     this.$emit('resetNotif', this.notif);
