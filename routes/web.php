@@ -93,6 +93,7 @@ $router->get('/', ['middleware' => 'cors', function () {
     return view('app');
 }]);
 $router->get('/admin', ['middleware' => 'cors', function () {
+   
     return view('admin');
 }]);
 

@@ -13,15 +13,10 @@ class ForexController extends Controller
     */
     public function index(){
 
-        $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))
-        ->where([
-            ['expire','=',0],
-            ['close','=',0]
-        ])
-        ->latest()->get();
-       
+        }))->latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
@@ -53,7 +48,10 @@ class ForexController extends Controller
             'sl'                =>  $request->sl,
             'buy_sell'          =>  $request->buy_sell,
         ]);
-
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
@@ -89,7 +87,10 @@ class ForexController extends Controller
             'expire'            =>  $request->expire,
             'close'             =>  $request->close
         ]);
-
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت به روز رسانی شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
@@ -101,7 +102,10 @@ class ForexController extends Controller
     public function forexExpire(Request $request,$id){
         $forex = 'App\Forex'::findOrFail($id);
         $forex->update(['expire'=>1]);
-
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('منقضی شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
@@ -136,6 +140,7 @@ class ForexController extends Controller
     public function forexEvent(){
         $Forex = 'App\Forex'::latest()->get();
         event(new \App\Events\ForexNotifEvent($Forex));
+        return "Event has been sent!";
        
     }
     /*
@@ -154,7 +159,10 @@ class ForexController extends Controller
             ['close','=',1],
         ])->latest()->get();
        
-
+        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
+        event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
     }

@@ -5,23 +5,23 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-class ForexNotifEvent extends Event implements ShouldBroadcast
+class BinaryNotif extends Event implements ShouldBroadcast
 {
     use  InteractsWithSockets, SerializesModels;
-    public $Forex;
+    public $Binary;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($Forex)
+    public function __construct($Binary)
     {
-        $this->Forex = $Forex;
+        $this->Binary = $Binary;
     }
 
     public function broadcastOn()
     {
-        return ['ForexNotif'];
+        return ['BinaryNotif'];
     }
 }

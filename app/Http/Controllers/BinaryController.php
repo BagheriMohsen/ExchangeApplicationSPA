@@ -31,6 +31,8 @@ class BinaryController extends Controller
             'endTime'       =>  $request->endTime,
             'close'         =>  $request->close
         ]); 
+        $Binary = 'App\Binary'::latest()->get();
+        event(new \App\Events\BinaryNotif($Binary));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('باینری با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
@@ -60,6 +62,8 @@ class BinaryController extends Controller
             'endTime'       =>  $request->endTime,
             'close'         =>  $request->close
         ]);
+        $Binary = 'App\Binary'::latest()->get();
+        event(new \App\Events\BinaryNotif($Binary));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت به روز رسانی شد',200, array($header),JSON_UNESCAPED_UNICODE);
         
@@ -71,7 +75,8 @@ class BinaryController extends Controller
     */
     public function delete($id){
         $binary = 'App\Binary'::destroy($id);
-        
+        $Binary = 'App\Binary'::latest()->get();
+        event(new \App\Events\BinaryNotif($Binary));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
         
@@ -96,7 +101,8 @@ class BinaryController extends Controller
         $binaries = 'App\Binary'::where([
             ['close','=',1]
         ])->latest()->get();
-
+        $Binary = 'App\Binary'::latest()->get();
+        event(new \App\Events\BinaryNotif($Binary));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);
     }
