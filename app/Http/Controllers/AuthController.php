@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
-use Auth;
+use Firebase\JWT\ExpiredException;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Lumen\Routing\Controller as BaseController;
+
 class AuthController extends Controller
 {
     
@@ -15,6 +19,19 @@ class AuthController extends Controller
     {
         //
     }
+
+    protected function jwt($user) {
+        $payload = [
+            'iss' => "lumen-jwt", // Issuer of the token
+            'sub' => $user->id, // Subject of the token
+            'iat' => time(), // Time when JWT was issued. 
+            'exp' => time() + 60*60 // Expiration time
+        ];
+        
+        // As you can see we are passing `JWT_SECRET` as the second parameter that will 
+        // be used to decode the token in the future.
+        return JWT::encode($payload, env('JWT_SECRET'));
+    } 
     
     public function register(Request $request){
         $status = 'App\User'::where('phoneNumber',$request->phoneNumber)->exists();
@@ -29,21 +46,19 @@ class AuthController extends Controller
             'phoneNumber'   =>  $request->phoneNumber
         ]);
        
-        Auth::loginUsingId($user->id);
-        $message = 'ثبت نام شما با موفقیت انجام شد';
-        return response()->json($message,200, array($header),JSON_UNESCAPED_UNICODE);
-         
+        return response()->json([
+            'token' => $this->jwt($user)
+        ], 200);
+        
     }
 
-    public function login(){
+    public function login(Request $request){
         
-        // $user = 'App\User'::where('email', $request->input('email'))->first();
-        $_SESSION["userLoginStatus"] = 'ok';
-        // $apikey = uniqid();
-
-        // 'App\User'::where('phoneNumber','09102222222')->update(['api_key' => "$apikey"]);;
-        
-        // return response()->json(['status' => 'success','api_key' => $apikey]);
+        $user = 'App\User'::where('phoneNumber', $request->input('phoneNumber'))->firstOrFail();
+       
+        return response()->json([
+            'token' => $this->jwt($user)
+        ], 200);
            
     }
 

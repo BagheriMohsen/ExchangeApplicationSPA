@@ -6,11 +6,11 @@
 |--------------------------------------------------------------------------
 */
 $router->group(['middleware'=>['cors'],'as'=>'auth.'], function () use ($router) {
-    $router->get('/register', 'AuthController@register');
-    $router->get('/login', 'AuthController@login');
+    $router->post('/register', 'AuthController@register');
+    $router->post('/login', 'AuthController@login');
 });
 
-$router->group(['middleware'=>'cors','as'=>'home.'], function () use ($router) {
+$router->group(['middleware'=>['cors','jwt.auth'],'as'=>'home.'], function () use ($router) {
     $router->get('/', 'HomeController@index');
 });
 /*
