@@ -35,7 +35,7 @@ class ForexController extends Controller
 
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))>latest()->get();
+        }))->latest()->get();
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($Forex,200, array($header),JSON_UNESCAPED_UNICODE);

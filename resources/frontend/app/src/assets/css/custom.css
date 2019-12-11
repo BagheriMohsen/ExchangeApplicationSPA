@@ -43,3 +43,9 @@ html { overflow-y: auto }
   .v-tab{
     min-width: initial!important;
   }
+  .v-content{
+    margin-bottom: 56px;
+  }
+  .light-color{
+    color: #f3f3f3;
+  }

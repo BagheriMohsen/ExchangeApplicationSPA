@@ -35,7 +35,7 @@
                                 </div>
                                 <div v-if="showBuySell" class="mx-2">
                                     <div class="radio">
-                                        <input type="radio" value="buy" v-model="farx.buy_sell" checked>
+                                        <input type="radio" value="buy" v-model="farx.buy_sell">
                                         <label class="mr-1">خرید</label>
                                     </div>
                                     <div class="radio">
@@ -69,17 +69,6 @@
     </div>
 </template>
 <script>
-// Pusher.logToConsole = true;
-
-//     var pusher = new Pusher('0b6db206a7be0ce7e956', {
-//       cluster: 'ap2',
-//       forceTLS: true
-//     });
-
-//     var channel = pusher.subscribe('my-channel');
-//     channel.bind('my-event', function(data) {
-//       alert(JSON.stringify(data));
-//     });
   import FarxInputs from '@/components/FarxInputs.vue';
   export default {
    
