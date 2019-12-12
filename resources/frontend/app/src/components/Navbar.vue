@@ -3,24 +3,19 @@
         <v-app-bar fixed app transparent>
             <v-app-bar-nav-icon class="white--text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-spacer></v-spacer>
-            <v-img left
+            <!-- <v-img left
                 class="mx-2"
                 src="/img/logo-for-splash-screen.png"
                 max-height="40"
                 max-width="40"
                 contain
-            ></v-img>
+            ></v-img> -->
             <v-spacer></v-spacer>
             <a @click="$router.go(-1)">
                 <v-icon color="white">keyboard_backspace
                 </v-icon>
             </a>
             
-            
-
-            <!-- <v-toolbar-title class="white--text">
-                <span class="font-weight-bold">Unique App</span>
-            </v-toolbar-title> -->
         </v-app-bar>
         <v-navigation-drawer app :width="'65%'" v-model="drawer"
             absolute
@@ -67,8 +62,9 @@ export default {
         return{
             items: [
                 { title: 'درباره ی ما', icon: 'info',route:'/about' },
-                { title: 'تماس با ما', icon: 'contacts', route:'contact' },
-                { title: 'عضویت ', icon: 'assignment_turned_in', route:'/register'}
+                { title: 'تماس با ما', icon: 'contacts', route:'/contact' },
+                { title: 'عضویت ', icon: 'assignment_turned_in', route:'/register'},
+                { title: 'اشتراک ', icon: 'account_balance_wallet', route:'/subscription'}
             ],
             drawer: false
         }

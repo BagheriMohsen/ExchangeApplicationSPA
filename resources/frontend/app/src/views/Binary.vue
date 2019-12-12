@@ -1,40 +1,25 @@
 <template>
     <section>
         <div class="container-fluid">
-            
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
-                    <div class="d-flex white">
-                      <div class="px-2 ml-auto">{{notif.created_at}}</div>
-                      <div v-show="notif.buy_sell" class="px-2 bg-success white--text">{{notif.buy_sell}}</div>
-                      <div v-if="!notif.close" class="px-1 bg-info white--text">فعال</div>
-                      <div v-if="notif.close" class="px-2 bg-default white--text">Expire</div>
-                    </div>
-                    <div class="table-responsive white">
-                         <table class="table text-center">
-                            <thead>
-                                <tr>
-                                    <th>ارز</th>
-                                    <th>زمان</th>
-                                    <th>آماده</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{notif.pair}}</td>
-                                    <td>{{notif.time_expire}}</td>
-                                    <td>{{notif.ready}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <binary-notif :binaryInfo="notif"></binary-notif>
                 </div>
             </div>
         </div>
     </section>
 </template>
 <script>
+
+  import BinaryNotif from '@/components/BinaryNotif.vue'
+  import Pusher from 'pusher-js'
+  var moment = require('jalali-moment');
+  moment.locale('fa', { useGregorianParser: true }); 
+
   export default {
+    components:{
+      BinaryNotif
+    },
     data () {
       return {
        notifs:[]
@@ -47,40 +32,45 @@
             this.notifs = res.data;
           })
           .catch(err => console.log(err));
+      },
+      subscribe(){
+        let pusher = new Pusher('0b6db206a7be0ce7e956', { cluster: 'ap2' })
+        pusher.subscribe('BinaryNotif')
+        pusher.bind('App\\Events\\BinaryNotifEvent', data => {
+          this.notifs = data.Binary;
+          console.log(data.Binary); 
+        })
+      },
+      convertToJalali(){
+        let jalali_update = [];
+        let jalali_create = [];
+        this.notifs.forEach(function(item){
+           jalali_update.push(moment(item.updated_at).format('YYYY/M/D HH:mm:ss')); 
+           jalali_create.push(moment(item.created_at).format('YYYY/M/D HH:mm:ss')); 
+        });
+        this.notifs.forEach(function(item,index){
+          item.jalali_update = jalali_update[index];
+        });
+        this.notifs.forEach(function(item,index){
+          item.jalali_create = jalali_create[index];
+        });
       }
     },
+    
     created () {
-        this.fetchNotif();
+      this.fetchNotif();
+      this.subscribe();
+      this.convertToJalali();
+    },
+    updated(){
+      this.convertToJalali();
     }
   }
 </script>
 
 <style scoped>
-  table td,table th{
-    font-size: .75rem;
-    /* color: #f3f3f3; */
-  }
-  table{
-    width: 100%;
-  }
   .col-12{
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 3px;
+    padding-bottom: 3px;
   }
-  .bg-danger{
-    background: #ff3547!important;
-  }
-  .bg-default{
-    background: #616161!important;
-  }
-  .bg-info{
-    background: #33b5e5;
-  }
-  .bg-success{
-    background: #00C851;
-  }
-  div{
-    font-size: .7rem;
-  }
-  
  </style>

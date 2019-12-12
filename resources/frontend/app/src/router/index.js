@@ -57,6 +57,38 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "demo" */ '../views/Binary.vue')
+      },
+      {
+        path: '/archive',
+        name: 'آرشیو',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Archive.vue')
+      },
+      {
+        path: '/contact',
+        name: 'تماس با ما',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/ContactUs.vue')
+      },
+      {
+        path: '/about',
+        name: 'درباره ی ما',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/AboutUs.vue')
+      },
+      {
+        path: '/subscription',
+        name: 'اشتراک',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Subscription.vue')
       }
     ]
   },
