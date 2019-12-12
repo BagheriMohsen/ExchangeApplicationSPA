@@ -50,13 +50,7 @@ class StartingSeeder extends Seeder
             'role_id'       =>  2,
             'freeTime'      =>  null,
         ]);
-        #3.Create Free Trial User
-        'App\User'::create([
-            'FullName'      => 'کاربر با اشتراک رایگان',
-            'phoneNumber'   =>  '09102226022',
-            'role_id'       =>  3,
-            'freeTime'      =>  null,
-        ]);
+       
         /*
         |--------------------------------------------------------------------------
         | Create Category

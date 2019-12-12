@@ -25,7 +25,7 @@ class AuthController extends Controller
             'iss' => "lumen-jwt", // Issuer of the token
             'sub' => $user->id, // Subject of the token
             'iat' => time(), // Time when JWT was issued. 
-            'exp' => time() + 60*60 // Expiration time
+            'exp' => time() + ((60*60)*24)*365 // Expiration time
         ];
         
         // As you can see we are passing `JWT_SECRET` as the second parameter that will 
@@ -65,6 +65,39 @@ class AuthController extends Controller
 
     public function logout(){
         return response()->json('logout');
+    }
+
+    public function token($request, Closure $next, $guard = null){
+        $token = $request->get('token');
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        if(!$token) {
+            // Unauthorized response if token not there
+            return response()->json([
+                'خطا' => 'توکنی برای پردازش دریافت نشده'
+            ], 401,array($header),JSON_UNESCAPED_UNICODE);
+        }
+        try {
+            $credentials = JWT::decode($token, env('JWT_SECRET'), ['HS256']);
+        } catch(ExpiredException $e) {
+            return response()->json([
+                'خطا' => 'توکن دریافتی منقضی شده است'
+            ], 400,array($header),JSON_UNESCAPED_UNICODE);
+        } catch(Exception $e) {
+            return response()->json([
+                'خطا' => 'در پردازش توکن مشکلی وجود دارد'
+            ], 400,array($header),JSON_UNESCAPED_UNICODE);
+        }
+        $user = User::find($credentials->sub);
+        // Now let's put the user in the request class so that you can grab it from there
+        $request->auth = $user;
+        // return $next($request);
+        // $users = app('db')->table('users')
+        // ->select('select * from users where id = ?', [$user->id])
+        // ->join('roles', 'users.role_id', '=', 'roles.id')
+        // ->get();
+
+       
+        return response()->json($user,200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
 }
