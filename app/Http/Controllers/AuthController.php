@@ -43,7 +43,8 @@ class AuthController extends Controller
 
         $user = 'App\User'::create([
             'FullName'      =>  $request->FullName,
-            'phoneNumber'   =>  $request->phoneNumber
+            'phoneNumber'   =>  $request->phoneNumber,
+            'role_id'       =>  $request->role_id
         ]);
        
         return response()->json([

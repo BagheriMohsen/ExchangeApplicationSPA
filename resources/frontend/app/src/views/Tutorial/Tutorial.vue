@@ -40,13 +40,12 @@
         >
           </v-img>
           <v-card-text class="text-center pa-0 ">
-              فارکس
+              فارکس 
           </v-card-text>
       </v-card>
           </v-col>
         </v-row>
       </v-container>
-      
     </section>
     
 </template>
@@ -54,22 +53,33 @@
   export default {
     data () {
       return {
-       items: [
-        {
-          color: '#fff',
-          src: './img/graph.png',
-          title: 'فارکس',
-          url: '/tutorial/farx',
-        },
-        {
-          color: '#fff',
-          src: './img/graph.png',
-          title: 'باینری آپشن',
-          url: '/tutorial/binary',
+        items: [
+          {
+            color: '#fff',
+            src: './img/graph.png',
+            title: 'فارکس',
+            url: '/tutorial/farx',
+          },
+          {
+            color: '#fff',
+            src: './img/graph.png',
+            title: 'باینری آپشن',
+            url: '/tutorial/binary',
+          }
+        ],
+        token: localStorage.getItem('token')
         }
-      ]
+    },
+    methods:{
+      checkToken(){
+        if(this.token == ''){
+          this.$router.push('/login');
+        }
       }
     },
+    mounted(){
+     this.checkToken();
+    }
   }
 </script>
 <style scoped>
