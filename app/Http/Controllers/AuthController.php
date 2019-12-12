@@ -5,7 +5,6 @@ use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\Hash;
-use Closure;
 use Exception;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
@@ -68,7 +67,7 @@ class AuthController extends Controller
         return response()->json('logout');
     }
 
-    public function token($request, Closure $next, $guard = null){
+    public function token(Request $request){
         $token = $request->get('token');
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         if(!$token) {
