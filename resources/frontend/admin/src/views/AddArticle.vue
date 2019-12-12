@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-exchange">
+    <base-header type="gradient-success" class="pb-6 pb-8 pt-3 pt-md-5 bg-gradient-exchange">
     </base-header>
     <div class="container-fluid mt--7">
       <div class="row">
@@ -94,7 +94,6 @@
                 </tbody>
               </table>
             </div>
-            {{article}}
           </card>
         </div>
       </div>

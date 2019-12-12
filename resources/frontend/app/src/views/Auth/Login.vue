@@ -6,31 +6,30 @@
                     cols="12"
                     :class="'text-center'">
                     
-                    <v-form 
-                    
+                    <v-form @submit.prevent="submit"
                     ref="form"
                     v-model="valid"
                     lazy-validation
-                >
-                    <v-text-field
-                    dark
-                    v-model="phone"
-                    :rules="phoneRules"
-                    :counter="11"
-                    label="شماره همراه"
-                    required
-                    ></v-text-field>
-
-                    <v-btn
-                    dark
-                    :disabled="!valid"
-                    color="info"
-                    class="mt-3"
-                    @click="submit"
                     >
-                    ورود
-                    </v-btn>
-                </v-form>
+                      <v-text-field
+                      dark
+                      v-model="phone"
+                      :rules="phoneRules"
+                      :counter="11"
+                      label="شماره همراه"
+                      required
+                      ></v-text-field>
+
+                      <v-btn
+                      dark
+                      :disabled="!valid"
+                      color="info"
+                      class="mt-3"
+                      @click="submit"
+                      >
+                      ورود
+                      </v-btn>
+                  </v-form>
                 </v-col>
                 <v-col
                     cols="12"
@@ -49,7 +48,7 @@
                     dark
                     color="success"
                     class="mt-3"
-                    @click.prevent="validateCode"
+                    @click.prevent="logIn"
                     >
                     ارسال کد  
                     </v-btn>
@@ -83,6 +82,7 @@
       valid: true,
       submitDone: false,
       phone: '',
+      code:'',
       phoneRules: [
         v => !!v || 'شماره همراه الزامی است',
         v => /^[0-9]*$/.test(v) || 'شماره همراه معتبر نیست',
@@ -93,8 +93,26 @@
     methods: {
       submit(){
         if(this.$refs.form.validate()){
-          this.submitDone = true;
+          this.$http.get('/checkphone',{phone:this.phone})
+            .then(response => {
+              if(response.status == 'ok'){
+                 this.submitDone = true;
+              }else{
+                alert('There is no such phone log in')
+              }
+            })
         }
+      },
+      logIn(){
+        this.$http.post('/checkCode',{code:this.code,phone:this.phone})
+          .then(response => {
+            if(response.status == 'ok'){
+              let token = response.token;
+              if(token){
+                localStorage.setItem('token',token);
+              }
+            }
+          })
       }
     },
   }

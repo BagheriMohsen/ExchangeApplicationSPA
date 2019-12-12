@@ -49,3 +49,13 @@ html { overflow-y: auto }
   .light-color{
     color: #f3f3f3;
   }
+  .theme--dark.v-navigation-drawer{
+    background: linear-gradient(to right,#2a74a5,#24415b);
+  }
+  div.table-responsive{
+    border-radius: 0px 0px 5px 5px;
+  }
+  .notif_header{
+    border-radius: 5px 5px 0px 0px;
+    color: #f3f3f3;
+  }

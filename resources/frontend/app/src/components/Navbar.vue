@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <v-app-bar fixed app transparent>
+        <v-app-bar fixed app transparent height="45px">
             <v-app-bar-nav-icon class="white--text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-spacer></v-spacer>
             <!-- <v-img left
@@ -10,8 +10,12 @@
                 max-width="40"
                 contain
             ></v-img> -->
+            <div class="white--text" style="font-size:13px">
+                {{$route.name}}
+            </div>
+            
             <v-spacer></v-spacer>
-            <a @click="$router.go(-1)">
+            <a  @click="$router.go(-1)">
                 <v-icon color="white">keyboard_backspace
                 </v-icon>
             </a>
@@ -21,7 +25,6 @@
             absolute
             dark
             right
-            src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
             temporary>
             <v-img
                 class="my-4 mx-auto"
@@ -46,9 +49,9 @@
 
       <template v-slot:append>
         <div class="pa-2">
-            <v-btn block flat light class="grey--text text--darken-2">
+            <v-btn block  light class="grey--text text--darken-2">
                 <v-icon>exit_to_app</v-icon>
-                <span left class="caption">خروج از حساب</span>
+                <span left class="caption">خروج</span>
             </v-btn>
         </div>
       </template>
@@ -64,10 +67,18 @@ export default {
                 { title: 'درباره ی ما', icon: 'info',route:'/about' },
                 { title: 'تماس با ما', icon: 'contacts', route:'/contact' },
                 { title: 'عضویت ', icon: 'assignment_turned_in', route:'/register'},
-                { title: 'اشتراک ', icon: 'account_balance_wallet', route:'/subscription'}
+                { title: 'اشتراک ', icon: 'payment', route:'/subscription'}
             ],
             drawer: false
         }
     }
 }
 </script>
+<style  scoped>
+.v-list-item__icon{
+    margin: 13px 0;
+}
+.v-list-item{
+    min-height: 30px;
+}
+</style>

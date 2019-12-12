@@ -1,7 +1,7 @@
 <template>
     <div id="layout">
         <Navbar/>
-        <v-content>
+        <v-content style="padding-left: 4px;padding-right: 4px;">
             <router-view></router-view>
         </v-content>
         <Footer/>
@@ -19,3 +19,4 @@ export default {
   }),
 };
 </script>
+

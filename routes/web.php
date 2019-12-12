@@ -90,10 +90,10 @@ $router->group(['middleware'=>'cors','prefix' => '/currency/','as'=>'currency.']
 | User Panel Routes
 |--------------------------------------------------------------------------
 */
-$router->get('/', ['middleware' => 'cors', function () {
+$router->get('/', ['middleware' => ['cors'], function () {
     return view('app');
 }]);
-$router->get('/admin', ['middleware' => 'cors', function () {
+$router->get('/admin', ['middleware' => ['cors'], function () {
    
     return view('admin');
 }]);

@@ -12,14 +12,14 @@ export default new Router({
       redirect: 'dashboard',
       component: DashboardLayout,
       children: [
-        {
-          path: '/dashboard',
-          name: 'پیشخوان',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
-        },
+        // {
+        //   path: '/dashboard',
+        //   name: 'پیشخوان',
+        //   // route level code-splitting
+        //   // this generates a separate chunk (about.[hash].js) for this route
+        //   // which is lazy-loaded when the route is visited.
+        //   component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
+        // },
         {
           path: '/farx',
           name: 'فارکس',
