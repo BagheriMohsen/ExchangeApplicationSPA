@@ -8,11 +8,9 @@
 $router->group(['middleware'=>['cors'],'as'=>'auth.'], function () use ($router) {
     $router->post('/register', 'AuthController@register');
     $router->post('/login', 'AuthController@login');
+    $router->get('/token','AuthController@token');
 });
 
-$router->group(['middleware'=>['cors','jwt.auth'],'as'=>'home.'], function () use ($router) {
-    $router->get('/', 'HomeController@index');
-});
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
