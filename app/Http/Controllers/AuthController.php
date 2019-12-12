@@ -5,6 +5,8 @@ use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\Hash;
+use Closure;
+use Exception;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AuthController extends Controller
