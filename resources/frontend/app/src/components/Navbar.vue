@@ -49,7 +49,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-            <v-btn block  light class="grey--text text--darken-2">
+            <v-btn block  light class="grey--text text--darken-2" @click="logout">
                 <v-icon>exit_to_app</v-icon>
                 <span left class="caption">خروج</span>
             </v-btn>
@@ -70,6 +70,12 @@ export default {
                 { title: 'اشتراک ', icon: 'payment', route:'/subscription'}
             ],
             drawer: false
+        }
+    },
+    methods:{
+        logout(){
+            localStorage.removeItem('token');
+            this.$router('/login');
         }
     }
 }

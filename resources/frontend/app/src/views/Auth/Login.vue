@@ -50,7 +50,7 @@
                     class="mt-3"
                     @click.prevent="logIn"
                     >
-                    ارسال کد  
+                    ورود
                     </v-btn>
                 </v-form>
                 </v-col>
@@ -104,15 +104,16 @@
         }
       },
       logIn(){
-        this.$http.post('/checkCode',{code:this.code,phone:this.phone})
-          .then(response => {
-            if(response.status == 'ok'){
-              let token = response.token;
-              if(token){
-                localStorage.setItem('token',token);
+        this.$http.post('http://localhost:8000/login',{phoneNumber:this.phone,role_id:'2'})
+            .then(response => {
+              if(response.data.token){
+                localStorage.setItem('token',response.data.token);
+                this.$router.push('/');
+              }else{
+                this.error = response.data;
               }
-            }
-          })
+              
+            }).catch((err)=>console.error(err));
       }
     },
   }

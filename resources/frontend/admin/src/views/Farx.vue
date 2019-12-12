@@ -6,11 +6,13 @@
             <div class="row">
               <div class="col-xl-12 mb-5 mb-xl-0">
                 <card shadow type="secondary">
+                    <h4 class="mb-3">افزودن پیام جدید:</h4>
                     <form @submit.prevent="postNotif" class="row">
                         <div class="col-sm-8">
                             <div class="form-row flex-nowrap">
                                 <div class="form-group">
-                                    <select v-model="farx.pair" class="form-control" required>
+                                    <select v-model="farx.pair" class="form-control" required style="padding: 0.55rem 0.5rem;">
+                                       <option value="">ارز</option>
                                       <option v-for="currency in farx_currencies" v-bind:key="currency.id" :value="currency.name">{{currency.name}}</option>
                                     </select>
                                 </div>
@@ -18,7 +20,8 @@
                                     <input v-model="farx.startingPrice" type="text" class="form-control" id="" placeholder="قیمت شروع">
                                 </div>
                                 <div class=" form-group" style="width:150px">
-                                    <select @change="optionChanged" v-model="farx.forex_category_id" class="form-control" id="">
+                                    <select @change="optionChanged" v-model="farx.forex_category_id" class="form-control" id="" style="padding: 0.55rem 0.5rem;">
+                                      <option value="">انتخاب حالت</option>
                                       <option value="1">Buy limit</option>
                                       <option value="2">Sell limit</option>
                                       <option value="3">Buy stop</option>
@@ -36,21 +39,35 @@
                                 <div v-if="showBuySell" class="mx-2">
                                     <div class="radio">
                                         <input type="radio" value="buy" v-model="farx.buy_sell">
-                                        <label class="mr-1">خرید</label>
+                                        <label class="m-0 mr-2">خرید</label>
                                     </div>
                                     <div class="radio">
                                         <input type="radio" value="sell" v-model="farx.buy_sell">
-                                        <label class="mr-2">فروش</label>
+                                        <label class="m-0 mr-2">فروش</label>
                                     </div>
+                                </div>
+                                <div title="توضیحات" @click="showModal = true" class="mr-3" style="cursor:pointer">
+                                    <i class="far fa-file-alt fa-lg mt-2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="">
-                                <button type="submit" class="btn mx-1">Send</button>
+                                <button type="submit" class="btn mx-1"><i class="fas fa-plus"></i></button>
                             </div>
                         </div>
+                        <modal :show.sync="showModal">
+                          <template slot="header" class="pb-0"> 
+                              <h3 class="modal-title">توضیحات</h3>
+                          </template>
+                          <div>
+                              <textarea class="form-control" v-model="farx.desc" rows="5"></textarea>
+                          </div>
+                      </modal>
                     </form>
+                  
+                  <hr>
+                  <h4 class="mb-3">لیست پیام های فعال:</h4>
                   <div class="row justify-content-center">
                     <farx-inputs 
                       v-for="notifInput in notifInputs"
@@ -85,11 +102,13 @@
           buy_sell:'',
           close:false,
           expire:false,
-          forex_category_id:''
+          forex_category_id:'',
+          desc:''
         },
         notifInputs:[],
         showBuySell:false,
-        farx_currencies:[]
+        farx_currencies:[],
+        showModal:false
       };
     },
     methods: {
@@ -126,6 +145,7 @@
         this.farx.close = false;
         this.farx.expire = false;
         this.farx.forex_category_id = '';
+        this.farx.desc = '';
         this.fetchNotifs();
 
       },
@@ -138,7 +158,8 @@
           tp : value.tp,
           expire : value.expire,
           close : value.close,
-          buy_sell : value.buy_sell
+          buy_sell : value.buy_sell,
+          desc:value.desc
         })
         .then(response => console.log(response))
         .catch(e => {
@@ -175,8 +196,11 @@
 
 <style scoped>
 
-  .form-group{
+.form-group{
   width: 100px;
   padding: 0px 2px;
+} 
+.label{
+  font-size: .8rem;
 }
 </style>

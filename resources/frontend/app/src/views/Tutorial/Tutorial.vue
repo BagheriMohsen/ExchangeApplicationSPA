@@ -46,6 +46,7 @@
           </v-col>
         </v-row>
       </v-container>
+      <button @click="checkToken"></button>
     </section>
     
 </template>
@@ -53,6 +54,7 @@
   export default {
     data () {
       return {
+        user:'',
         items: [
           {
             color: '#fff',
@@ -71,10 +73,25 @@
         }
     },
     methods:{
-      checkToken(){
-        if(this.token == ''){
-          this.$router.push('/login');
-        }
+      // checkToken(){
+      //   if(this.token == ''){
+      //     this.$router.push('/login');
+      //   }else{
+      //     this.$http.get('http://localhost:8000/token',{params:{token:this.token}})
+      //       .then(response => {
+      //         console.log(response);
+      //         this.user = response.data;
+      //         }).catch(err => {
+      //           console.log(err);
+      //           console.log(err.response);
+      //           if(err.response.status == 400 || err.response.status == 401){
+      //             this.$router.push('/login');
+      //           }
+      //         });
+      //   }
+      // },
+      checkUserRole(){
+
       }
     },
     mounted(){
