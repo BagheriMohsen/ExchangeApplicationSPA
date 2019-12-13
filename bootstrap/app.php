@@ -91,7 +91,10 @@ $app->routeMiddleware([
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
-
+// Artisan Command Line
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+//JWT Secret:generate
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
 
 // config/broadcasting
