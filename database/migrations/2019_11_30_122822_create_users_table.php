@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('role_id')->unsigned();
             $table->string('fullName',100);
-            $table->string('phoneNumber',100);
+            $table->string('phoneNumber',100)->unique();
             $table->string('language')->default('fa');
             $table->Date('freeTime')->nullable();
             $table->string('api_key')->nullable();
