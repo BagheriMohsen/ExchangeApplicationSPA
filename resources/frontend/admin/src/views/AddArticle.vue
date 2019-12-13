@@ -51,7 +51,8 @@
                 <div class="col-12 form-group">
                   <div class="form-group">
                     <label for="body">متن مقاله</label>
-                    <textarea v-model="article.body" class="form-control" rows="10" id="body"></textarea>
+                    <!-- <textarea v-model="article.body" class="form-control" rows="10" id="body"></textarea> -->
+                     <ckeditor :editor="editor" v-model="article.body" :config="editorConfig"></ckeditor>
                   </div>
                 </div>
               </div>
@@ -67,6 +68,7 @@
                 <h3 class="mb-0">لیست مقالات</h3>
               </div>
             </div>
+            
             <div class="col-12">
               <table class="table">
                 <thead>
@@ -101,7 +103,9 @@
   </div>
 </template>
 <script>
-
+  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+  import '@ckeditor/ckeditor5-build-classic/build/translations/fa';
+  // import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
   export default {
     components: {
     },
@@ -117,7 +121,23 @@
           subCategory_id:'',
           body:''
         },
-        edit:false
+        edit:false,
+        editor: ClassicEditor,
+        editorConfig: {
+            // plugins: [ Alignment],
+            toolbar: {
+                items: [
+                    'bold',
+                    'italic',
+                    'link',
+                    'undo',
+                    'redo',
+                    'heading',
+                    'alignment'
+                ]
+            },
+            language: 'fa'
+        }
       };
     },
     created() {

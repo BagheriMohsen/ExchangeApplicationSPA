@@ -25,6 +25,9 @@
                         <!-- <label for="currency">عدد TP </label> -->
                         <input v-model="notif.tp" type="text" class="form-control" id="" placeholder="عدد TP">
                     </div>
+                    <div title="توضیحات" @click="showModal = true" class="mx-2" style="cursor:pointer">
+                        <i class="far fa-file-alt fa-lg mt-2"></i>
+                    </div>
                     <div v-if="notif.forex_category_id == 5" class="mx-2">
                         <div class="radio">
                             <input type="radio" value="buy" v-model="notif.buy_sell" checked>
@@ -35,16 +38,17 @@
                             <label class="m-0 mr-2">فروش</label>
                         </div>
                     </div>
-                    <div title="توضیحات" @click="showModal = true" class="mr-3" style="cursor:pointer">
-                        <i class="far fa-file-alt fa-lg mt-2"></i>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-4">
-                <div class="">
+                <div v-show="!loading">
                     <button type="submit" class="btn btn-sm mx-1">Send</button>
                     <button @click="expireNotif" type="button" class="btn btn-sm btn-danger mx-1">Expire</button>
                     <button @click="closeNotif" type="button" class="btn btn-sm btn-warning mx-1">Close</button>
+                </div>
+                <div v-show="loading">
+                    <div class="lds-dual-ring"></div>
                 </div>
             </div>
             <modal :show.sync="showModal">
@@ -73,6 +77,7 @@
             return {
                 notif:this.notifInput,
                 showModal: false,
+                loading:false
             };
         },
         methods: {
@@ -88,6 +93,8 @@
         },
         mounted() {
         
+        },
+        updated(){
         }
     };
 </script>

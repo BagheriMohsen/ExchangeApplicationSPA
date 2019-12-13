@@ -36,6 +36,9 @@
                                     <!-- <label for="currency">عدد TP </label> -->
                                     <input v-model="farx.tp" type="text" class="form-control" id="" placeholder="عدد TP">
                                 </div>
+                                <div title="توضیحات" @click="showModal = true" class="mx-2" style="cursor:pointer">
+                                    <i class="far fa-file-alt fa-lg mt-2"></i>
+                                </div>
                                 <div v-if="showBuySell" class="mx-2">
                                     <div class="radio">
                                         <input type="radio" value="buy" v-model="farx.buy_sell">
@@ -46,14 +49,15 @@
                                         <label class="m-0 mr-2">فروش</label>
                                     </div>
                                 </div>
-                                <div title="توضیحات" @click="showModal = true" class="mr-3" style="cursor:pointer">
-                                    <i class="far fa-file-alt fa-lg mt-2"></i>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-2">
-                            <div class="">
+                            <div v-show="!loading">
                                 <button type="submit" class="btn mx-1"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <div v-show="loading">
+                                <div class="lds-dual-ring"></div>
                             </div>
                         </div>
                         <modal :show.sync="showModal">
@@ -108,7 +112,8 @@
         notifInputs:[],
         showBuySell:false,
         farx_currencies:[],
-        showModal:false
+        showModal:false,
+        loading:false
       };
     },
     methods: {
@@ -123,6 +128,7 @@
           .catch(e => this.errors.push(e));
       },
      postNotif(){
+        this.loading = true;
         this.$http.post('http://localhost:8000/forex/forexStore/', {
           pair : this.farx.pair,
           startingPrice : this.farx.startingPrice,
@@ -133,7 +139,11 @@
           close : this.farx.close,
           buy_sell : this.farx.buy_sell
         })
-        .then(response => console.log(response))
+        .then(response => {
+          console.log(response);
+          this.loading = false;
+          this.$toastr.s("با موفقیت ثبت شد");
+          })
         .catch(e => {
           this.errors.push(e)
         });
@@ -147,7 +157,6 @@
         this.farx.forex_category_id = '';
         this.farx.desc = '';
         this.fetchNotifs();
-
       },
       updateNotif(value){
         this.$http.post('http://localhost:8000/forex/forexUpdate/' + value.id, {
@@ -161,21 +170,21 @@
           buy_sell : value.buy_sell,
           desc:value.desc
         })
-        .then(response => console.log(response))
+        .then(response => {console.log(response);this.$toastr.s(" با موفقیت آپدیت شد");})
         .catch(e => {
           this.errors.push(e)
         });
-        this.fetchNotifs();
+        // this.fetchNotifs();
       },
       expireNotif(id){
         this.$http.get('http://localhost:8000/forex/forexExpire/' + id)
-          .then(response => console.log(response.data))
+          .then(response => {console.log(response.data);this.$toastr.s(" با موفقیت منقضی شد");})
           .catch(e => this.errors.push(e));
           this.fetchNotifs();
       },
       closeNotif(id){
         this.$http.get('http://localhost:8000/forex/forexClose/' + id)
-          .then(response => console.log(response.data))
+          .then(response => {console.log(response.data);this.$toastr.s(" با موفقیت بسته شد");})
           .catch(e => this.errors.push(e));
         this.fetchNotifs();
       },
@@ -203,4 +212,5 @@
 .label{
   font-size: .8rem;
 }
+
 </style>
