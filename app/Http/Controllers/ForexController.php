@@ -66,6 +66,7 @@ class ForexController extends Controller
             'tp'                =>  $request->tp,
             'sl'                =>  $request->sl,
             'buy_sell'          =>  $request->buy_sell,
+            'desc'              =>  $request->desc
         ]);
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
@@ -104,7 +105,8 @@ class ForexController extends Controller
             'sl'                =>  $request->sl,
             'buy_sell'          =>  $request->buy_sell,
             'expire'            =>  $request->expire,
-            'close'             =>  $request->close
+            'close'             =>  $request->close,
+            'desc'              =>  $request->desc
         ]);
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');

@@ -10,7 +10,8 @@ class Plan extends Model
         'currency_type_id',
         'title',
         'price',
-        'expireDay'
+        'expireDay',
+        'desc'
     ];
 
     public function users(){

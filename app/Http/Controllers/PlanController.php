@@ -29,7 +29,8 @@ class PlanController extends Controller
             'currency_type_id'  =>  $request->currency_type_id,
             'title'             =>  $request->title,
             'price'             =>  $request->price,
-            'expireDay'         =>  $request->expireDay
+            'expireDay'         =>  $request->expireDay,
+            'desc'              =>  $request->desc
         ]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('پلن با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
@@ -55,7 +56,8 @@ class PlanController extends Controller
             'currency_type_id'  =>  $request->currency_type_id,
             'title'             =>  $request->title,
             'price'             =>  $request->price,
-            'expireDay'         =>  $request->expireDay
+            'expireDay'         =>  $request->expireDay,
+            'desc'              =>  $request->desc
         ]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('موفقیت آمیز بود',200, array($header),JSON_UNESCAPED_UNICODE);
