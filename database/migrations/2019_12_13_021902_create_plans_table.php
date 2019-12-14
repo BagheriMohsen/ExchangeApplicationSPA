@@ -19,7 +19,7 @@ class CreatePlansTable extends Migration
             $table->bigInteger('currency_type_id')->unsigned();
             $table->string('title');
             $table->integer('price');
-            $table->integer('expireTime');
+            $table->integer('expireDay');
             $table->timestamps();
 
             $table->foreign('currency_type_id')->references('id')->on('currency_types')
@@ -30,7 +30,7 @@ class CreatePlansTable extends Migration
             $table->bigInteger('plan_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->Date('expireTime');
-            $table->boolean('expire');
+            $table->boolean('expire')->default(1);
 
             $table->foreign('user_id')->references('id')->on('users')
             ->onUpdated('cascade')->onDelete('cascade');
