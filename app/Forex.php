@@ -16,7 +16,8 @@ class Forex extends Model
         'sl',
         'buy_sell',
         'expire',
-        'close'
+        'close',
+        'desc'
     ];
      /*
     |--------------------------------------------------------------------------

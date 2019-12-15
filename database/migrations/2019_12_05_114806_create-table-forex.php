@@ -26,6 +26,7 @@ class CreateTableForex extends Migration
             $table->integer('startingPrice');
             $table->string('tp');
             $table->string('sl');
+            $table->Text('desc');
             $table->string('buy_sell')->nullable();
             $table->boolean('expire')->default(0);
             $table->boolean('close')->default(0);

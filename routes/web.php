@@ -85,6 +85,23 @@ $router->group(['middleware'=>'cors','prefix' => '/currency/','as'=>'currency.']
 });
 /*
 |--------------------------------------------------------------------------
+| Plan Routes
+|--------------------------------------------------------------------------
+*/
+$router->group(['middleware'=>'cors','prefix' => '/plans/','as'=>'plans.'], function () use ($router) {
+    $router->get('', 'PlanController@index');
+    $router->get('PlanStore', 'PlanController@PlanStore');
+    $router->get('PlanEdit/{id}', 'PlanController@PlanEdit');
+    $router->get('PlanUpdate/{id}', 'PlanController@PlanUpdate');
+    $router->get('PlanDelete/{id}', 'PlanController@PlanDelete');
+    $router->get('StorePlanForUser', 'PlanController@StorePlanForUser');
+    $router->get('AllUserPlan/{user_id}', 'PlanController@StorePlanForUser');
+
+
+
+});
+/*
+|--------------------------------------------------------------------------
 | User Panel Routes
 |--------------------------------------------------------------------------
 */
