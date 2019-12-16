@@ -20,7 +20,7 @@ class CreatePlansTable extends Migration
             $table->string('title');
             $table->integer('price');
             $table->integer('expireDay');
-            $table->Text('desc');
+            $table->Text('desc')->nullable();
             $table->timestamps();
 
             $table->foreign('currency_type_id')->references('id')->on('currency_types')
