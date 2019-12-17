@@ -16,15 +16,13 @@ class CreatePlansTable extends Migration
 
         Schema::create('plans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('currency_type_id')->unsigned();
+            $table->string('type');
             $table->string('title');
             $table->integer('price');
             $table->integer('expireDay');
             $table->Text('desc')->nullable();
             $table->timestamps();
 
-            $table->foreign('currency_type_id')->references('id')->on('currency_types')
-            ->onUpdated('cascade')->onDelete('cascade');
         });
 
         Schema::create('plan_user', function (Blueprint $table) {
