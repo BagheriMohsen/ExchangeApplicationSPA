@@ -26,8 +26,8 @@
             </div>
             <div class="col-4">
                 <div class="">
-                    <button type="submit" class="btn mx-1">Send</button>
-                    <button @click="closeNotif" type="button" class="btn btn-warning mx-1">Close</button>
+                    <button type="submit" class="btn btn-sm mx-1">Send</button>
+                    <button @click="closeNotif" type="button" class="btn btn-sm btn-warning mx-1">Close</button>
                 </div>
             </div>
         </form>

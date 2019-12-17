@@ -25,7 +25,9 @@
     "vue-chartjs": "3.4.2",
     "vue-clipboard2": "0.3.0",
     "vue-flatpickr-component": "8.1.2",
+    "vue-loading-overlay": "^3.2.0",
     "vue-router": "3.0.1",
+    "vue-tables-2": "^1.6.19",
     "vue-toastr": "^2.1.2",
     "vue2-transitions": "0.3.0"
   },

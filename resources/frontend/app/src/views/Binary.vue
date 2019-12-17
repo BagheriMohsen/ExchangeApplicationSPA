@@ -69,8 +69,27 @@
 </script>
 
 <style scoped>
-  .col-12{
+   .col-12{
     padding-top: 3px;
     padding-bottom: 3px;
   }
+  .loading {
+    text-align: center;
+    position: absolute;
+    color: #fff;
+    z-index: 9;
+    background: rgba(42, 116, 165, 0.73);
+    padding: 8px 18px;
+    border-radius: 5px;
+    left: calc(50% - 45px);
+    top: calc(50% - 18px);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
  </style>

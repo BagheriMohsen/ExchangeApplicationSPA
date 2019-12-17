@@ -1,28 +1,48 @@
 <template>
     <div>
-        <div :class="{'bg-expire': notif.expire}" class="d-flex bg-open notif_header">
-            <div class="px-2 ml-auto d-flex flex-column">
-              <div>تاریخ پیام: {{notif.updated_at}}</div>
-              <div v-if="notif.close || notif.expire">تاریخ شروع: {{notif.created_at}}</div>
+        <div :class="{'bg-close':binaryInfo.close}" class="d-flex bg-open notif_header">
+            <div class="px-2 ml-auto d-flex flex-row">
+              <div class="notif-icon"><v-icon @click.stop="timeDialog = true" class="white--text" style="font">schedule</v-icon></div>
+              <div class="mr-1 mt-1"> {{jalali_update_date}}</div>
             </div>
-            <div v-show="notif.buy_sell" class="px-2" style="align-self: center;">{{notif.buy_sell}}</div>
-            <div v-if="!notif.close" class="px-2">فعال</div>
-            <div v-if="notif.close" class="px-2 bg-expire" style="align-self: center;">Expire</div>
+
+            <div class="d-flex flex-row">
+              <div v-if="binaryInfo.buy_sell" class="px-2" style="align-self: center;">{{binaryInfo.buy_sell}}</div>
+              <div v-if="!binaryInfo.close" class="px-2" style="align-self: center;">فعال</div>
+              <div v-if="binaryInfo.close" class="px-2" style="align-self: center;">ببند</div>
+            </div>
         </div>
+        <v-dialog
+          v-model="timeDialog"
+          max-width="290"
+        >
+          <v-card>
+            <v-card-text>
+              تاریخ پیام:
+              <br>
+              {{binaryInfo.jalali_update}}
+            </v-card-text>
+            <v-card-text v-if="binaryInfo.close || binaryInfo.expire">
+              تاریخ شروع پیام :
+              <br>
+              {{binaryInfo.jalali_create}}
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <div class="table-responsive white">
                 <table class="table text-center">
                 <thead>
                     <tr>
                         <th>ارز</th>
-                        <th>زمان</th>
-                        <th>آماده</th>
+                        <th>زمان (دقیقه)</th>
+                        <th>آماده (دقیقه)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{notif.pair}}</td>
-                        <td>{{notif.time_expire}}</td>
-                        <td>{{notif.ready}}</td>
+                        <td>{{binaryInfo.pair}}</td>
+                        <td>{{binaryInfo.time_expire}}</td>
+                        <td>{{binaryInfo.ready}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -39,26 +59,39 @@
     },
     data () {
       return {
-        notif : this.binaryInfo
+        jalali_update_date:'',
+        timeDialog: false,
       }
     },
     methods:{
       convertJalali(){
-        this.notif.updated_at = moment(this.notif.updated_at).format('HH:mm:ss - YY/M/D');
-        this.notif.created_at = moment(this.notif.created_at).format('HH:mm:ss - YY/M/D');
+        this.jalali_update_date = moment(this.binaryInfo.updated_at).format('HH:mm:ss');
+        this.binaryInfo.jalali_update = moment(this.binaryInfo.update_at).format('HH:mm:ss - YY/M/D');
+        this.binaryInfo.jalali_create = moment(this.binaryInfo.created_at).format('HH:mm:ss - YY/M/D');
       },
       buySell :function(){
-        if(this.notif.buy_sell == 'buy'){
-          this.notif.buy_sell = 'خرید'
-        }else if(this.notif.buy_sell == 'sell'){
-          this.notif.buy_sell = 'فروش'
+        if(this.binaryInfo.buy_sell == 'buy'){
+          this.binaryInfo.buy_sell = 'خرید'
+        }else if(this.binaryInfo.buy_sell == 'sell'){
+          this.binaryInfo.buy_sell = 'فروش'
         }
       }
+      // convertJalali(){
+      //   this.notif.updated_at = moment(this.notif.updated_at).format('HH:mm:ss - YY/M/D');
+      //   this.notif.created_at = moment(this.notif.created_at).format('HH:mm:ss - YY/M/D');
+      // },
+      // buySell :function(){
+      //   if(this.notif.buy_sell == 'buy'){
+      //     this.notif.buy_sell = 'خرید'
+      //   }else if(this.notif.buy_sell == 'sell'){
+      //     this.notif.buy_sell = 'فروش'
+      //   }
+      // }
     },
     
     created () {
       this.convertJalali();
-      this.buySell;
+      this.buySell();
      
     },
     updated(){
@@ -102,11 +135,15 @@
     background: #00C851;
   }
   div{
-    font-size: .6rem;
+    font-size: .7rem;
   }
   .notif_header{
     padding: 2px 2px;
     border-bottom: 1px solid #c7c7c7;
   }
+  .notif-icon i{
+    font-size: 1rem;
+  }
+ 
   
  </style>

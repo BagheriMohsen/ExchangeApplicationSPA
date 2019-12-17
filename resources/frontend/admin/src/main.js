@@ -24,12 +24,16 @@ import ArgonDashboard from './plugins/argon-dashboard'
 import axios from 'axios'
 import VueToastr from "vue-toastr";
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import {ClientTable} from 'vue-tables-2';
+
 
 Vue.use( CKEditor );
 Vue.use(VueToastr);
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(ArgonDashboard)
+Vue.use(ClientTable);
+
 
 new Vue({
   router,

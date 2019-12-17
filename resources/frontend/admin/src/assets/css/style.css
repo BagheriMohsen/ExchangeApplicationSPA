@@ -64,4 +64,6 @@ label{
       transform: rotate(360deg);
     }
   }
-  
+  .form-group select{
+    padding: 0.3rem 0.75rem;
+  }

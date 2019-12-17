@@ -2,6 +2,10 @@
     <div>
         <base-header type="gradient-success" class="pb-6 pb-8 pt-3 pt-md-5 bg-gradient-exchange">
         </base-header>
+
+        <loading :active.sync="isLoading" 
+        :is-full-page="true"></loading>
+
         <div class="container-fluid mt--7">
             <div class="row">
               <div class="col-xl-12 mb-5 mb-xl-0">
@@ -53,11 +57,8 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <div v-show="!loading">
+                            <div>
                                 <button type="submit" class="btn mx-1"><i class="fas fa-plus"></i></button>
-                            </div>
-                            <div v-show="loading">
-                                <div class="lds-dual-ring"></div>
                             </div>
                         </div>
                         <modal :show.sync="showModal">
@@ -91,10 +92,14 @@
 </template>
 <script>
   import FarxInputs from '@/components/FarxInputs.vue';
+  import Loading from 'vue-loading-overlay';
+  import 'vue-loading-overlay/dist/vue-loading.css';
+
   export default {
    
     components: {
-      FarxInputs
+      FarxInputs,
+      Loading
     },
     data() {
       return {
@@ -113,7 +118,7 @@
         showBuySell:false,
         farx_currencies:[],
         showModal:false,
-        loading:false
+        isLoading:false
       };
     },
     methods: {
@@ -128,7 +133,7 @@
           .catch(e => this.errors.push(e));
       },
      postNotif(){
-        this.loading = true;
+        this.isLoading = true;
         this.$http.post('http://localhost:8000/forex/forexStore/', {
           pair : this.farx.pair,
           startingPrice : this.farx.startingPrice,
@@ -137,12 +142,14 @@
           tp : this.farx.tp,
           expire : this.farx.expire,
           close : this.farx.close,
-          buy_sell : this.farx.buy_sell
+          buy_sell : this.farx.buy_sell,
+          desc:this.farx.desc
         })
         .then(response => {
           console.log(response);
-          this.loading = false;
           this.$toastr.s("با موفقیت ثبت شد");
+          this.fetchNotifs();
+          this.isLoading = false;
           })
         .catch(e => {
           this.errors.push(e)
@@ -156,9 +163,9 @@
         this.farx.expire = false;
         this.farx.forex_category_id = '';
         this.farx.desc = '';
-        this.fetchNotifs();
       },
       updateNotif(value){
+        this.isLoading = true;
         this.$http.post('http://localhost:8000/forex/forexUpdate/' + value.id, {
           pair : value.pair,
           startingPrice : value.startingPrice,
@@ -170,23 +177,33 @@
           buy_sell : value.buy_sell,
           desc:value.desc
         })
-        .then(response => {console.log(response);this.$toastr.s(" با موفقیت آپدیت شد");})
+        .then(response => {
+          this.$toastr.s(" با موفقیت آپدیت شد");
+          this.fetchNotifs();
+          this.isLoading = false;
+          })
         .catch(e => {
           this.errors.push(e)
         });
-        // this.fetchNotifs();
       },
       expireNotif(id){
+        this.isLoading = true;
         this.$http.get('http://localhost:8000/forex/forexExpire/' + id)
-          .then(response => {console.log(response.data);this.$toastr.s(" با موفقیت منقضی شد");})
+          .then(response => {
+            this.$toastr.s(" با موفقیت منقضی شد");
+            this.fetchNotifs();
+            this.isLoading = false;
+            })
           .catch(e => this.errors.push(e));
-          this.fetchNotifs();
       },
       closeNotif(id){
+        this.isLoading = true;
         this.$http.get('http://localhost:8000/forex/forexClose/' + id)
-          .then(response => {console.log(response.data);this.$toastr.s(" با موفقیت بسته شد");})
+          .then(response => {this.$toastr.s(" با موفقیت بسته شد");
+          this.fetchNotifs();
+          this.isLoading = false;
+          })
           .catch(e => this.errors.push(e));
-        this.fetchNotifs();
       },
       optionChanged(){
           if(this.farx.forex_category_id == '5'){

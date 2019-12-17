@@ -1,17 +1,29 @@
 <template>
     <section>
-        <transition name="fade">
+        <!-- <transition name="fade">
             <pulse-loader :loading="loading" :color="'white'" :size="'10px'"></pulse-loader>
-        </transition>
-        <div v-if="subscribedUser" class="container-fluid">
+        </transition> -->
+        <div v-if="showNotif == 'show'" class="container-fluid">
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
                     <farx-notif :notifInfo="notif"></farx-notif>
                 </div>
             </div>
         </div>
-        <div v-if="!subscribedUser" class="white--text">
-          این بخش تنها برای کاربران ویژه قابل دسترس است
+        <div v-if="showNotif == 'dontShow'" class="white--text">
+          <v-card class="mx-1 bg-unique" dark router :to="'/subscription'"
+        >
+            <div class="d-flex flex-no-wrap justify-content-center">
+                <div>
+                    <v-card-subtitle center class="mt-0"> این بخش تنها برای کاربران ویژه قابل دسترس است</v-card-subtitle>
+                </div>
+            </div>
+            <div>
+                <v-card-actions>
+                    <v-btn style="background-color:rgba(137, 152, 165, 0.54)" block text>خرید اکانت</v-btn>
+                </v-card-actions>
+            </div>
+        </v-card>
         </div>
     </section>
 </template>
@@ -20,19 +32,18 @@
 
   import FarxNotif from '@/components/FarxNotif.vue'
   import Pusher from 'pusher-js'
-  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+  // import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   export default {
     components:{
       FarxNotif,
-      PulseLoader
+    },
+    props:{
+        user:Object
     },
     data () {
       return {
         notifs:[],
-        showNotifs:[],
-        subscribedUser:true,
-        token:true,
-        loading:false
+        showNotif: null
       }
     },
     methods:{
@@ -48,25 +59,36 @@
         pusher.subscribe('ForexNotif')
         pusher.bind('App\\Events\\ForexNotifEvent', data => {
           this.notifs = data.Forex;
+          console.log('notif',this.notifs);
         })
       },
-    
-      checkAuth(){
-        if(this.token){
-          //initie true
-        }else{
-          this.$router.push('/login');
+      checkUserSubscribe(){
+        if(this.user.role_id == 2){
+          if(this.user.freeTime == null){
+            this.showNotif = 'show';
+          }else{
+            this.showNotif = 'dontShow';
+          }
+        }else if(this.user.role_id == 3){
+          this.showNotif = 'dontShow';
         }
       }
     },
-    created () {
+    watch:{
+      user:{
+        immediate:true,
+        handler(){
+          this.checkUserSubscribe();
+        }
+      }
+    },
+    computed:{
+
+    },
+    created(){
+      this.checkUserSubscribe();
       this.fetchNotif();
       this.subscribe();
-    },
-    updated(){
-    },
-    mounted(){
-      this.checkAuth();
     }
   }
 </script>

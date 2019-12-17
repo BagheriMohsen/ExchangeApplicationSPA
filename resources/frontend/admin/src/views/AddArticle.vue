@@ -2,6 +2,10 @@
   <div>
     <base-header type="gradient-success" class="pb-6 pb-8 pt-3 pt-md-5 bg-gradient-exchange">
     </base-header>
+
+    <loading :active.sync="isLoading" 
+        :is-full-page="true"></loading>
+
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col-xl-12 mb-5 mb-xl-0">
@@ -52,7 +56,7 @@
                   <div class="form-group">
                     <label for="body">متن مقاله</label>
                     <!-- <textarea v-model="article.body" class="form-control" rows="10" id="body"></textarea> -->
-                     <ckeditor :editor="editor" v-model="article.body" :config="editorConfig"></ckeditor>
+                     <ckeditor :editor="editor" v-model="article.body" @ready="onReady" :config="editorConfig"></ckeditor>
                   </div>
                 </div>
               </div>
@@ -68,7 +72,6 @@
                 <h3 class="mb-0">لیست مقالات</h3>
               </div>
             </div>
-            
             <div class="col-12">
               <table class="table">
                 <thead>
@@ -95,6 +98,7 @@
                   </tr>
                 </tbody>
               </table>
+              <!-- <v-client-table :data="tableData" :columns="columns" :options="options"/> -->
             </div>
           </card>
         </div>
@@ -103,11 +107,15 @@
   </div>
 </template>
 <script>
-  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-  import '@ckeditor/ckeditor5-build-classic/build/translations/fa';
-  // import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+  
+  import Loading from 'vue-loading-overlay';
+  import 'vue-loading-overlay/dist/vue-loading.css';
+  import DecoupledDocument from '@ckeditor/ckeditor5-build-decoupled-document';
+  import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/fa';
+
   export default {
     components: {
+      Loading
     },
     data() {
       return {
@@ -122,22 +130,18 @@
           body:''
         },
         edit:false,
-        editor: ClassicEditor,
+        editor: DecoupledDocument,
         editorConfig: {
-            // plugins: [ Alignment],
             toolbar: {
                 items: [
                     'bold',
-                    'italic',
                     'link',
-                    'undo',
-                    'redo',
-                    'heading',
                     'alignment'
                 ]
             },
             language: 'fa'
-        }
+        },
+        isLoading:false
       };
     },
     created() {
@@ -146,6 +150,13 @@
       this.fetchSubCategories();
     },
     methods: {
+      onReady( editor )  {
+                // Insert the toolbar before the editable area.
+                editor.ui.getEditableElement().parentElement.insertBefore(
+                    editor.ui.view.toolbar.element,
+                    editor.ui.getEditableElement()
+                );
+      },
       fetchSubCategories(){
          this.$http.get('http://localhost:8000/categories/AllSubCategoryList')
           .then(res => {
@@ -172,15 +183,18 @@
             .catch(err =>console.log(err));
       },
       deleteArticle(id){
+          this.isLoading = true;
           if(confirm('آیا از حذف این آیتم اطمینان دارید؟')){
             this.$http.get('http://localhost:8000/admin/articles/ArticleDelete/' + id)
             .then(data =>{
               alert('مقاله حذف شد');
               this.fetchArticles();
+              this.isLoading = false;
               }).catch((err)=>console.error(err));
           }
       },
       saveArticle(){
+          this.isLoading = true;
           if(this.edit === false){
               this.$http.post('http://localhost:8000/admin/articles/ArticleStore',{
                 title : this.article.title,
@@ -193,6 +207,7 @@
                   this.article.subCategory_id = ''
                   alert('مقاله اضافه شد');
                   this.fetchArticles();
+                  this.isLoading = false;
               });
           }else{
               this.edit = true;
@@ -208,6 +223,7 @@
                   this.article.subCategory_id = ''
                   alert('مقاله آپدیت شد');
                   this.fetchArticles();
+                  this.isLoading = false;
               });
           }
       },
@@ -237,6 +253,10 @@
  }
  .form-control{
    padding: .4rem .75rem;
+ }
+ .ck-content{
+   background:white;
+   border:1px solid darkgray; 
  }
 </style>
  

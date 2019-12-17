@@ -9,17 +9,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: 'dashboard',
+      redirect: 'farx',
       component: DashboardLayout,
       children: [
-        {
-          path: '/dashboard',
-          name: 'پیشخوان',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
-        },
         {
           path: '/farx',
           name: 'فارکس',
@@ -39,6 +31,11 @@ export default new Router({
           path: '/add-currency',
           name: ' افزودن ارز ',
           component: () => import(/* webpackChunkName: "demo" */ './views/AddCurrency.vue')
+        },
+        {
+          path: '/account-plan',
+          name: ' اشتراک ',
+          component: () => import(/* webpackChunkName: "demo" */ './views/AccountPlan.vue')
         }
       ]
     }

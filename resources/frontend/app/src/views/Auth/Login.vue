@@ -6,7 +6,7 @@
                     cols="12"
                     :class="'text-center'">
                     
-                    <v-form @submit.prevent="submit"
+                    <v-form 
                     ref="form"
                     v-model="valid"
                     lazy-validation
@@ -25,13 +25,13 @@
                       :disabled="!valid"
                       color="info"
                       class="mt-3"
-                      @click="submit"
+                      @click.prevent="logIn"
                       >
                       ورود
                       </v-btn>
                   </v-form>
                 </v-col>
-                <v-col
+                <!-- <v-col
                     cols="12"
                     :class="'text-center'">
                     
@@ -53,7 +53,7 @@
                     ورود
                     </v-btn>
                 </v-form>
-                </v-col>
+                </v-col> -->
                 
                 
             </v-row>
@@ -91,18 +91,18 @@
     }),
 
     methods: {
-      submit(){
-        if(this.$refs.form.validate()){
-          this.$http.get('/checkphone',{phone:this.phone})
-            .then(response => {
-              if(response.status == 'ok'){
-                 this.submitDone = true;
-              }else{
-                alert('There is no such phone log in')
-              }
-            })
-        }
-      },
+      // submit(){
+      //   if(this.$refs.form.validate()){
+      //     this.$http.get('/checkphone',{phone:this.phone})
+      //       .then(response => {
+      //         if(response.status == 'ok'){
+      //            this.submitDone = true;
+      //         }else{
+      //           alert('There is no such phone log in')
+      //         }
+      //       })
+      //   }
+      // },
       logIn(){
         this.$http.post('http://localhost:8000/login',{phoneNumber:this.phone,role_id:'2'})
             .then(response => {

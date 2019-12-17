@@ -8,41 +8,66 @@
         fixed
         color="white"
         >
-            <v-btn  
-            value="tutorial"
-            router :to='"/"'>
-                <span>آموزش</span>
-                <v-icon>account_balance</v-icon>
+            <v-btn  v-for="item in items" v-bind:key="item.value"
+            :value="item.value"
+            router :to='item.route'>
+                <span>{{item.title}}</span>
+                <v-icon>{{item.icon}}</v-icon>
             </v-btn>
-            <v-btn value="farx"
-              router :to='"/farx"'>
-                <span>فارکس</span>
-                <v-icon>bar_chart</v-icon>
-            </v-btn>
-             <v-btn
-            router :to='"/binary"'
-            value="binary">
-                <span>باینری</span>
-                <v-icon small>multiline_chart</v-icon>
-            </v-btn>
-            <v-btn
-            router :to='"/archive"'
-            value="archive">
-                <span>بایگانی</span>
-                <v-icon small>move_to_inbox</v-icon>
-            </v-btn>
-           
         </v-bottom-navigation>
     </footer>
     
 </template>
 <script>
   export default {
+    props:{
+      user:Object
+    },
     data () {
       return {
         bottomNav: 'tutorial',
+        items:'',
+        arabicItems: [
+                { title: 'آموزش', icon: 'account_balance', route:"/",value:'tutorial'},
+                { title: 'فارکس', icon: 'bar_chart', route:"/farx",value:'farx'},
+                { title: 'باینری', icon: 'multiline_chart', route:"/binary",value:'binary'},
+                { title: 'بایگانی', icon: 'move_to_inbox', route:"/archive",value:'archive'},
+        ],
+        englishItems: [
+                { title: 'Tutorial', icon: 'account_balance', route:"/",value:'tutorial'},
+                { title: 'Farx', icon: 'bar_chart', route:"/farx",value:'farx'},
+                { title: 'Binary', icon: 'multiline_chart', route:"/binary",value:'binary'},
+                { title: 'Archive', icon: 'move_to_inbox', route:"/archive",value:'archive'},
+        ],
+        persianItems: [
+                { title: 'آموزش', icon: 'account_balance', route:"/",value:'tutorial'},
+                { title: 'فارکس', icon: 'bar_chart', route:"/farx",value:'farx'},
+                { title: 'باینری', icon: 'multiline_chart', route:"/binary",value:'binary'},
+                { title: 'بایگانی', icon: 'move_to_inbox', route:"/archive",value:'archive'},
+        ],
       }
     },
+    methods:{
+      checkLanguage(){
+          if(this.user.language == 'ar'){
+              this.items = this.arabicItems;
+          }else if(this.user.language == 'en'){
+              this.items = this.englishItems;
+          }else{
+              this.items = this.persianItems;
+          }
+      }
+    },
+    watch:{
+      user:{
+        handler(){
+          this.checkLanguage();
+        }
+      }
+    },
+    mounted(){
+      this.checkLanguage();
+    }
   }
 </script>
 <style scoped>

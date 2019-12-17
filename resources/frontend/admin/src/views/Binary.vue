@@ -2,10 +2,15 @@
     <div>
         <base-header type="gradient-success" class="pb-6 pb-8 pt-3 pt-md-5 bg-gradient-exchange">
         </base-header>
+
+        <loading :active.sync="isLoading" 
+        :is-full-page="true"></loading>
+
         <div class="container-fluid mt--7">
             <div class="row">
                 <div class="col-xl-12 mb-5 mb-xl-0">
                     <card shadow type="secondary">
+                      <h4 class="mb-3">افزودن پیام جدید:</h4>
                       <form @submit.prevent="postNotif" class="row">
                         <div class="col-sm-8">
                             <div class="form-row flex-nowrap">
@@ -33,11 +38,13 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <div class="">
-                                <button type="submit" class="btn mx-1">Send</button>
+                            <div>
+                                <button type="submit" class="btn mx-1"><i class="fas fa-plus"></i></button>
                             </div>
                         </div>
                       </form>
+                      <hr>
+                      <h4 class="mb-3">لیست پیام های فعال:</h4>
                       <div class="row justify-content-center">
                         <binary-inputs 
                           v-for="notifInput in notifInputs"
@@ -56,10 +63,13 @@
 </template>
 <script>
   import BinaryInputs from '@/components/BinaryInputs.vue';
+  import Loading from 'vue-loading-overlay';
+  import 'vue-loading-overlay/dist/vue-loading.css';
   export default {
    
     components: {
-      BinaryInputs
+      BinaryInputs,
+      Loading
     },
     data() {
       return {
@@ -71,7 +81,8 @@
           time_expire:''
         },
         notifInputs:[],
-        binary_currencies:[]
+        binary_currencies:[],
+        isLoading:false
       };
     },
     methods: {
@@ -86,6 +97,7 @@
           .catch(e => this.errors.push(e));
       },
       postNotif(){
+        this.isLoading = true;
         this.$http.post('http://localhost:8000/binaries/store/', {
           pair : this.binary.pair,
           time_expire: this.binary.time_expire,
@@ -93,7 +105,12 @@
           close : this.binary.close,
           buy_sell : this.binary.buy_sell
         })
-        .then(response => console.log(response))
+        .then(response => {
+          console.log(response);
+          this.$toastr.s("با موفقیت ثبت شد");
+          this.fetchNotifs();
+          this.isLoading = false;
+        })
         .catch(e => {
           this.errors.push(e)
         });
@@ -102,27 +119,36 @@
         this.binary.close = false;
         this.binary.endTime = '';
         this.binary.time_expire = '';
-        this.fetchNotifs();
+        
       },
       updateNotif(value){
+        this.isLoading = true;
         this.$http.post('http://localhost:8000/binaries/update/' + value.id, {
           pair : value.pair,
-          time_expire: value.expire,
+          time_expire: value. time_expire,
           endTime: value.endTime,
           close : value.close,
           buy_sell : value.buy_sell
-        })
-        .then(response => console.log(response))
+        }).then(response => {
+          console.log(response);
+          this.$toastr.s("با موفقیت آپدیت شد");
+          this.fetchNotifs();
+          this.isLoading = false;
+          })
         .catch(e => {
           this.errors.push(e)
         });
-        this.fetchNotifs();
       },
       closeNotif(id){
+        this.isLoading = true;
         this.$http.get('http://localhost:8000/binaries/close/' + id)
-          .then(response => console.log(response.data))
+          .then(response => {
+            console.log(response);
+            this.$toastr.s("با موفقیت بسته شد");
+            this.fetchNotifs();
+            this.isLoading = false;
+          })
           .catch(e => this.errors.push(e));
-        this.fetchNotifs();
       },
     },
     created() {
@@ -133,7 +159,11 @@
 </script>
 
 <style scoped>
-  .form-group{
-    width: 150px;
-  }
+.form-group{
+  width: 100px;
+  padding: 0px 2px;
+} 
+.label{
+  font-size: .8rem;
+}
 </style>
