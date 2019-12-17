@@ -88,7 +88,7 @@ class AuthController extends Controller
                 'خطا' => 'در پردازش توکن مشکلی وجود دارد'
             ], 400,array($header),JSON_UNESCAPED_UNICODE);
         }
-        $user = User::find($credentials->sub);
+        $user = User::with('plans')->find($credentials->sub);
         // Now let's put the user in the request class so that you can grab it from there
         $request->auth = $user;
         // return $next($request);

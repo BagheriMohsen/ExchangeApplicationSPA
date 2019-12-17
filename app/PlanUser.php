@@ -18,4 +18,8 @@ class PlanUser extends Model
     public function plan(){
         return $this->hasMany('App\Plan');
     }
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }
