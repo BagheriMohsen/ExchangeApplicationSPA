@@ -6,18 +6,19 @@
       title="Argon"
     >
       <template slot="links">
-        <sidebar-item
+        <!-- <sidebar-item
           :link="{
             name: 'پیشخوان',
-            icon: 'fas fa-home text-dark',
+            icon: 'fas fa-home text-light',
             path: '/dashboard'
           }"
-        />
+        /> -->
 
-        <sidebar-item :link="{name: 'فارکس', icon: 'fas fa-coins text-dark', path: '/farx'}"/>
-        <sidebar-item :link="{name: 'باینری آپشن', icon: 'fas fa-money-check-alt text-dark', path: '/binary'}"/>
-        <sidebar-item :link="{name: 'مقالات', icon: 'fas fa-newspaper text-dark', path: '/articles'}"/>
-        <sidebar-item :link="{name: 'لیست ارزها', icon: 'fas fa-list text-dark', path: '/add-currency'}"/>
+        <sidebar-item :link="{name: 'فارکس', icon: 'fas fa-coins text-light ', path: '/farx'}"/>
+        <sidebar-item :link="{name: 'باینری آپشن', icon: 'fas fa-money-check-alt text-light', path: '/binary'}"/>
+        <sidebar-item :link="{name: 'مقالات', icon: 'fas fa-newspaper text-light', path: '/articles'}"/>
+        <sidebar-item :link="{name: 'لیست ارزها', icon: 'fas fa-list text-light', path: '/add-currency'}"/>
+        <sidebar-item :link="{name: 'اشتراک کاربری', icon: 'fas fa-list text-light', path: '/account-plan'}"/>
         <!-- <sidebar-item :link="{name: 'تیکت ها', icon: 'ni ni-support-16 text-yellow', path: '/tickets'}"/>
         <sidebar-item :link="{name: 'حساب کاربری', icon: 'ni ni-circle-08 text-red', path: '/profile'}"/>
         <sidebar-item :link="{name: 'حساب های بانکی', icon: 'ni ni-credit-card text-green', path: '/bank'}"/> -->
@@ -52,7 +53,7 @@
     },
     data() {
       return {
-        sidebarBackground: 'vue' //vue|blue|orange|green|red|primary
+        sidebarBackground: 'orange' //vue|blue|orange|green|red|primary
       };
     },
     methods: {

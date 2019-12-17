@@ -103,10 +103,10 @@ $router->group(['middleware'=>'cors','prefix' => '/plans/','as'=>'plans.'], func
 | User Panel Routes
 |--------------------------------------------------------------------------
 */
-$router->get('/', ['middleware' => 'cors', function () {
+$router->get('/', ['middleware' => ['cors'], function () {
     return view('app');
 }]);
-$router->get('/admin', ['middleware' => 'cors', function () {
+$router->get('/admin', ['middleware' => ['cors'], function () {
    
     return view('admin');
 }]);

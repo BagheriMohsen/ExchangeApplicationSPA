@@ -34,10 +34,11 @@
                     :disabled="!valid"
                     color="info"
                     class="mt-3"
-                    @click="submit"
+                    @click="register"
                     >
                     عضویت
                     </v-btn>
+                    <div v-if="error" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error}}</div>
                 </v-form>
                 </v-col>
                 <v-col
@@ -90,6 +91,7 @@
     data: () => ({
       valid: true,
       name: '',
+      error:'',
       submitDone: false,
       nameRules: [
         v => !!v || 'نام و نام خانوادگی الزامی است',
@@ -108,8 +110,19 @@
         if(this.$refs.form.validate()){
           this.submitDone = true;
         }
+      },
+      register(){
+        this.$http.post('http://localhost:8000/register',{FullName : this.name,phoneNumber:this.phone,role_id:'2'})
+          .then(response => {
+            if(response.data.token){
+              localStorage.setItem('token',response.data.token);
+              this.$router.push('/');
+            }else{
+              this.error = response.data;
+            }
+            
+          }).catch((err)=>console.error(err));
       }
-  
     },
   }
 </script>

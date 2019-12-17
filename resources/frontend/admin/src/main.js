@@ -21,18 +21,20 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
 import axios from 'axios'
-// import Pusher from 'pusher-js'
+import VueToastr from "vue-toastr";
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import {ClientTable} from 'vue-tables-2';
 
+
+Vue.use( CKEditor );
+Vue.use(VueToastr);
 Vue.prototype.$http = axios
-
 Vue.config.productionTip = false
-// Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('content');
-// Vue.use(Pusher)
 Vue.use(ArgonDashboard)
-// Vue.use(BootstrapVue)
+Vue.use(ClientTable);
+
+
 new Vue({
   router,
   render: h => h(App)

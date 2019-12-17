@@ -14,7 +14,7 @@ class Forex extends Model
         'startingPrice',
         'tp',
         'sl',
-        'buy&sell',
+        'buy_sell',
         'expire',
         'close',
         'desc'

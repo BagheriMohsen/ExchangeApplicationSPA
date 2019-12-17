@@ -14,7 +14,7 @@
 
           <div class="modal-header" :class="[headerClasses]" v-if="$slots.header">
             <slot name="header"></slot>
-            <slot name="close-button">
+            <!-- <slot name="close-button">
               <button type="button"
                       class="close"
                       v-if="showClose"
@@ -23,7 +23,7 @@
                       aria-label="Close">
                 <span :aria-hidden="!show">×</span>
               </button>
-            </slot>
+            </slot> -->
           </div>
 
           <div class="modal-body" :class="bodyClasses">
@@ -113,5 +113,8 @@ export default {
 <style>
 .modal.show {
   background-color: rgba(0, 0, 0, 0.3);
+}
+.modal-header{
+  padding-bottom: 0;
 }
 </style>
