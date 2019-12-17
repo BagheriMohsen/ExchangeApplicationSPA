@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     protected $fillable = [
-        'currency_type_id',
+        'type',
         'title',
         'price',
         'expireDay',

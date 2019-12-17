@@ -53,7 +53,7 @@ class PlanController extends Controller
     public function PlanUpdate(Request $request,$id){
         $plan = Plan::findOrFail($id);
         $plan->update([
-            'currency_type_id'  =>  $request->currency_type_id,
+            'type'              =>  $request->type,
             'title'             =>  $request->title,
             'price'             =>  $request->price,
             'expireDay'         =>  $request->expireDay,

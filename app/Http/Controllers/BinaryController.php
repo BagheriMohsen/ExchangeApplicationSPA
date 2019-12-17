@@ -20,6 +20,17 @@ class BinaryController extends Controller
     }
     /*
     |--------------------------------------------------------------------------
+    | All Binaries
+    |--------------------------------------------------------------------------
+    */
+    public function AllBinaries(){
+        $binaries = $binaries = 'App\Binary'::latest('updated_at')->get();
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
+    /*
+    |--------------------------------------------------------------------------
     | Binary Store
     |--------------------------------------------------------------------------
     */

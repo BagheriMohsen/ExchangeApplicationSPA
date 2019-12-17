@@ -63,6 +63,7 @@ $router->group(['middleware'=>'cors','prefix' => '/forex/','as'=>'forex.'], func
 */
 $router->group(['middleware'=>'cors','prefix' => '/binaries/','as'=>'binaries.'], function () use ($router) {
     $router->get('', 'BinaryController@index');
+    $router->get('AllBinaries','BinaryController@AllBinaries');
     $router->post('store', 'BinaryController@store');
     $router->get('edit/{id}', 'BinaryController@edit');
     $router->post('update/{id}', 'BinaryController@update');
@@ -96,9 +97,6 @@ $router->group(['middleware'=>'cors','prefix' => '/plans/','as'=>'plans.'], func
     $router->get('PlanDelete/{id}', 'PlanController@PlanDelete');
     $router->get('StorePlanForUser', 'PlanController@StorePlanForUser');
     $router->get('AllUserPlan/{user_id}', 'PlanController@StorePlanForUser');
-
-
-
 });
 /*
 |--------------------------------------------------------------------------

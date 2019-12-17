@@ -18,7 +18,7 @@ class CreateTableBinaryOption extends Migration
             $table->string('pair');
             $table->string('buy_sell')->nullable();
             $table->string('time_expire');
-            $table->Date('endTime');
+            $table->string('endTime');
             $table->boolean('close')->default(0);
             $table->timestamps();
         });
