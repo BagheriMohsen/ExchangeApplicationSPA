@@ -23,7 +23,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'phoneNumber',
         'role_id',
         'freeTime',
-        'language'
+        'language',
+        'api_key'
     ];
 
     /**
@@ -38,5 +39,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function plans(){
         return $this->hasMany('App\PlanUser');
+    }
+    public function expire_plans(){
+        return $this->hasMany('App\PlanUserExpire');
     }
 }

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PlanUser extends Model
+class PlanUserExpire extends Model
 {
-    protected $table = 'plan_user';
+    protected $table = 'plan_user_expire';
     public $timestamps = false;
     protected $fillable = [
         'plan_id',

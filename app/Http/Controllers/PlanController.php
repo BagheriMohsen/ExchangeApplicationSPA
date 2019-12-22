@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Plan;
+use App\User;
 use App\PlanUser;
 use Carbon\Carbon;
 class PlanController extends Controller
@@ -100,6 +101,20 @@ class PlanController extends Controller
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($planUsers,200, array($header),JSON_UNESCAPED_UNICODE);
     }
-    
+    /*
+    |--------------------------------------------------------------------------
+    | User Expire Plans
+    |--------------------------------------------------------------------------
+    */
+    public function UserExpirePlans($id){
+        $user = 'App\User'::findOrFail($id);
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        $user = 'App\User'::with(['expire_plans'=>function($query){
+            $query->select('id','plan_id','user_id','expireTime')
+            ->with('plan')->get();
+        }])->findOrFail($id);
+
+        return response()->json($user,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
     
 }

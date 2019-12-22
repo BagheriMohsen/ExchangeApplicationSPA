@@ -10,11 +10,11 @@ class Plan extends Model
         'type',
         'title',
         'price',
-        'expireDay',
+        'expireTime',
         'desc'
     ];
 
     public function users(){
-        return $this->hasMany('App\PlanUser');
+        return $this->hasMany('App\PlanUser','plan_id','id');
     }
 }

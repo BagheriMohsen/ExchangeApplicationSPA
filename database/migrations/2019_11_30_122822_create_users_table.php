@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('fullName',100);
             $table->string('phoneNumber',100)->unique();
             $table->string('language')->default('fa');
-            $table->Date('freeTime')->nullable();
+            $table->boolean('freeTime')->default(True);
             $table->string('api_key')->nullable();
             $table->timestamps();
 
