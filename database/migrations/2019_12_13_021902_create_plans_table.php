@@ -30,7 +30,7 @@ class CreatePlansTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->Date('expireTime');
             $table->boolean('expire')->default(1);
-
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')
             ->onUpdated('cascade')->onDelete('cascade');
 

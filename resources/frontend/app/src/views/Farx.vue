@@ -1,8 +1,5 @@
 <template>
     <section>
-        <!-- <transition name="fade">
-            <pulse-loader :loading="loading" :color="'white'" :size="'10px'"></pulse-loader>
-        </transition> -->
         <div v-if="showNotif == 'show'" class="container-fluid">
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
@@ -15,7 +12,7 @@
         >
             <div class="d-flex flex-no-wrap justify-content-center">
                 <div>
-                    <v-card-subtitle center class="mt-0"> این بخش تنها برای کاربران ویژه قابل دسترس است</v-card-subtitle>
+                    <v-card-subtitle center class="mt-0"> اشتراک رایگان شما به پایان رسیده است،لطفا برای خرید اشتراک اقدام نمایید</v-card-subtitle>
                 </div>
             </div>
             <div>
@@ -32,7 +29,6 @@
 
   import FarxNotif from '@/components/FarxNotif.vue'
   import Pusher from 'pusher-js'
-  // import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
   export default {
     components:{
       FarxNotif,
@@ -59,17 +55,18 @@
         pusher.subscribe('ForexNotif')
         pusher.bind('App\\Events\\ForexNotifEvent', data => {
           this.notifs = data.Forex;
-          console.log('notif',this.notifs);
         })
       },
       checkUserSubscribe(){
-        if(this.user.role_id == 2){
-          if(this.user.freeTime == null){
-            this.showNotif = 'show';
-          }else{
-            this.showNotif = 'dontShow';
-          }
-        }else if(this.user.role_id == 3){
+        if(this.user.freeTime){
+          this.showNotif = 'show';
+        }else if(this.user.plans.length){
+          this.user.plans.forEach(item => {
+            if(item.expire == 1){
+              this.showNotif = 'show';
+            }
+          });
+        }else{
           this.showNotif = 'dontShow';
         }
       }

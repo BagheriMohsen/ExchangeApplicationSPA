@@ -26,6 +26,16 @@
                 </div>
                 <div class="col-md-4 form-group">
                   <div class="form-group">
+                    <label for="category">زبان مقاله</label>
+                    <select v-model="article.lang" class="form-control">
+                      <option value="fa"> فارسی</option>
+                      <option value="ar"> عربی</option>
+                      <option value="en"> عربی</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="form-group">
                     <label for="category">دسته مقاله</label>
                     <select v-model="article.category_id" class="form-control" id="category">
                       <option value=""> انتخاب دسته</option>
@@ -127,7 +137,8 @@
           title:'',
           category_id:'',
           subCategory_id:'',
-          body:''
+          body:'',
+          lang:''
         },
         edit:false,
         editor: DecoupledDocument,
@@ -191,6 +202,8 @@
               this.fetchArticles();
               this.isLoading = false;
               }).catch((err)=>console.error(err));
+          }else{
+            this.isLoading = false;
           }
       },
       saveArticle(){
@@ -201,10 +214,11 @@
                 body : this.article.body,
                 sub_category : this.article.subCategory_id
               }).then(data => {
-                  this.article.title = '',
-                  this.article.category = '',
-                  this.article.body = '',
-                  this.article.subCategory_id = ''
+                  this.article.title = '';
+                  this.article.category = '';
+                  this.article.body = '';
+                  this.article.subCategory_id = '';
+                  this.article.lang = '';
                   alert('مقاله اضافه شد');
                   this.fetchArticles();
                   this.isLoading = false;
@@ -217,10 +231,11 @@
                   body : this.article.body,
                   sub_category : this.article.subCategory_id
               }).then(data => {
-                  this.article.title = '',
-                  this.article.category = '',
-                  this.article.body = '',
-                  this.article.subCategory_id = ''
+                  this.article.title = '';
+                  this.article.category = '';
+                  this.article.body = '';
+                  this.article.subCategory_id = '';
+                  this.article.lang = '';
                   alert('مقاله آپدیت شد');
                   this.fetchArticles();
                   this.isLoading = false;
@@ -235,6 +250,7 @@
         this.article.id = article.id;
         this.article.category_id = article.sub_category.category.id;
         this.article.subCategory_id = article.subCategory_id;
+        this.article.lang = article.lang;
       },
       cancelEdit(){
         this.edit = !this.edit;
@@ -243,6 +259,7 @@
         this.article.id = '';
         this.article.category_id = '';
         this.article.subCategory_id = '';
+        this.article.lang = '';
       }
     }
   };

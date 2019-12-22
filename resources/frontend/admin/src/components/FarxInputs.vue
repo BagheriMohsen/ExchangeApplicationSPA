@@ -1,7 +1,7 @@
 <template>
     <div class="col-12">
         <form @submit.prevent="updateNotif" class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-9">
                 <div class="form-row flex-nowrap">
                     <div class="form-group">
                         <input v-model="notif.pair" type="text" class="form-control" id="currency" placeholder="ارز" disabled>
@@ -41,7 +41,7 @@
                     
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div v-show="!loading">
                     <button type="submit" class="btn btn-sm mx-1">Send</button>
                     <button @click="expireNotif" type="button" class="btn btn-sm btn-danger mx-1">Expire</button>

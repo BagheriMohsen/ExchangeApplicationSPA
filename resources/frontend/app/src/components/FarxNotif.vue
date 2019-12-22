@@ -8,7 +8,7 @@
 
             <div class="d-flex flex-row">
               <div v-if="notifInfo.buy_sell" class="px-2" style="align-self: center;">{{notifInfo.buy_sell}}</div>
-              <div v-if="!notifInfo.close && !notifInfo.expire" class="px-2">فعال</div>
+              <div v-if="!notifInfo.close && !notifInfo.expire" class="px-2" style="align-self: center;">فعال</div>
               <div v-if="notifInfo.close" class="px-2" style="align-self: center;">ببند</div>
               <div v-if="notifInfo.expire" class="px-2" style="align-self: center;">منقضی</div>
               <div v-if="notifInfo.desc" class="notif-icon"><v-icon @click.stop="descDialog = true" class="white--text" style="font">description</v-icon></div>
@@ -19,12 +19,12 @@
           max-width="290"
         >
           <v-card>
-            <v-card-text>
-              تاریخ پیام:
+            <v-card-text v-if="notifInfo.close || notifInfo.expire">
+              تاریخ آپدیت پیام:
               <br>
               {{notifInfo.jalali_update}}
             </v-card-text>
-            <v-card-text v-if="notifInfo.close || notifInfo.expire">
+            <v-card-text>
               تاریخ شروع پیام :
               <br>
               {{notifInfo.jalali_create}}
