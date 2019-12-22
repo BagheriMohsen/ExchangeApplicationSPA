@@ -66,7 +66,7 @@
     methods:{
       convertJalali(){
         this.jalali_update_date = moment(this.binaryInfo.updated_at).format('HH:mm:ss');
-        this.binaryInfo.jalali_update = moment(this.binaryInfo.update_at).format('HH:mm:ss - YY/M/D');
+        this.binaryInfo.jalali_update = moment(this.binaryInfo.updated_at).format('HH:mm:ss - YY/M/D');
         this.binaryInfo.jalali_create = moment(this.binaryInfo.created_at).format('HH:mm:ss - YY/M/D');
       },
       buySell :function(){
@@ -76,17 +76,6 @@
           this.binaryInfo.buy_sell = 'فروش'
         }
       }
-      // convertJalali(){
-      //   this.notif.updated_at = moment(this.notif.updated_at).format('HH:mm:ss - YY/M/D');
-      //   this.notif.created_at = moment(this.notif.created_at).format('HH:mm:ss - YY/M/D');
-      // },
-      // buySell :function(){
-      //   if(this.notif.buy_sell == 'buy'){
-      //     this.notif.buy_sell = 'خرید'
-      //   }else if(this.notif.buy_sell == 'sell'){
-      //     this.notif.buy_sell = 'فروش'
-      //   }
-      // }
     },
     
     created () {

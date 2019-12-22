@@ -1,69 +1,102 @@
 <template>
     <section>
-        <div class="container-fluid">
+        <div v-if="showNotif == 'show'" class="container-fluid">
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
                     <binary-notif :binaryInfo="notif"></binary-notif>
                 </div>
             </div>
         </div>
+        <div v-if="showNotif == 'dontShow'" class="white--text">
+          <v-card class="mx-1 bg-unique" dark router :to="'/subscription'"
+        >
+            <div class="d-flex flex-no-wrap justify-content-center">
+                <div>
+                    <v-card-subtitle center class="mt-0"> اشتراک رایگان شما به پایان رسیده است،لطفا برای خرید اشتراک باینری اقدام نمایید</v-card-subtitle>
+                </div>
+            </div>
+            <div>
+                <v-card-actions>
+                    <v-btn style="background-color:rgba(137, 152, 165, 0.54)" block text>خرید اکانت</v-btn>
+                </v-card-actions>
+            </div>
+        </v-card>
+        </div>
+
+        <!-- <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
+                    <binary-notif :binaryInfo="notif"></binary-notif>
+                </div>
+            </div>
+        </div> -->
     </section>
+   
 </template>
 <script>
 
   import BinaryNotif from '@/components/BinaryNotif.vue'
   import Pusher from 'pusher-js'
-  var moment = require('jalali-moment');
-  moment.locale('fa', { useGregorianParser: true }); 
+  // var moment = require('jalali-moment');
+  // moment.locale('fa', { useGregorianParser: true }); 
 
   export default {
+    props:{
+      user:Object
+    },
     components:{
       BinaryNotif
     },
     data () {
       return {
-       notifs:[]
+        notifs:[],
+        showNotif: null
       }
     },
     methods:{
       fetchNotif(){
-        this.$http.get('http://localhost:8000/binaries/')
+        this.$http.get('http://localhost:8000/binaries/AllBinaries')
           .then(res => {
             this.notifs = res.data;
+            console.log('binary',res.data);
           })
           .catch(err => console.log(err));
       },
       subscribe(){
         let pusher = new Pusher('0b6db206a7be0ce7e956', { cluster: 'ap2' })
         pusher.subscribe('BinaryNotif')
-        pusher.bind('App\\Events\\BinaryNotifEvent', data => {
+        pusher.bind('App\\Events\\BinaryNotif', data => {
           this.notifs = data.Binary;
-          console.log(data.Binary); 
         })
       },
-      convertToJalali(){
-        let jalali_update = [];
-        let jalali_create = [];
-        this.notifs.forEach(function(item){
-           jalali_update.push(moment(item.updated_at).format('YYYY/M/D HH:mm:ss')); 
-           jalali_create.push(moment(item.created_at).format('YYYY/M/D HH:mm:ss')); 
-        });
-        this.notifs.forEach(function(item,index){
-          item.jalali_update = jalali_update[index];
-        });
-        this.notifs.forEach(function(item,index){
-          item.jalali_create = jalali_create[index];
-        });
+      checkUserSubscribe(){
+        if(this.user.freeTime){
+          this.showNotif = 'show';
+        }else if(this.user.plans.length){
+          this.user.plans.forEach(item => {
+            if(item.expire == 1){
+              this.showNotif = 'show';
+            }
+          });
+        }else{
+          this.showNotif = 'dontShow';
+        }
       }
     },
-    
+    watch:{
+      user:{
+        immediate:true,
+        handler(){
+          this.checkUserSubscribe();
+        }
+      }
+    },
     created () {
+      this.checkUserSubscribe();
       this.fetchNotif();
       this.subscribe();
-      this.convertToJalali();
     },
     updated(){
-      this.convertToJalali();
     }
   }
 </script>

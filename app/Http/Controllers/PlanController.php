@@ -27,7 +27,7 @@ class PlanController extends Controller
     public function PlanStore(Request $request){
 
         Plan::create([
-            'currency_type_id'  =>  $request->currency_type_id,
+            'type'              =>  $request->type,
             'title'             =>  $request->title,
             'price'             =>  $request->price,
             'expireDay'         =>  $request->expireDay,
@@ -79,12 +79,12 @@ class PlanController extends Controller
     |--------------------------------------------------------------------------
     */
     public function StorePlanForUser(Request $request,$id){
-        $plan = Plan::findOrFind($request->plan_id);
+        $plan = Plan::findOrFail($id);
         $expireTime = Carbon::now()->addDays($plan->expireDay);
         
         PlanUser::create([
-            'plan_id'       =>  $request->plan_id,
-            'user_id'       =>  $id,
+            'plan_id'       =>  $id,
+            'user_id'       =>  $request->user_id,
             'expireTime'    =>  $expireTime,
         ]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];

@@ -25,7 +25,7 @@
         <v-tab-item>
             <div class="container-fluid">
                 <div class="row">
-                    <account-box></account-box>
+                    <account-box v-for="plan in binaryPlans" v-bind:key="plan.id" :plan="plan" @buyAccount="buyAccount"></account-box>
                 </div>
             </div>
         </v-tab-item>
@@ -33,6 +33,7 @@
             <div class="container-fluid">
                 <div class="row">
                     
+                    <account-box v-for="plan in farxPlans" v-bind:key="plan.id" :plan="plan" @buyAccount="buyAccount"></account-box>
                 </div>
             </div>
         </v-tab-item>
@@ -40,6 +41,7 @@
             <div class="container-fluid">
                 <div class="row">
                     
+                    <account-box v-for="plan in bothPlans" v-bind:key="plan.id" :plan="plan" @buyAccount="buyAccount"></account-box>
                 </div>
             </div>
         </v-tab-item>
@@ -52,20 +54,86 @@
 import AccountBox from '@/components/AccountBox.vue';
 
 export default {
+    props:{
+        user:Object
+    },
     components:{
         AccountBox
     },
     data () {
         return {
             tab: null,
+            plans:'',
+            farxPlans:'',
+            binaryPlans:'',
+            bothPlans:''
+            
         }
     },
     methods:{
-        
+        getPlans(){
+            this.$http.get('http://localhost:8000/plans/')
+                .then(resp => {
+                    console.log(resp.data);
+                    this.plans = resp.data;
+                    this.setFarx();
+                    this.setBinary();
+                    this.setBoth();
+                });
+        },
+        buyAccount(plan){
+            this.$http.get('http://localhost:8000/plans/StorePlanForUser/'+plan.id, {
+                params:{
+                    user_id:this.user.id,
+                }
+            })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(e => {
+            this.errors.push(e)
+            });
+            this.$emit('checkToken');
+        },
+        setFarx(){
+            var typeArray = [];
+            this.plans.forEach(function(item){
+                
+                if(item.type == 'forex'){
+                    typeArray.push(item);
+                }
+               
+            })
+            this.farxPlans = typeArray;
+        },
+        setBinary(){
+            var typeArray = [];
+            this.plans.forEach(function(item){
+                
+                if(item.type == 'binary'){
+                    typeArray.push(item);
+                    
+                }
+               
+            })
+            this.binaryPlans = typeArray;
+        },
+        setBoth(){
+            var typeArray = [];
+            this.plans.forEach(function(item){
+                
+                if(item.type == 'both'){
+                    typeArray.push(item);
+                    
+                }
+               
+            })
+            this.bothPlans = typeArray;
+        },
     },
     created () {
-        
-    }
+        this.getPlans();
+    },
 }
 </script>
 <style scoped>

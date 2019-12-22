@@ -10,7 +10,7 @@
         </div>
         <v-divider></v-divider>
         <div class="article-body text-justify mt-1 px-2 pb-2">
-          {{article.body}}
+          <div v-html="article.body"> </div>
         </div>
       </div>
               

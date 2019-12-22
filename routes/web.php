@@ -95,7 +95,7 @@ $router->group(['middleware'=>'cors','prefix' => '/plans/','as'=>'plans.'], func
     $router->get('PlanEdit/{id}', 'PlanController@PlanEdit');
     $router->get('PlanUpdate/{id}', 'PlanController@PlanUpdate');
     $router->get('PlanDelete/{id}', 'PlanController@PlanDelete');
-    $router->get('StorePlanForUser', 'PlanController@StorePlanForUser');
+    $router->get('StorePlanForUser/{id}', 'PlanController@StorePlanForUser');
     $router->get('AllUserPlan/{user_id}', 'PlanController@StorePlanForUser');
     $router->get('UserExpirePlans/{id}','PlanController@UserExpirePlans');
 });
