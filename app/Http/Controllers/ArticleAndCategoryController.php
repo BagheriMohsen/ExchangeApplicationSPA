@@ -15,7 +15,8 @@ class ArticleAndCategoryController extends Controller
         'App\Article'::create([
             'title'             =>  $request->title,
             'subCategory_id'    =>  $request->sub_category,
-            'body'              =>  $request->body
+            'body'              =>  $request->body,
+            'lang'              =>  $request->lang
         ]);
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
@@ -43,7 +44,8 @@ class ArticleAndCategoryController extends Controller
         $artilce->update([
             'title'             =>  $request->title,
             'subCategory_id'    =>  $request->sub_category,
-            'body'              =>  $request->body
+            'body'              =>  $request->body,
+            'lang'              =>  $request->lang
         ]);
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
