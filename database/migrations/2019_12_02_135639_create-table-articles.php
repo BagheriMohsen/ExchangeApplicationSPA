@@ -34,6 +34,7 @@ class CreateTableArticles extends Migration
             $table->string('title');
             $table->bigInteger('subCategory_id')->unsigned();
             $table->text('body');
+            $table->string('lang')->default('fa');
             $table->timestamps();
 
             $table->foreign('subCategory_id')->references('id')->on('subCategories')
