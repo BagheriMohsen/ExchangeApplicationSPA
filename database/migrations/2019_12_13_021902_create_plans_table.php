@@ -26,17 +26,31 @@ class CreatePlansTable extends Migration
         });
 
         Schema::create('plan_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('plan_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->Date('expireTime');
-            $table->boolean('expire')->default(1);
-            $table->timestamps();
+            
             $table->foreign('user_id')->references('id')->on('users')
             ->onUpdated('cascade')->onDelete('cascade');
 
             $table->foreign('plan_id')->references('id')->on('plans')
             ->onUpdated('cascade')->onDelete('cascade');
         });
+
+        Schema::create('plan_user_expire', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('plan_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->Date('expireTime');
+            
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onUpdated('cascade')->onDelete('cascade');
+
+            $table->foreign('plan_id')->references('id')->on('plans')
+            ->onUpdated('cascade')->onDelete('cascade');
+        });
+
     }
 
     /**
@@ -48,6 +62,8 @@ class CreatePlansTable extends Migration
     {
         Schema::dropIfExists('plans');
         Schema::dropIfExists('plan_user');
+        Schema::dropIfExists('plan_user_expire');
+
 
     }
 }

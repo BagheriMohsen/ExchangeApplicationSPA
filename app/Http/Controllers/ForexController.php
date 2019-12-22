@@ -70,7 +70,7 @@ class ForexController extends Controller
         ]);
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest()->get();
+        }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
@@ -110,7 +110,7 @@ class ForexController extends Controller
         ]);
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest()->get();
+        }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت به روز رسانی شد',200, array($header),JSON_UNESCAPED_UNICODE);

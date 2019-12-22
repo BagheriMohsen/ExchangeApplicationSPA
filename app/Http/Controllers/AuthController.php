@@ -7,6 +7,7 @@ use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 use App\User;
+use Carbon\Carbon;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AuthController extends Controller
@@ -89,7 +90,12 @@ class AuthController extends Controller
                 'خطا' => 'در پردازش توکن مشکلی وجود دارد'
             ], 400,array($header),JSON_UNESCAPED_UNICODE);
         }
-        $user = User::with('plans')->find($credentials->sub);
+        $user = User::with(['plans'=>function($query){
+            $query->select('id','plan_id','user_id','expireTime')
+            ->with('plan')->get();
+        }])->find($credentials->sub);
+
+        
         // Now let's put the user in the request class so that you can grab it from there
         $request->auth = $user;
         // return $next($request);
@@ -97,9 +103,42 @@ class AuthController extends Controller
         // ->select('select * from users where id = ?', [$user->id])
         // ->join('roles', 'users.role_id', '=', 'roles.id')
         // ->get();
+        $thisUser = $user;
+        $now    =   Carbon::now();
+        $diff   =   $user->created_at->diffInDays($now);
 
+        // store token into api-key 
+        $user->update([
+            'api_key'   =>  $token
+        ]);
+
+        // for user free trial
+        if($diff > 14){
+            $user->update([
+                'freeTime'  =>  False
+            ]);
+        }
+        // for user plan expire
        
-        return response()->json($user,200, array($header),JSON_UNESCAPED_UNICODE);
+        foreach($user->plans as $plan){
+            $planExpireTime = Carbon::parse($plan->expireTime);
+            $diffPlan = $planExpireTime->diffForHumans($now); 
+
+            if(strpos($diffPlan, 'before') == True){
+                
+                'App\PlanUserExpire'::create([
+                    'plan_id'       =>  $plan->plan_id,
+                    'user_id'       =>  $plan->user_id,
+                    'expireTime'    =>  $plan->expireTime,
+                ]);
+               
+                $result ='App\PlanUser'::destroy($plan->id);
+            } 
+
+            
+            
+        }
+        return response()->json($thisUser,200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
 }

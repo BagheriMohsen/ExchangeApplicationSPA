@@ -27,10 +27,10 @@ class StartingSeeder extends Seeder
             'persianName'   =>  'کاربر عادی'
         ]);
         #3.Create Admin
-        app('db')->table('roles')->insert([
-            'name'          =>  'freeTrialUser',
-            'persianName'   =>  'کاربر با اشتراک رایگان'
-        ]);
+        // app('db')->table('roles')->insert([
+        //     'name'          =>  'freeTrialUser',
+        //     'persianName'   =>  'کاربر با اشتراک رایگان'
+        // ]);
         /*
         |--------------------------------------------------------------------------
         | Create Users
@@ -41,14 +41,12 @@ class StartingSeeder extends Seeder
             'FullName'      => 'ادمین سایت',
             'phoneNumber'   =>  '09102222222',
             'role_id'       =>  1,
-            'freeTime'      =>  null,
         ]);
         #2.Create Normal User
         'App\User'::create([
             'FullName'      => 'کاربر عادی',
             'phoneNumber'   =>  '09102222502',
             'role_id'       =>  2,
-            'freeTime'      =>  null,
         ]);
        
         /*
