@@ -64,7 +64,7 @@
         },
         methods:{
             fetchBinaryNotif(){
-                this.$http.get('http://localhost:8000/binaries/')
+                this.$http.get('http://localhost:8000/binaries/closeBinaries')
                     .then(res => {
                         this.binaryNotifs = res.data;
                     }).catch(err => console.log(err));

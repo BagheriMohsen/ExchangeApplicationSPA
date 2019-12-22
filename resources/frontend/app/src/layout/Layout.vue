@@ -31,9 +31,9 @@ export default {
               this.user = response.data;
               }).catch(err => {
                 console.log(err);
-                if(err.response.status == 400 || err.response.status == 401){
+                // if(err.response.status == 400 || err.response.status == 401){
                   this.$router.push('/login');
-                }
+                // }
               });
         }
     },

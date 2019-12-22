@@ -54,6 +54,9 @@
 </template>
 <script>
   export default {
+    props:{
+      user:Object
+    },
     data () {
       return {
         tab: null,
@@ -65,7 +68,7 @@
     },
     created () {
       this.$http
-        .get('http://localhost:8000/categories/1/AllSubCategoriesList')
+        .get('http://localhost:8000/categories/1/AllSubCategoriesList' + this.user.api_key)
         .then((response) => this.articleTags = response.data)
     }
   }

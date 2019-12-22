@@ -42,7 +42,7 @@
                     <tr>
                         <td>{{binaryInfo.pair}}</td>
                         <td>{{binaryInfo.time_expire}}</td>
-                        <td>{{binaryInfo.ready}}</td>
+                        <td>{{binaryInfo.endTime}}</td>
                     </tr>
                 </tbody>
             </table>
