@@ -60,14 +60,16 @@
       checkUserSubscribe(){
         if(this.user.freeTime){
           this.showNotif = 'show';
-        }else if(this.user.plans.length){
-          this.user.plans.forEach(item => {
-            if(item.expire == 1){
-              this.showNotif = 'show';
-            }
-          });
         }else{
-          this.showNotif = 'dontShow';
+          let planList =[]
+          this.user.plans.forEach(function(item){
+              planList.push(item.plan.type);
+          });
+          if(planList.includes('forex') || planList.includes('both')){
+            this.showNotif = 'show';
+          }else{
+             this.showNotif = 'dontShow';
+          }
         }
       }
     },

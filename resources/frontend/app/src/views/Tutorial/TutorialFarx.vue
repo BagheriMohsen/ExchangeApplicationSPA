@@ -1,7 +1,7 @@
 <template>
     <section>
       <!-- {{articles}} -->
-      
+      {{user}}
       <v-tabs 
         show-arrows 
         dark 
@@ -70,8 +70,8 @@
     methods:{
       fetchArticleTags(){
         this.$http
-          .get('http://localhost:8000/categories/2/AllSubCategoriesList/' + this.user.api_key)
-          .then((response) =>{ this.articleTags = response.data;console.log(response.data);})
+          .get('http://localhost:8000/categories/2/AllSubCategoriesList/' + this.user.id)
+          .then((response) =>{ this.articleTags = response.data;console.log(response.data)})
       }
     },
     created () {

@@ -31,28 +31,46 @@
 </template>
 <script>
   export default {
+    props:{
+      user:Object
+    },
     data () {
       return {
-        user:'',
-        items: [
-          {
-            title: 'فارکس',
-            route: '/tutorial/farx',
-            img: '/img/money-growth.png',
-          },
-          {
-            title: 'باینری',
-            route: '/tutorial/binary',
-            img: '/img/graph.png',
-          }
-         
+        items:'',
+        arabicItems: [
+                {title: 'فارکس',route: '/tutorial/farx',img: '/img/money-growth.png'},
+                {title: 'باینری',route: '/tutorial/binary',img: '/img/graph.png'}
         ],
+        englishItems: [
+                {title: 'Forex',route: '/tutorial/farx',img: '/img/money-growth.png'},
+                {title: 'Binary',route: '/tutorial/binary',img: '/img/graph.png'}     
+        ],
+        persianItems: [
+                {title: 'فارکس',route: '/tutorial/farx',img: '/img/money-growth.png'},
+                {title: 'باینری',route: '/tutorial/binary',img: '/img/graph.png'}
+        ]
       }
     },
     methods:{
-      
+      checkLanguage(){
+          if(this.user.language == 'ar'){
+              this.items = this.arabicItems;
+          }else if(this.user.language == 'en'){
+              this.items = this.englishItems;
+          }else{
+              this.items = this.persianItems;
+          }
+      }
+    },
+    watch:{
+        user:{
+          handler(){
+            this.checkLanguage();
+          }
+        }
     },
     mounted(){
+      this.checkLanguage();
     }
   }
 </script>
