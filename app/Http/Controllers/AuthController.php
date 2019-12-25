@@ -65,14 +65,16 @@ class AuthController extends Controller
         $parameters['text']     =   $FourDigitRandom;
         $parameters['isflash']  =   false;
 
-        echo $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
+        $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
         
+    
         
-        $_SESSION['DigitValidate']  =   $FourDigitRandom;
-        $_SESSION['user_id']        =   $user->id; 
-      
+        $response = array (
+            'DigitValidate' => $FourDigitRandom,
+            'user_id'       => $user->id 
+        );
         
-        return response()->json('ثبت نام موفقیت آمیز بود.کد ارسال شد',200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($response,200, array($header),JSON_UNESCAPED_UNICODE);
 
         
     }
@@ -80,16 +82,20 @@ class AuthController extends Controller
     public function sendVerfySms(Request $request){
         // turn off the WSDL cache
         $header = ['Content-Type' => 'application/json;charset=utf8'];
-        $DigitValidate  =   $_SESSION['DigitValidate'];
-        $user_id        =   $_SESSION['user_id'];   
-
-        if($DigitValidate == $request->DigitValidate){
+        // $DigitValidate  =   $request->FourDigitRandom;
+        $user_id        =   $request->user_id;   
+        $user = 'App\User'::findOrFail($request->user_id);
             return response()->json([
                 'token' => $this->jwt($user)
             ], 200);
-        }else{
-            return response()->json('شماره درست نیست',200, array($header),JSON_UNESCAPED_UNICODE);
-        }
+        // if($DigitValidate == $request->DigitValidate){
+        //     $user = 'App\User'::findOrFail($request->user_id);
+        //     return response()->json([
+        //         'token' => $this->jwt($user)
+        //     ], 200);
+        // }else{
+        //     return response()->json('شماره درست نیست',200, array($header),JSON_UNESCAPED_UNICODE);
+        // }
         
         
         
@@ -114,13 +120,15 @@ class AuthController extends Controller
         $parameters['text']     =   $FourDigitRandom;
         $parameters['isflash']  =   false;
 
-        echo $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
+        $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
        
         
-        $_SESSION['DigitValidate']  =   $FourDigitRandom;
-        $_SESSION['user_id']        =   $user->id;  
+        $response = array (
+            'DigitValidate' => $FourDigitRandom,
+            'user_id'       => $user->id 
+        );  
 
-        return response()->json('لاگین موفقیت آمیز بود.کد ارسال شد',200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($response,200, array($header),JSON_UNESCAPED_UNICODE);
 
            
     }
