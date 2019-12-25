@@ -6,10 +6,13 @@
     "type": "project",
     "require": {
         "php": "^7.2",
+        "artisaninweb/laravel-soap": "0.3.0.9",
         "cviebrock/eloquent-sluggable": "^6.0",
         "firebase/php-jwt": "^5.0",
         "flipbox/lumen-generator": "^6.0",
+        "intergo/sms.to-laravel-lumen": "^0.0.28",
         "laravel/lumen-framework": "^6.0",
+        "league/flysystem-aws-s3-v3": "~1.0",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^4.1",
         "tymon/jwt-auth": "^1.0.0-rc.2"

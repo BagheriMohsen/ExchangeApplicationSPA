@@ -8,6 +8,7 @@
 $router->group(['middleware'=>['cors'],'as'=>'auth.'], function () use ($router) {
     $router->post('/register', 'AuthController@register');
     $router->post('/login', 'AuthController@login');
+    $router->get('sendVerfySms','AuthController@sendVerfySms');
     $router->get('/token','AuthController@token');
 });
 

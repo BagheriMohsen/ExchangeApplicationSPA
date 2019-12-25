@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Exception;
 use App\User;
 use Carbon\Carbon;
+use Session;
+use Artisaninweb\SoapWrapper\SoapWrapper;
+
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AuthController extends Controller
@@ -50,19 +53,79 @@ class AuthController extends Controller
             'role_id'       =>  $request->role_id
         ]);
        
-        return response()->json([
-            'token' => $this->jwt($user)
-        ], 200);
+        if(session('DigitValidate')){
+            return 'ok';
+        }else{
+            return 'wrong';
+        }
+
+        ini_set("soap.wsdl_cache_enabled", "0");
+        $sms_client = new \SoapClient('http://api.payamak-panel.com/post/send.asmx?wsdl', array('encoding'=>'UTF-8'));
+        $FourDigitRandom = rand(1000,9999);
+        $parameters['username'] =   "09388387058";
+        $parameters['password'] =   "3907";
+        $parameters['to']       =   $request->phoneNumber;
+        $parameters['from']     =   "50001060689251";
+        $parameters['text']     =   $FourDigitRandom;
+        $parameters['isflash']  =   false;
+
+        echo $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
+        
+        
+        $_SESSION['DigitValidate']  =   $FourDigitRandom;
+        $_SESSION['user_id']        =   $user->id; 
+      
+        
+        return response()->json('ثبت نام موفقیت آمیز بود.کد ارسال شد',200, array($header),JSON_UNESCAPED_UNICODE);
+
+        
+    }
+
+    public function sendVerfySms(Request $request){
+        // turn off the WSDL cache
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        $DigitValidate  =   $_SESSION['DigitValidate'];
+        $user_id        =   $_SESSION['user_id'];   
+
+        if($DigitValidate == $request->DigitValidate){
+            return response()->json([
+                'token' => $this->jwt($user)
+            ], 200);
+        }else{
+            return response()->json('شماره درست نیست',200, array($header),JSON_UNESCAPED_UNICODE);
+        }
+        
+        
         
     }
 
     public function login(Request $request){
+        $status = 'App\User'::where('phoneNumber',$request->phoneNumber)->exists();
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        if($status !=True){
+            return response()->json('همچین شماره ای در سیستم ثبت نشده',200, array($header),JSON_UNESCAPED_UNICODE);
+        }
+
+        $user   = 'App\User'::where('phoneNumber',$request->phoneNumber)->firstOrFail();
         
-        $user = 'App\User'::where('phoneNumber', $request->input('phoneNumber'))->firstOrFail();
+        ini_set("soap.wsdl_cache_enabled", "0");
+        $sms_client = new \SoapClient('http://api.payamak-panel.com/post/send.asmx?wsdl', array('encoding'=>'UTF-8'));
+        $FourDigitRandom = rand(1000,9999);
+        $parameters['username'] =   "09388387058";
+        $parameters['password'] =   "3907";
+        $parameters['to']       =   $request->phoneNumber;
+        $parameters['from']     =   "50001060689251";
+        $parameters['text']     =   $FourDigitRandom;
+        $parameters['isflash']  =   false;
+
+        echo $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
        
-        return response()->json([
-            'token' => $this->jwt($user)
-        ], 200);
+        
+        $_SESSION['DigitValidate']  =   $FourDigitRandom;
+        $_SESSION['user_id']        =   $user->id;  
+
+        return response()->json('لاگین موفقیت آمیز بود.کد ارسال شد',200, array($header),JSON_UNESCAPED_UNICODE);
+
            
     }
 
@@ -134,6 +197,7 @@ class AuthController extends Controller
                
                 $result ='App\PlanUser'::destroy($plan->id);
             } 
+
 
             
             

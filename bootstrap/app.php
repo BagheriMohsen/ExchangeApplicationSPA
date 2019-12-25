@@ -26,6 +26,10 @@ $app->withFacades();
 
 $app->withEloquent();
 
+
+if (!class_exists('SmsTo')) {
+    class_alias('Intergo\SmsTo\Facades\SmsToFacade', 'SmsTo');
+}
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -96,7 +100,6 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 //JWT Secret:generate
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
-
 // config/broadcasting
 $app->singleton(
     Illuminate\Broadcasting\BroadcastManager::class,
@@ -104,8 +107,19 @@ $app->singleton(
     Illuminate\Broadcasting\BroadcastManager::class
 );
 
-$app->configure('broadcasting');
+$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
 
+$app->singleton('filesystem', function ($app) {
+    return $app->loadComponent(
+        'filesystems',
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        'filesystem'
+    );
+});
+
+
+$app->configure('broadcasting');
+$app->configure('filesystems');
 
 
 /*
