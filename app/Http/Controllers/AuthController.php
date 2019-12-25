@@ -53,11 +53,7 @@ class AuthController extends Controller
             'role_id'       =>  $request->role_id
         ]);
        
-        if(session('DigitValidate')){
-            return 'ok';
-        }else{
-            return 'wrong';
-        }
+        
 
         ini_set("soap.wsdl_cache_enabled", "0");
         $sms_client = new \SoapClient('http://api.payamak-panel.com/post/send.asmx?wsdl', array('encoding'=>'UTF-8'));

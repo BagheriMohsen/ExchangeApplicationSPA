@@ -65,8 +65,17 @@
                           <template slot="header" class="pb-0"> 
                               <h3 class="modal-title">توضیحات</h3>
                           </template>
+                          <h5>توضیحات فارسی</h5>
                           <div>
-                              <textarea class="form-control" v-model="farx.desc" rows="5"></textarea>
+                              <textarea class="form-control" v-model="farx.desc.fa" rows="5"></textarea>
+                          </div>
+                          <h5 class="mt-2">توضیحات عربی</h5>
+                          <div>
+                              <textarea class="form-control" v-model="farx.desc.ar" rows="5"></textarea>
+                          </div>
+                          <h5 class="mt-2">توضیحات انگلیسی</h5>
+                          <div>
+                              <textarea class="form-control text-left" v-model="farx.desc.en" rows="5"></textarea>
                           </div>
                       </modal>
                     </form>

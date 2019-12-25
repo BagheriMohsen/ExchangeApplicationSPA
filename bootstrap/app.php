@@ -27,9 +27,7 @@ $app->withFacades();
 $app->withEloquent();
 
 
-if (!class_exists('SmsTo')) {
-    class_alias('Intergo\SmsTo\Facades\SmsToFacade', 'SmsTo');
-}
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
