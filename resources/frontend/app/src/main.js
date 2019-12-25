@@ -4,10 +4,9 @@ import router from './router'
 import axios from 'axios'
 import vuetify from './plugins/vuetify';
 import '@/assets/css/custom.css';
-
-
-
-
+import VueSimpleAlert from "vue-simple-alert";
+ 
+Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 

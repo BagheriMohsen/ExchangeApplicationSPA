@@ -66,15 +66,19 @@ export default {
             plans:'',
             farxPlans:'',
             binaryPlans:'',
-            bothPlans:''
-            
+            bothPlans:'',
+            errorBuy:{
+                text: "این دوره قبلا خریداری شده است",
+                type: "error",
+                timer: 2000,
+                showConfirmButton: false,
+            }
         }
     },
     methods:{
         getPlans(){
             this.$http.get('http://localhost:8000/plans/')
                 .then(resp => {
-                    console.log(resp.data);
                     this.plans = resp.data;
                     this.setFarx();
                     this.setBinary();
@@ -82,18 +86,32 @@ export default {
                 });
         },
         buyAccount(plan){
-            this.$http.get('http://localhost:8000/plans/StorePlanForUser/'+plan.id, {
-                params:{
-                    user_id:this.user.id,
-                }
-            })
-            .then(response => {
-                console.log(response);
-            })
-            .catch(e => {
-            this.errors.push(e)
+            let planList =[]
+            this.user.plans.forEach(function(item){
+               planList.push(item.plan.type);
             });
-            this.$emit('checkToken');
+            if(planList.includes('both')){
+               this.$fire(this.errorBuy)
+            }else if(planList.includes(plan.type)){
+               this.$fire(this.errorBuy)
+            }else if(plan.type == 'both' && planList.includes('binary')){
+              this.$fire(this.errorBuy)
+            }else if(plan.type == 'both' && planList.includes('forex')){
+               this.$fire(this.errorBuy)
+            }else{
+                this.$http.get('http://localhost:8000/plans/StorePlanForUser/'+plan.id, {
+                    params:{
+                        user_id:this.user.id,
+                    }
+                })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(e => {
+                this.errors.push(e)
+                });
+                this.$emit('checkToken');
+            }
         },
         setFarx(){
             var typeArray = [];

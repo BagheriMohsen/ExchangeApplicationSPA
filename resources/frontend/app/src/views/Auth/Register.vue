@@ -2,7 +2,7 @@
     <section>
         <v-container>
             <v-row dark :justify="'center'">
-                <v-col  cols="12" :class="'text-center'">
+                <!-- <v-col  cols="12" :class="'text-center'">
                   <v-btn class="mx-1" @click="lang = 'fa';currentComponent = 'persian-register'">
                     فارسی
                   </v-btn>
@@ -12,10 +12,43 @@
                   <v-btn class="mx-1" @click="lang = 'ar';currentComponent = 'arabic-register'">
                     عربی
                   </v-btn>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12" :class="'text-center'">
-                  <component v-bind:is="'persian-register'"></component>
+                  <!-- <component v-bind:is="'persian-register'"></component> -->
                     <!-- <persian-register></persian-register> -->
+                    <v-form 
+                      ref="form"
+                      v-model="valid"
+                      lazy-validation
+                    >
+                    <v-text-field
+                      dark
+                      v-model="name"
+                      :rules="nameRules"
+                      label="نام و نام خانوادگی"
+                      required
+                    ></v-text-field>
+
+                    <v-text-field
+                      dark
+                      v-model="phone"
+                      :rules="phoneRules"
+                      :counter="11"
+                      label="شماره همراه"
+                      required
+                    ></v-text-field>
+
+                    <v-btn
+                      dark
+                      :disabled="!valid"
+                      color="info"
+                      class="mt-3"
+                      @click="register"
+                      >
+                      عضویت
+                      </v-btn>
+                      <div v-if="error" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error}}</div>
+                  </v-form>
                 </v-col>
             </v-row>
              <v-row :justify="'center'">
@@ -38,12 +71,12 @@
     </section>
 </template>
 <script>
-import PersianRegister from '@/components/Register/PersianRegister.vue'
+// import PersianRegister from '@/components/Register/PersianRegister.vue'
 // import EnglishRegister from '@/components/Register/EnglishRegister.vue'
 // import ArabicRegister from '@/components/Register/ArabicRegister.vue'
   export default {
     components:{
-      'persian-register':PersianRegister,
+      // 'persian-register':PersianRegister,
       // 'arabic-register':ArabicRegister,
       // 'english-register':EnglishRegister
     },

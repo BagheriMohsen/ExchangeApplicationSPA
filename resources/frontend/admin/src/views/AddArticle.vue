@@ -30,7 +30,7 @@
                     <select v-model="article.lang" class="form-control">
                       <option value="fa"> فارسی</option>
                       <option value="ar"> عربی</option>
-                      <option value="en"> عربی</option>
+                      <option value="en"> انگلیسی</option>
                     </select>
                   </div>
                 </div>
@@ -89,6 +89,7 @@
                     <th scope="col">عنوان</th>
                     <th scope="col">دسته</th>
                     <th scope="col">زیردسته</th>
+                    <th scope="col">زبان</th>
                     <th scope="col">عملیات</th>
                   </tr>
                 </thead>
@@ -97,6 +98,7 @@
                     <th scope="row">{{article.title}}</th>
                     <td>{{article.sub_category.category.name}}</td>
                     <td>{{article.sub_category.name}}</td>
+                    <td>{{article.lang}}</td>
                     <td>
                       <a href="javascript:void(0)" @click.prevent="updateArticle(article)" class="m-1">
                         <i class="fas fa-pen-square text-info"></i>
@@ -212,7 +214,8 @@
               this.$http.post('http://localhost:8000/admin/articles/ArticleStore',{
                 title : this.article.title,
                 body : this.article.body,
-                sub_category : this.article.subCategory_id
+                sub_category : this.article.subCategory_id,
+                lang: this.article.lang
               }).then(data => {
                   this.article.title = '';
                   this.article.category = '';

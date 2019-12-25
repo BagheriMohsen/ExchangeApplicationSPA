@@ -1,7 +1,7 @@
 <template>
     <section>
         persianREgister
-        <!-- <v-form 
+        <v-form 
                     
                     ref="form"
                     v-model="valid"
@@ -57,7 +57,7 @@
                     >
                     ارسال کد ثبت نام
                     </v-btn>
-                </v-form> -->
+                </v-form>
     </section>
 </template>
 <script>

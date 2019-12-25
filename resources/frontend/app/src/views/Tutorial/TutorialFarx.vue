@@ -1,6 +1,7 @@
 <template>
     <section>
       <!-- {{articles}} -->
+      {{user}}
       <v-tabs 
         show-arrows 
         dark 
@@ -13,6 +14,7 @@
           v-for="articleTag in articleTags"
           :key="articleTag.id"
         >
+       
           {{ articleTag.name }}
         </v-tab>
       </v-tabs>
@@ -42,7 +44,7 @@
                     <v-card-title style="color:white"
                       class="ma-0 pa-0 px-1"
                       v-text="article.title"
-                    ></v-card-title>
+                    > </v-card-title>
                 </div>
               </v-card>
             </v-col>
@@ -55,6 +57,9 @@
 </template>
 <script>
   export default {
+    props:{
+      user:Object
+    },
     data () {
       return {
         tab: null,
@@ -65,7 +70,7 @@
     methods:{
       fetchArticleTags(){
         this.$http
-          .get('http://localhost:8000/categories/2/AllSubCategoriesList')
+          .get('http://localhost:8000/categories/2/AllSubCategoriesList/' + this.user.id)
           .then((response) =>{ this.articleTags = response.data;console.log(response.data)})
       }
     },
