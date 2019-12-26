@@ -17,7 +17,9 @@ class Forex extends Model
         'buy_sell',
         'expire',
         'close',
-        'desc'
+        'fa_desc',
+        'ar_desc',
+        'en_desc'
     ];
      /*
     |--------------------------------------------------------------------------
