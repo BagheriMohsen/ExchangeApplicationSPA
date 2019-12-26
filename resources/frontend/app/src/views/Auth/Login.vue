@@ -2,119 +2,62 @@
     <section>
         <v-container>
             <v-row dark :justify="'center'">
-                <v-col
-                    cols="12"
-                    :class="'text-center'">
-                    
-                    <v-form 
-                    ref="form"
-                    v-model="valid"
-                    lazy-validation
-                    >
-                      <v-text-field
-                      dark
-                      v-model="phone"
-                      :rules="phoneRules"
-                      :counter="11"
-                      label="شماره همراه"
-                      required
-                      ></v-text-field>
-
-                      <v-btn
-                      dark
-                      :disabled="!valid"
-                      color="info"
-                      class="mt-3"
-                      @click.prevent="logIn"
-                      >
-                      ورود
-                      </v-btn>
-                  </v-form>
-                </v-col>
-                <!-- <v-col
-                    cols="12"
-                    :class="'text-center'">
-                    
-                    <v-form v-if="submitDone" >
-
-                    <v-text-field
-                    dark
-                    v-model="code"
-                    label="کد ارسالی را وارد نمایید"
-                    :counter="5"
-                    required
-                    ></v-text-field>
-                    <v-btn
-                    dark
-                    color="success"
-                    class="mt-3"
-                    @click.prevent="logIn"
-                    >
-                    ورود
-                    </v-btn>
-                </v-form>
-                </v-col> -->
-                
-                
+              <v-col  cols="12" :class="'text-center'">
+                <v-btn outlined color="white" style="min-width: 57px;" class="" @click="currentComponent = 'persian-login'">
+                  فارسی
+                </v-btn>
+                <v-btn outlined color="white" style="min-width: 57px;" class="" @click="currentComponent = 'english-login'">
+                  English
+                </v-btn>
+                <v-btn outlined color="white" style="min-width: 57px;" class="" @click="currentComponent = 'arabic-login'">
+                  عربی
+                </v-btn>
+              </v-col>
             </v-row>
-             <!-- <v-row :justify="'center'">
-                <v-col cols="12" :class="'text-center'">
-                    <v-btn router :to="'/'"
-                    color=""
-                    class="">
-                     ورود به عنوان کاربر مهمان
-                    </v-btn>
-                </v-col>
-            </v-row> -->
-             <v-row :justify="'center'">
-                <v-col cols="12" :class="'text-center'">
-                    <router-link color="white" to="/register">
-                      <span class="white--text"> هنوز ثبت نام نکرده اید؟ لطفا اینجا کلیک کنید</span>
-                    </router-link>
-                </v-col>
-            </v-row>
+            <component v-bind:is="currentComponent"></component>
         </v-container>
     </section>
 </template>
 <script>
+  import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+  import PersianLogin from '@/components/Login/PersianLogin.vue'
+  import EnglishLogin from '@/components/Login/EnglishLogin.vue'
+  import ArabicLogin from '@/components/Login/ArabicLogin.vue'
   export default {
+    components:{
+      ClipLoader,
+      'persian-login':PersianLogin,
+      'arabic-login':ArabicLogin,
+      'english-login':EnglishLogin
+    },
     data: () => ({
-      valid: true,
-      submitDone: false,
-      phone: '',
-      code:'',
-      phoneRules: [
-        v => !!v || 'شماره همراه الزامی است',
-        v => /^[0-9]*$/.test(v) || 'شماره همراه معتبر نیست',
-        v => (v && v.length == 11) || 'شماره همراه بایستی 11 رقمی باشد',
-      ]
+      'currentComponent' : 'persian-login',
     }),
 
     methods: {
-      // submit(){
-      //   if(this.$refs.form.validate()){
-      //     this.$http.get('/checkphone',{phone:this.phone})
-      //       .then(response => {
-      //         if(response.status == 'ok'){
-      //            this.submitDone = true;
-      //         }else{
-      //           alert('There is no such phone log in')
-      //         }
-      //       })
-      //   }
-      // },
-      logIn(){
-        this.$http.post('http://localhost:8000/login',{phoneNumber:this.phone,role_id:'2'})
-            .then(response => {
-              if(response.data.token){
-                localStorage.setItem('token',response.data.token);
-                this.$router.push('/');
-              }else{
-                this.error = response.data;
-              }
-              
-            }).catch((err)=>console.error(err));
+      checkToken(){
+        if(localStorage.getItem('token')){
+          this.$router.push('/');
+        }
       }
     },
+    created(){
+      this.checkToken();
+    },
+    mounted(){
+      this.checkToken();
+    }
   }
 </script>
+<style scoped>
+ .v-spinner{
+   display:flex!important;
+ }
+ .v-btn__content{
+   font-size: 11px
+ }
+ .v-btn{
+   margin: 0px 1px;
+   padding:0px 5px!important;
+ }
+</style>
