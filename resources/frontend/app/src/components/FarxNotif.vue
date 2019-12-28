@@ -11,7 +11,9 @@
               <div v-if="!notifInfo.close && !notifInfo.expire" class="px-2" style="align-self: center;">فعال</div>
               <div v-if="notifInfo.close" class="px-2" style="align-self: center;">ببند</div>
               <div v-if="notifInfo.expire" class="px-2" style="align-self: center;">منقضی</div>
-              <div v-if="notifInfo.desc" class="notif-icon"><v-icon @click.stop="descDialog = true" class="white--text" style="font">description</v-icon></div>
+              <div v-if="userLang == 'fa' && notifInfo.fa_desc" class="notif-icon"><v-icon @click.stop="descDialogFa = true" class="white--text" style="font">description</v-icon></div>
+              <div v-if="userLang == 'en' && notifInfo.en_desc" class="notif-icon"><v-icon @click.stop="descDialogEn = true" class="white--text" style="font">description</v-icon></div>
+              <div v-if="userLang == 'ar' && notifInfo.ar_desc" class="notif-icon"><v-icon @click.stop="descDialogAr = true" class="white--text" style="font">description</v-icon></div>
             </div>
         </div>
         <v-dialog
@@ -22,22 +24,42 @@
             <v-card-text v-if="notifInfo.close || notifInfo.expire">
               تاریخ آپدیت پیام:
               <br>
-              {{notifInfo.jalali_update}}
+              {{jalali_update}}
             </v-card-text>
             <v-card-text>
               تاریخ شروع پیام :
               <br>
-              {{notifInfo.jalali_create}}
+              {{jalali_create}}
             </v-card-text>
           </v-card>
         </v-dialog>
         <v-dialog
-          v-model="descDialog"
+          v-model="descDialogFa"
           max-width="290"
         >
           <v-card>
             <v-card-text>
-              {{notifInfo.desc}}
+              {{notifInfo.fa_desc}}
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+        <v-dialog
+          v-model="descDialogEn"
+          max-width="290"
+        >
+          <v-card>
+            <v-card-text>
+              {{notifInfo.en_desc}}
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+        <v-dialog
+          v-model="descDialogAr"
+          max-width="290"
+        >
+          <v-card>
+            <v-card-text>
+              {{notifInfo.ar_desc}}
             </v-card-text>
           </v-card>
         </v-dialog>
@@ -73,20 +95,26 @@
   moment.locale('fa', { useGregorianParser: true });  
   export default {
     props:{
-        notifInfo:Object
+        notifInfo:Object,
+        userLang:String
     },
     data () {
       return {
         jalali_update_date:'',
+        jalali_update:'',
+        jalali_create:'',
         timeDialog: false,
-        descDialog: false,
+        descDialogFa: false,
+        descDialogEn: false,
+        descDialogAr: false,
+        
       }
     },
     methods:{
       convertJalali(){
         this.jalali_update_date = moment(this.notifInfo.updated_at).format('HH:mm:ss');
-        this.notifInfo.jalali_update = moment(this.notifInfo.update_at).format('HH:mm:ss - YY/M/D');
-        this.notifInfo.jalali_create = moment(this.notifInfo.created_at).format('HH:mm:ss - YY/M/D');
+        this.jalali_update = moment(this.notifInfo.update_at).format('HH:mm:ss - YY/M/D');
+        this.jalali_create = moment(this.notifInfo.created_at).format('HH:mm:ss - YY/M/D');
       },
       buySell :function(){
         if(this.notifInfo.buy_sell == 'buy'){
@@ -102,6 +130,12 @@
       this.buySell();
     },
     updated(){
+    },
+    watch:{
+      notifInfo: function() { 
+        console.log('updated')
+        this.convertJalali();
+      }
     },
     computed:{
       

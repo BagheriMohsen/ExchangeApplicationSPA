@@ -110,7 +110,8 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
           this.$http.post('http://localhost:8000/register',{
             FullName : this.user.name,
             phoneNumber:this.user.phone,
-            role_id:'2'
+            role_id:'2',
+            lang:this.lang
           }).then(response => {
             if(response.data.DigitValidate){
               this.code.sended = true;

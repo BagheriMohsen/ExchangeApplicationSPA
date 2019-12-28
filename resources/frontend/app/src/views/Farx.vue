@@ -3,7 +3,7 @@
         <div v-if="showNotif == 'show'" class="container-fluid">
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
-                    <farx-notif :notifInfo="notif"></farx-notif>
+                    <farx-notif :notifInfo="notif" :userLang="user.language"></farx-notif>
                 </div>
             </div>
         </div>

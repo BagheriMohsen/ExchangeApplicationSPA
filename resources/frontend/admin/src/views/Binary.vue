@@ -98,7 +98,7 @@
       },
       postNotif(){
         this.isLoading = true;
-        this.$http.post('http://localhost:8000/binaries/store/', {
+        this.$http.post('http://localhost:8000/binaries/store', {
           pair : this.binary.pair,
           time_expire: this.binary.time_expire,
           endTime: this.binary.endTime,

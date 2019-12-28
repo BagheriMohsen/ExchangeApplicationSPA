@@ -91,7 +91,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
         info:'',
         code:'',
       },
-      lang:'fa',
+      lang:'en',
       nameRules: [
         v => !!v || 'First name and last name are required',
         v => (v && v.length <= 100) || 'First name and last name should be less than 100 character',
@@ -110,7 +110,8 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
           this.$http.post('http://localhost:8000/register',{
             FullName : this.user.name,
             phoneNumber:this.user.phone,
-            role_id:'2'
+            role_id:'2',
+            lang:this.lang
           }).then(response => {
             if(response.data.DigitValidate){
               this.code.sended = true;
