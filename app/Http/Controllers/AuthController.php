@@ -50,7 +50,8 @@ class AuthController extends Controller
         $user = 'App\User'::create([
             'FullName'      =>  $request->FullName,
             'phoneNumber'   =>  $request->phoneNumber,
-            'role_id'       =>  $request->role_id
+            'role_id'       =>  $request->role_id,
+            'language'      =>  $request->lang
         ]);
        
         
