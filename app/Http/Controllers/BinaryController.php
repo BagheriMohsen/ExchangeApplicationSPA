@@ -114,7 +114,7 @@ class BinaryController extends Controller
         $binaries = 'App\Binary'::where([
             ['close','=',1]
         ])->latest()->get();
-        $Binary = 'App\Binary'::latest()->get();
+        $Binary = 'App\Binary'::latest('updated_at')->get();
         event(new \App\Events\BinaryNotif($Binary));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);

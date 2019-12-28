@@ -16,6 +16,8 @@ class CreateTableArticles extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('ar_name');
+            $table->string('en_name');
             $table->timestamps();
         });
 
@@ -23,6 +25,8 @@ class CreateTableArticles extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id')->unsigned();
             $table->string('name');
+            $table->string('ar_name');
+            $table->string('en_name');
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')

@@ -10,6 +10,8 @@ class ArticleCategory extends Model
     protected $table = 'categories';
     protected $fillable = [
         'name',
+        'ar_name',
+        'en_name'
     ];
     /*
     |--------------------------------------------------------------------------

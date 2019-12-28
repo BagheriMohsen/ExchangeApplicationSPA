@@ -130,7 +130,7 @@ class ForexController extends Controller
         $forex->update(['expire'=>1]);
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest()->get();
+        }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('منقضی شد',200, array($header),JSON_UNESCAPED_UNICODE);
@@ -145,7 +145,7 @@ class ForexController extends Controller
         $forex->update(['close'=>1]);
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest()->get();
+        }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('بسته شد',200, array($header),JSON_UNESCAPED_UNICODE);

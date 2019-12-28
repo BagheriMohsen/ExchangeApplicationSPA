@@ -56,11 +56,15 @@ class StartingSeeder extends Seeder
         */
         #1.Binary
         'App\ArticleCategory'::create([
-            'name'  =>  'باینری آپشن'
+            'name'      =>  'باینری آپشن',
+            'en_name'   =>  'Binary Option',
+            'ar_name'   =>  'الباینری آپشن'
         ]);
         #2.Forex
         'App\ArticleCategory'::create([
-            'name'  =>  'فارکس'
+            'name'  =>  'فارکس',
+            'en_name'   =>  'Forex',
+            'ar_name'   =>  'الفارکس'
         ]);
         /*
         |--------------------------------------------------------------------------
@@ -70,42 +74,58 @@ class StartingSeeder extends Seeder
         #2.Verify-Binary
         'App\SubCategory'::create([
             'name'          =>  'وریفای',
+            'en_name'       =>  'Verify',
+            'ar_name'       =>  'الوریفای',
             'category_id'   =>  1
         ]);
         #2.Meta Traider-Binary
         'App\SubCategory'::create([
             'name'          =>  'متاریدر',
+            'en_name'       =>  'Meta Traider',
+            'ar_name'       =>  'المتاتریدر',
             'category_id'   =>  1
         ]);
         #2.Reforms-Binary
         'App\SubCategory'::create([
             'name'          =>  'اصلاحات',
+            'en_name'       =>  'Reforms',
+            'ar_name'       =>  'الاصلاحات',
             'category_id'   =>  1
         ]);
         #2.Deal-Binary
         'App\SubCategory'::create([
             'name'          =>  'معاملات',
+            'en_name'       =>  'Deal',
+            'ar_name'       =>  'المعاملات',
             'category_id'   =>  1
         ]);
         /*########### Forex ########### */
         #2.Verify-Forex
         'App\SubCategory'::create([
             'name'          =>  'وریفای',
+            'en_name'       =>  'Verify',
+            'ar_name'       =>  'الوریفای',
             'category_id'   =>  2
         ]);
         #2.Meta Traider-Forex
         'App\SubCategory'::create([
             'name'          =>  'متاریدر',
+            'en_name'       =>  'Meta Traider',
+            'ar_name'       =>  'المتاتریدر',
             'category_id'   =>  2
         ]);
         #2.Reforms-Forex
         'App\SubCategory'::create([
             'name'          =>  'اصلاحات',
+            'en_name'       =>  'Reforms',
+            'ar_name'       =>  'الاصلاحات',
             'category_id'   =>  2
         ]);
         #2.Deal-Forex
         'App\SubCategory'::create([
             'name'          =>  'معاملات',
+            'en_name'       =>  'Deal',
+            'ar_name'       =>  'المعاملات',
             'category_id'   =>  2
         ]);
         /*

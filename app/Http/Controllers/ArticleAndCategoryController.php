@@ -73,14 +73,59 @@ class ArticleAndCategoryController extends Controller
 
         $category = 'App\ArticleCategory'::findOrFail($id);
         $subCategories = $category->SubCategories;
+        $lang = $user->language;
+        
+        // $subCategories = 'App\SubCategory'::with(array('articles'=>function($query){
 
-        $subCategories = 'App\SubCategory'::with(array('articles'=>function($query){
-            $query->select('subCategory_id','id','title');
-        }))->where([
-            ['category_id','=',$id],
-            ['lang','=',$user->language]
-        ])->get(['id','name']);
+        //     $query->select('subCategory_id','id','title','lang');
 
+        // }))->where('category_id',$id)->get(['id','name']);
+        
+        $items = array();
+        foreach($category->SubCategories as $subcategory){
+            
+            $article = 'App\Article'::where([
+                ['subCategory_id','=',$subcategory->id],
+                ['lang','=',$lang]
+            ])->get();
+
+            
+
+            $article = $article->toArray();
+            
+            if(empty($article)){
+                continue;
+            }
+
+           if($lang = "fa"){
+                $items[] = [
+                    'id'                =>  $subcategory->id,
+                    'name'              =>  $subcategory->name,
+                    'article_id'        =>  $article[0]['id'],
+                    'title'             =>  $article[0]['title'],
+                    
+                ];
+           }elseif($lang = "ar"){
+                $items[] = [
+                    'id'                =>  $subcategory->id,
+                    'name'              =>  $subcategory->ar_name,
+                    'article_id'        =>  $article[0]['id'],
+                    'title'             =>  $article[0]['title'],
+                    
+                ];
+           }else{
+                $items[] = [
+                    'id'                =>  $subcategory->id,
+                    'name'              =>  $subcategory->en_name,
+                    'article_id'        =>  $article[0]['id'],
+                    'title'             =>  $article[0]['title'],
+                    
+                ];
+           }
+            
+        }
+
+        return response()->json($items);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($subCategories,200, array($header),JSON_UNESCAPED_UNICODE);
     }
