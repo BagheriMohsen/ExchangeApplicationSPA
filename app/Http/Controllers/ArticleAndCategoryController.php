@@ -67,14 +67,19 @@ class ArticleAndCategoryController extends Controller
     | All Sub Categories List
     |--------------------------------------------------------------------------
     */
-    public function AllSubCategoriesList($id){
+    public function AllSubCategoriesList($id,$user_id){
         
+        $user = 'App\User'::findOrFail($user_id);
+
         $category = 'App\ArticleCategory'::findOrFail($id);
         $subCategories = $category->SubCategories;
 
         $subCategories = 'App\SubCategory'::with(array('articles'=>function($query){
             $query->select('subCategory_id','id','title');
-        }))->where('category_id',$id)->get(['id','name']);
+        }))->where([
+            ['category_id','=',$id],
+            ['lang','=',$user->language]
+        ])->get(['id','name']);
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($subCategories,200, array($header),JSON_UNESCAPED_UNICODE);

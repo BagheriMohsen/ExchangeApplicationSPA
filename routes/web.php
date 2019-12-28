@@ -28,7 +28,7 @@ $router->group(['middleware'=>'cors','prefix' => '/admin/','middleware'=>'auth',
 */
 $router->group(['middleware'=>'cors','prefix' => '/categories/','as'=>'articles.'], function () use ($router) {
     $router->get('', 'ArticleAndCategoryController@index');
-    $router->get('{id}/AllSubCategoriesList', 'ArticleAndCategoryController@AllSubCategoriesList');
+    $router->get('{id}/AllSubCategoriesList/{user_id}', 'ArticleAndCategoryController@AllSubCategoriesList');
     $router->get('AllSubCategoryList','ArticleAndCategoryController@AllSubCategoryList');
     $router->get('ArticleSingle/{id}','ArticleAndCategoryController@ArticleSingle');
 });
