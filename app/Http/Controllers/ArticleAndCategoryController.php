@@ -114,7 +114,7 @@ class ArticleAndCategoryController extends Controller
             foreach($articles as $article){
 
                 
-                if($lang = "fa"){
+                if($lang == "fa"){
                         $items[] = [
                             'id'                =>  $subcategory->id,
                             'name'              =>  $subcategory->name,
@@ -122,7 +122,7 @@ class ArticleAndCategoryController extends Controller
                             'title'             =>  $article->title,
                             
                         ];
-                }elseif($lang = "ar"){
+                }elseif($lang == "ar"){
                         $items[] = [
                             'id'                =>  $subcategory->id,
                             'name'              =>  $subcategory->ar_name,
