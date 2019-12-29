@@ -84,44 +84,46 @@ class ArticleAndCategoryController extends Controller
         $items = array();
         foreach($category->SubCategories as $subcategory){
             
-            $article = 'App\Article'::where([
+            $articles = 'App\Article'::where([
                 ['subCategory_id','=',$subcategory->id],
                 ['lang','=',$lang]
             ])->get();
-
             
-
-            $article = $article->toArray();
-            
-            if(empty($article)){
+            if(empty($articles)){
                 continue;
             }
+            foreach($articles as $article){
 
-           if($lang = "fa"){
-                $items[] = [
-                    'id'                =>  $subcategory->id,
-                    'name'              =>  $subcategory->name,
-                    'article_id'        =>  $article[0]['id'],
-                    'title'             =>  $article[0]['title'],
-                    
-                ];
-           }elseif($lang = "ar"){
-                $items[] = [
-                    'id'                =>  $subcategory->id,
-                    'name'              =>  $subcategory->ar_name,
-                    'article_id'        =>  $article[0]['id'],
-                    'title'             =>  $article[0]['title'],
-                    
-                ];
-           }else{
-                $items[] = [
-                    'id'                =>  $subcategory->id,
-                    'name'              =>  $subcategory->en_name,
-                    'article_id'        =>  $article[0]['id'],
-                    'title'             =>  $article[0]['title'],
-                    
-                ];
-           }
+                
+                if($lang = "fa"){
+                        $items[] = [
+                            'id'                =>  $subcategory->id,
+                            'name'              =>  $subcategory->name,
+                            'article_id'        =>  $article[0]['id'],
+                            'title'             =>  $article[0]['title'],
+                            
+                        ];
+                }elseif($lang = "ar"){
+                        $items[] = [
+                            'id'                =>  $subcategory->id,
+                            'name'              =>  $subcategory->ar_name,
+                            'article_id'        =>  $article[0]['id'],
+                            'title'             =>  $article[0]['title'],
+                            
+                        ];
+                }else{
+                        $items[] = [
+                            'id'                =>  $subcategory->id,
+                            'name'              =>  $subcategory->en_name,
+                            'article_id'        =>  $article[0]['id'],
+                            'title'             =>  $article[0]['title'],
+                            
+                        ];
+                }
+            }
+            
+
+            
             
         }
 
