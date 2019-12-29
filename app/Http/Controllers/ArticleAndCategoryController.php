@@ -99,24 +99,24 @@ class ArticleAndCategoryController extends Controller
                         $items[] = [
                             'id'                =>  $subcategory->id,
                             'name'              =>  $subcategory->name,
-                            'article_id'        =>  $article[0]['id'],
-                            'title'             =>  $article[0]['title'],
+                            'article_id'        =>  $article->id,
+                            'title'             =>  $article->title,
                             
                         ];
                 }elseif($lang = "ar"){
                         $items[] = [
                             'id'                =>  $subcategory->id,
                             'name'              =>  $subcategory->ar_name,
-                            'article_id'        =>  $article[0]['id'],
-                            'title'             =>  $article[0]['title'],
+                            'article_id'        =>  $article->id,
+                            'title'             =>  $article->title,
                             
                         ];
                 }else{
                         $items[] = [
                             'id'                =>  $subcategory->id,
                             'name'              =>  $subcategory->en_name,
-                            'article_id'        =>  $article[0]['id'],
-                            'title'             =>  $article[0]['title'],
+                            'article_id'        =>  $article->id,
+                            'title'             =>  $article->title,
                             
                         ];
                 }
