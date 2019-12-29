@@ -40,6 +40,7 @@ class AuthController extends Controller
     } 
     
     public function register(Request $request){
+        
         $status = 'App\User'::where('phoneNumber',$request->phoneNumber)->exists();
         $header = ['Content-Type' => 'application/json;charset=utf8'];
 
