@@ -64,6 +64,25 @@ class ArticleAndCategoryController extends Controller
     }
     /*
     |--------------------------------------------------------------------------
+    | sub Categories with check languages
+    |--------------------------------------------------------------------------
+    */
+    public function subCategories($category_id,$user_id){
+        $user = 'App\User'::findOrFail($user_id);
+        $lang = $user->language;
+        if($lang == 'fa'){
+            $subcategories = 'App\SubCategory'::where('category_id',$category_id)->get(['id','name']);
+        }elseif($lang == 'ar'){
+            $subcategories = 'App\SubCategory'::where('category_id',$category_id)->get(['id','ar_name']);
+        }else{
+            $subcategories = 'App\SubCategory'::where('category_id',$category_id)->get(['id','en_name']);
+        }
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        return response()->json($subcategories,200, array($header),JSON_UNESCAPED_UNICODE);
+        
+    }
+    /*
+    |--------------------------------------------------------------------------
     | All Sub Categories List
     |--------------------------------------------------------------------------
     */
