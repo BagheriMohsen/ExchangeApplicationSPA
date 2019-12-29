@@ -127,9 +127,9 @@ class ArticleAndCategoryController extends Controller
             
         }
 
-        return response()->json($items);
+     
         $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json($subCategories,200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($items,200, array($header),JSON_UNESCAPED_UNICODE);
     }
     /*
     |--------------------------------------------------------------------------

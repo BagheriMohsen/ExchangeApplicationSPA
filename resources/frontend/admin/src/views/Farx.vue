@@ -67,15 +67,15 @@
                           </template>
                           <h5>توضیحات فارسی</h5>
                           <div>
-                              <textarea class="form-control" v-model="farx.desc.fa" rows="5"></textarea>
+                              <textarea class="form-control" v-model="farx.fa_desc" rows="5"></textarea>
                           </div>
                           <h5 class="mt-2">توضیحات عربی</h5>
                           <div>
-                              <textarea class="form-control" v-model="farx.desc.ar" rows="5"></textarea>
+                              <textarea class="form-control" v-model="farx.ar_desc" rows="5"></textarea>
                           </div>
                           <h5 class="mt-2">توضیحات انگلیسی</h5>
                           <div>
-                              <textarea class="form-control text-left" v-model="farx.desc.en" rows="5"></textarea>
+                              <textarea class="form-control text-left" v-model="farx.en_desc" rows="5"></textarea>
                           </div>
                       </modal>
                     </form>
@@ -121,7 +121,9 @@
           close:false,
           expire:false,
           forex_category_id:'',
-          desc:''
+          en_desc:'',
+          fa_desc:'',
+          ar_desc:''
         },
         notifInputs:[],
         showBuySell:false,
@@ -143,7 +145,7 @@
       },
      postNotif(){
         this.isLoading = true;
-        this.$http.post('http://localhost:8000/forex/forexStore/', {
+        this.$http.post('http://localhost:8000/forex/forexStore', {
           pair : this.farx.pair,
           startingPrice : this.farx.startingPrice,
           forex_category_id : this.farx.forex_category_id,
@@ -152,7 +154,9 @@
           expire : this.farx.expire,
           close : this.farx.close,
           buy_sell : this.farx.buy_sell,
-          desc:this.farx.desc
+          fa_desc:this.farx.fa_desc,
+          ar_desc:this.farx.ar_desc,
+          en_desc:this.farx.en_desc
         })
         .then(response => {
           console.log(response);
@@ -171,7 +175,9 @@
         this.farx.close = false;
         this.farx.expire = false;
         this.farx.forex_category_id = '';
-        this.farx.desc = '';
+        this.farx.en_desc = '',
+        this.farx.fa_desc = '',
+        this.farx.ar_desc = ''
       },
       updateNotif(value){
         this.isLoading = true;
@@ -184,7 +190,9 @@
           expire : value.expire,
           close : value.close,
           buy_sell : value.buy_sell,
-          desc:value.desc
+          fa_desc:value.fa_desc,
+          ar_desc:value.ar_desc,
+          en_desc:value.en_desc
         })
         .then(response => {
           this.$toastr.s(" با موفقیت آپدیت شد");

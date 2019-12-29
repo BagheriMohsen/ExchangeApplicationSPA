@@ -232,7 +232,8 @@
               this.$http.post(actionUrl,{
                   title : this.article.title,
                   body : this.article.body,
-                  sub_category : this.article.subCategory_id
+                  sub_category : this.article.subCategory_id,
+                  lang: this.article.lang
               }).then(data => {
                   this.article.title = '';
                   this.article.category = '';
