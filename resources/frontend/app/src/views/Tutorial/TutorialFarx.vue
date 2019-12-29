@@ -1,7 +1,5 @@
 <template>
     <section>
-      <!-- {{articles}} -->
-      {{user}}
       <v-tabs 
         show-arrows 
         dark 

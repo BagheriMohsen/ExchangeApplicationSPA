@@ -74,7 +74,7 @@ class ArticleAndCategoryController extends Controller
         $category = 'App\ArticleCategory'::findOrFail($id);
         $subCategories = $category->SubCategories;
         $lang = $user->language;
-        
+  
         // $subCategories = 'App\SubCategory'::with(array('articles'=>function($query){
 
         //     $query->select('subCategory_id','id','title','lang');
@@ -97,7 +97,7 @@ class ArticleAndCategoryController extends Controller
                 continue;
             }
 
-           if($lang = "fa"){
+           if($lang ==  "fa"){
                 $items[] = [
                     'id'                =>  $subcategory->id,
                     'name'              =>  $subcategory->name,
@@ -105,7 +105,7 @@ class ArticleAndCategoryController extends Controller
                     'title'             =>  $article[0]['title'],
                     
                 ];
-           }elseif($lang = "ar"){
+           }elseif($lang == "ar"){
                 $items[] = [
                     'id'                =>  $subcategory->id,
                     'name'              =>  $subcategory->ar_name,
