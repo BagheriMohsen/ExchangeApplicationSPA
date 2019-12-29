@@ -31,6 +31,7 @@ $router->group(['middleware'=>'cors','prefix' => '/categories/','as'=>'articles.
     $router->get('{id}/AllSubCategoriesList/{user_id}', 'ArticleAndCategoryController@AllSubCategoriesList');
     $router->get('AllSubCategoryList','ArticleAndCategoryController@AllSubCategoryList');
     $router->get('ArticleSingle/{id}','ArticleAndCategoryController@ArticleSingle');
+    $router->get('{category_id}/subCategories/{user_id}','ArticleAndCategoryController@subCategories');
 });
 $router->group(['middleware'=>'cors','prefix' => '/admin/articles/','as'=>'admin.articles.'], function () use ($router) {
     $router->post('ArticleStore', 'ArticleAndCategoryController@ArticleStore');
