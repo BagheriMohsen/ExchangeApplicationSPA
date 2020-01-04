@@ -15,6 +15,7 @@
                 <h3 class="mb-0">افزودن مقاله</h3>
               </div>
             </div>
+            {{article}}
             <form @submit.prevent="saveArticle" id="form">
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="row">
@@ -227,7 +228,7 @@
                   this.isLoading = false;
               });
           }else{
-              this.edit = true;
+              this.edit = false;
               let actionUrl = 'http://localhost:8000/admin/articles/' + this.article.id + '/ArticleUpdate';
               this.$http.post(actionUrl,{
                   title : this.article.title,

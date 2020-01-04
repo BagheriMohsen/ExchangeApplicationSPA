@@ -93,7 +93,7 @@ class ArticleAndCategoryController extends Controller
         $category = 'App\ArticleCategory'::findOrFail($id);
         $subCategories = $category->SubCategories;
         $lang = $user->language;
-        
+  
         // $subCategories = 'App\SubCategory'::with(array('articles'=>function($query){
 
         //     $query->select('subCategory_id','id','title','lang');
