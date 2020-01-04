@@ -134,18 +134,18 @@
     },
     methods: {
       fetchNotifs(){
-        this.$http.get('http://localhost:8000/forex/')
+        this.$http.get('https://exchange.tipsy.ir/forex/')
           .then(res => {this.notifInputs = res.data;console.log(res.data)})
           .catch(e =>this.errors.push(e));
       },
       fetchCurrency(){
-        this.$http.get('http://localhost:8000/currency/')
+        this.$http.get('https://exchange.tipsy.ir/currency/')
           .then(response => {this.farx_currencies = response.data[1].currency;console.log(this.farx_currencies)})
           .catch(e => this.errors.push(e));
       },
      postNotif(){
         this.isLoading = true;
-        this.$http.post('http://localhost:8000/forex/forexStore', {
+        this.$http.post('https://exchange.tipsy.ir/forex/forexStore', {
           pair : this.farx.pair,
           startingPrice : this.farx.startingPrice,
           forex_category_id : this.farx.forex_category_id,
@@ -181,7 +181,7 @@
       },
       updateNotif(value){
         this.isLoading = true;
-        this.$http.post('http://localhost:8000/forex/forexUpdate/' + value.id, {
+        this.$http.post('https://exchange.tipsy.ir/forex/forexUpdate/' + value.id, {
           pair : value.pair,
           startingPrice : value.startingPrice,
           forex_category_id : value.forex_category_id,
@@ -205,7 +205,7 @@
       },
       expireNotif(id){
         this.isLoading = true;
-        this.$http.get('http://localhost:8000/forex/forexExpire/' + id)
+        this.$http.get('https://exchange.tipsy.ir/forex/forexExpire/' + id)
           .then(response => {
             this.$toastr.s(" با موفقیت منقضی شد");
             this.fetchNotifs();
@@ -215,7 +215,7 @@
       },
       closeNotif(id){
         this.isLoading = true;
-        this.$http.get('http://localhost:8000/forex/forexClose/' + id)
+        this.$http.get('https://exchange.tipsy.ir/forex/forexClose/' + id)
           .then(response => {this.$toastr.s(" با موفقیت بسته شد");
           this.fetchNotifs();
           this.isLoading = false;

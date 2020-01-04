@@ -87,18 +87,18 @@
     },
     methods: {
       fetchNotifs(){
-        this.$http.get('http://localhost:8000/binaries/')
+        this.$http.get('https://exchange.tipsy.ir/binaries/')
           .then(res => {this.notifInputs = res.data;console.log(res.data)})
           .catch(e =>this.errors.push(e));
       },
       fetchCurrency(){
-        this.$http.get('http://localhost:8000/currency/')
+        this.$http.get('https://exchange.tipsy.ir/currency/')
           .then(response => {this.binary_currencies = response.data[0].currency})
           .catch(e => this.errors.push(e));
       },
       postNotif(){
         this.isLoading = true;
-        this.$http.post('http://localhost:8000/binaries/store', {
+        this.$http.post('https://exchange.tipsy.ir/binaries/store', {
           pair : this.binary.pair,
           time_expire: this.binary.time_expire,
           endTime: this.binary.endTime,
@@ -123,7 +123,7 @@
       },
       updateNotif(value){
         this.isLoading = true;
-        this.$http.post('http://localhost:8000/binaries/update/' + value.id, {
+        this.$http.post('https://exchange.tipsy.ir/binaries/update/' + value.id, {
           pair : value.pair,
           time_expire: value. time_expire,
           endTime: value.endTime,
@@ -141,7 +141,7 @@
       },
       closeNotif(id){
         this.isLoading = true;
-        this.$http.get('http://localhost:8000/binaries/close/' + id)
+        this.$http.get('https://exchange.tipsy.ir/binaries/close/' + id)
           .then(response => {
             console.log(response);
             this.$toastr.s("با موفقیت بسته شد");

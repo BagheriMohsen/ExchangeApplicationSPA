@@ -26,7 +26,7 @@ export default {
         if(this.token == ''){
           this.$router.push('/login');
         }else{
-          this.$http.get('http://localhost:8000/token',{params:{token:this.token}})
+          this.$http.get('https://exchange.tipsy.ir/token',{params:{token:this.token}})
             .then(response => {
               this.user = response.data;
               }).catch(err => {

@@ -96,7 +96,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
       receiveCode(){
         if(this.$refs.form.validate()){
           this.loading = true;
-          this.$http.post('http://localhost:8000/login',{
+          this.$http.post('https://exchange.tipsy.ir/login',{
             phoneNumber:this.user.phone,
             role_id:'2'
           }).then(response => {
@@ -113,7 +113,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
       },
       verifyCode(){
         if(this.code.userInput == this.code.sms){
-           this.$http.get('http://localhost:8000/sendVerfySms',{
+           this.$http.get('https://exchange.tipsy.ir/sendVerfySms',{
               params:{
                 user_id: this.user.id
               }

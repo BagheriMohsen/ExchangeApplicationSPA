@@ -16,7 +16,7 @@
             
         </v-app-bar>
         <v-navigation-drawer app :width="'65%'" v-model="drawer"
-            absolute
+            
             dark
             right
             temporary>
@@ -50,7 +50,6 @@
                 <div class="pa-2">
                     <v-btn block  light class="grey--text text--darken-2" @click="logout">
                         <v-icon>exit_to_app</v-icon>
-                        <span left class="caption">{{exit}}</span>
                     </v-btn>
                 </div>
             </template>
@@ -64,6 +63,7 @@ export default {
     },
     data(){
         return{
+            test:false,
             persianItems: [
                 { title: 'درباره ی ما', icon: 'info',route:'/about' },
                 { title: 'تماس با ما', icon: 'contacts', route:'/contact' },
@@ -77,10 +77,10 @@ export default {
                 { title: 'Subscription ', icon: 'payment', route:'/subscription'}
             ],
             arabicItems: [
-                { title: 'About Us', icon: 'info',route:'/about' },
-                { title: 'Contact Us', icon: 'contacts', route:'/contact' },
-                { title: 'Register', icon: 'assignment_turned_in', route:'/register'},
-                { title: 'Subscription ', icon: 'payment', route:'/subscription'}
+                { title: 'معلومات عنا', icon: 'info',route:'/about' },
+                { title: 'اتصل بنا', icon: 'contacts', route:'/contact' },
+                { title: 'تسجيل', icon: 'assignment_turned_in', route:'/register'},
+                { title: 'اشتراك ', icon: 'payment', route:'/subscription'}
             ],
             items:'',
             persianExit:'خروج',

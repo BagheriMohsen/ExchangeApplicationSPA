@@ -55,7 +55,7 @@
     },
     methods:{
       fetchNotif(){
-        this.$http.get('http://localhost:8000/binaries/AllBinaries')
+        this.$http.get('https://exchange.tipsy.ir/binaries/AllBinaries')
           .then(res => {
             this.notifs = res.data;
             console.log('binary',res.data);

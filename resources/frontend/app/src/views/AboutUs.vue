@@ -26,9 +26,9 @@
     data () {
       return {
         items:'',
-        arabicItems: 'در صرافی آنلاین یونیک بدون نیاز به استفاده از سیستم های بانکی داخلی می توانید به صورت خودکار اقدام به مبادله پول های الکترونیک و ارزهای دیجیتال خود با کمترین میزان کارمزد نمائید. هدف ما در این مجموعه بستر سازی درآمد ارزی برای شما عزیزان است.',
+        arabicItems: 'باستخدام Unic لتبادل العملات عبر الإنترنت ، يمكنك استبدال أموالك الإلكترونية والعملات الرقمية تلقائيًا بأقل مبلغ من الرسوم دون الحاجة إلى استخدام الأنظمة المصرفية الداخلية. هدفنا في هذه المجموعة هو توفير دخل العملات الأجنبية لأحبائك.',
         englishItems: 'English About',
-        persianItems: 'در صرافی آنلاین یونیک بدون نیاز به استفاده از سیستم های بانکی داخلی می توانید به صورت خودکار اقدام به مبادله پول های الکترونیک و ارزهای دیجیتال خود با کمترین میزان کارمزد نمائید. هدف ما در این مجموعه بستر سازی درآمد ارزی برای شما عزیزان است.',
+        persianItems: 'With the unique online currency exchange system, you can automatically exchange your electronic money and digital currencies with the lowest fees, without having to use internal banking systems. Our goal in this set is to provide foreign exchange income for your loved ones',
       }
     },
     methods:{

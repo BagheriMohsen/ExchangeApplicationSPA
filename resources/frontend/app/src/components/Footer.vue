@@ -40,10 +40,10 @@
                 { title: 'Archive', icon: 'move_to_inbox', route:"/archive",value:'archive'},
         ],
         persianItems: [
-                { title: 'آموزش', icon: 'account_balance', route:"/",value:'tutorial'},
-                { title: 'فارکس', icon: 'bar_chart', route:"/farx",value:'farx'},
+                { title: 'تدريب', icon: 'account_balance', route:"/",value:'tutorial'},
+                { title: 'فوركس', icon: 'bar_chart', route:"/farx",value:'farx'},
                 { title: 'باینری', icon: 'multiline_chart', route:"/binary",value:'binary'},
-                { title: 'بایگانی', icon: 'move_to_inbox', route:"/archive",value:'archive'},
+                { title: 'الأرشيف', icon: 'move_to_inbox', route:"/archive",value:'archive'},
         ],
       }
     },

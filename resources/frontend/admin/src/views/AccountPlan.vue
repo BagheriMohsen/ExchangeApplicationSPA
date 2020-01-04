@@ -128,7 +128,7 @@
         updatePlan(){
             if(this.plan.id){
                 this.isLoading = true;
-                this.$http.get('http://localhost:8000/plans/PlanUpdate/'+this.plan.id,{
+                this.$http.get('https://exchange.tipsy.ir/plans/PlanUpdate/'+this.plan.id,{
                     params:{
                         type:this.plan.type,
                         title:this.plan.title,
@@ -162,7 +162,7 @@
             this.plan.desc = value.desc;
         },
         getPlan(){
-            this.$http.get('http://localhost:8000/plans/')
+            this.$http.get('https://exchange.tipsy.ir/plans/')
                 .then(response => {
                     console.log(response);
                     this.plans = response.data;
@@ -179,7 +179,7 @@
         // deletePlan(id){
         //     this.isLoading = true;
         //     if(confirm('آیا از حذف این آیتم اطمینان دارید؟')){
-        //         this.$http.get('http://localhost:8000/plans/PlanDelete/'+id)
+        //         this.$http.get('https://exchange.tipsy.ir/plans/PlanDelete/'+id)
         //             .then(response => {
         //                 this.getPlan();
         //                 this.isLoading = false;

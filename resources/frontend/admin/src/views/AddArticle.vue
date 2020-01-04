@@ -172,7 +172,7 @@
                 );
       },
       fetchSubCategories(){
-         this.$http.get('http://localhost:8000/categories/AllSubCategoryList')
+         this.$http.get('https://exchange.tipsy.ir/categories/AllSubCategoryList')
           .then(res => {
             this.subCategories = res.data;
             console.log(this.subCategories);
@@ -181,7 +181,7 @@
 
       },
       fetchCategories(){
-        this.$http.get('http://localhost:8000/categories')
+        this.$http.get('https://exchange.tipsy.ir/categories')
           .then(res => {
             this.categories = res.data;
             console.log(this.categories);
@@ -189,7 +189,7 @@
           .catch(err => console.log(err));
       },
       fetchArticles(){
-        this.$http.get('http://localhost:8000//admin/articles')
+        this.$http.get('https://exchange.tipsy.ir//admin/articles')
             .then(res=>{
                 this.articles = res.data;
                 console.log(this.articles);
@@ -199,7 +199,7 @@
       deleteArticle(id){
           this.isLoading = true;
           if(confirm('آیا از حذف این آیتم اطمینان دارید؟')){
-            this.$http.get('http://localhost:8000/admin/articles/ArticleDelete/' + id)
+            this.$http.get('https://exchange.tipsy.ir/admin/articles/ArticleDelete/' + id)
             .then(data =>{
               alert('مقاله حذف شد');
               this.fetchArticles();
@@ -212,7 +212,7 @@
       saveArticle(){
           this.isLoading = true;
           if(this.edit === false){
-              this.$http.post('http://localhost:8000/admin/articles/ArticleStore',{
+              this.$http.post('https://exchange.tipsy.ir/admin/articles/ArticleStore',{
                 title : this.article.title,
                 body : this.article.body,
                 sub_category : this.article.subCategory_id,
@@ -229,7 +229,7 @@
               });
           }else{
               this.edit = false;
-              let actionUrl = 'http://localhost:8000/admin/articles/' + this.article.id + '/ArticleUpdate';
+              let actionUrl = 'https://exchange.tipsy.ir/admin/articles/' + this.article.id + '/ArticleUpdate';
               this.$http.post(actionUrl,{
                   title : this.article.title,
                   body : this.article.body,

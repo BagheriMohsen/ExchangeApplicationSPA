@@ -64,13 +64,13 @@
         },
         methods:{
             fetchBinaryNotif(){
-                this.$http.get('http://localhost:8000/binaries/closeBinaries')
+                this.$http.get('https://exchange.tipsy.ir/binaries/closeBinaries')
                     .then(res => {
                         this.binaryNotifs = res.data;
                     }).catch(err => console.log(err));
             },
             fetchFarxNotif(){
-                this.$http.get('http://localhost:8000/forex/close-expire-list')
+                this.$http.get('https://exchange.tipsy.ir/forex/close-expire-list')
                 .then(res => {
                     this.farxNotifs = res.data;
                 })

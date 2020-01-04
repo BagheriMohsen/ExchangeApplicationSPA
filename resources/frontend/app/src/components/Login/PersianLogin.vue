@@ -26,6 +26,8 @@
                       @click.prevent="receiveCode"
                       >
                       <span v-if="!loading">ورود</span>
+                      <span>{{user.id}}</span>
+                      <span>{{user.sms}}</span>
                       <clip-loader v-if="loading" :color="'white'" :size="'26px'"></clip-loader>
                       </v-btn>
                       <div v-if="error.info" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error.info}}</div>
@@ -96,7 +98,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
       receiveCode(){
         if(this.$refs.form.validate()){
           this.loading = true;
-          this.$http.post('http://localhost:8000/login',{
+          this.$http.post('https://exchange.tipsy.ir/login',{
             phoneNumber:this.user.phone,
             role_id:'2'
           }).then(response => {
@@ -113,7 +115,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
       },
       verifyCode(){
         if(this.code.userInput == this.code.sms){
-           this.$http.get('http://localhost:8000/sendVerfySms',{
+           this.$http.get('https://exchange.tipsy.ir/sendVerfySms',{
               params:{
                 user_id: this.user.id
               }
