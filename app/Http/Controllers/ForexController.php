@@ -181,7 +181,7 @@ class ForexController extends Controller
 
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest()->get();
+        }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
         
         $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
