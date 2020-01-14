@@ -159,6 +159,7 @@ class AuthController extends Controller
                 'خطا' => 'در پردازش توکن مشکلی وجود دارد'
             ], 400,array($header),JSON_UNESCAPED_UNICODE);
         }
+       
         $user = User::with(['plans'=>function($query){
             $query->select('id','plan_id','user_id','expireTime')
             ->with('plan')->get();
@@ -209,6 +210,23 @@ class AuthController extends Controller
             
         }
         return response()->json($thisUser,200, array($header),JSON_UNESCAPED_UNICODE);
+    }
+
+    public function user_guide_check($user_id){
+
+
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
+        $user = User::findOrFail($user_id);
+     
+        $user->update([
+            'guide_check'       =>  True,
+            'guide_check_date'  =>  Carbon::now()
+        ]);
+
+        $result = array(
+            'message'   =>  'چک شد'
+        );
+        return response()->json($result,200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
 }

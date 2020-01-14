@@ -89,7 +89,7 @@ class ArticleAndCategoryController extends Controller
     public function AllSubCategoriesList($id,$user_id){
         
         $user = 'App\User'::findOrFail($user_id);
-
+       
         $category = 'App\ArticleCategory'::findOrFail($id);
         $subCategories = $category->SubCategories;
         $lang = $user->language;

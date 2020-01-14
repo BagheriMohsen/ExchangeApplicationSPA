@@ -24,7 +24,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'role_id',
         'freeTime',
         'language',
-        'api_key'
+        'api_key',
+        'guide_check',
+        'guide_check_date'
     ];
 
     /**

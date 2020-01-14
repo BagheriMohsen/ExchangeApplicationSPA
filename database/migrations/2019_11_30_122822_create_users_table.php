@@ -28,11 +28,15 @@ class CreateUsersTable extends Migration
             $table->string('language')->default('fa');
             $table->boolean('freeTime')->default(True);
             $table->string('api_key')->nullable();
+            $table->boolean('guide_check')->default(False);
+            $table->Date('guide_check_date')->nullable();
             $table->timestamps();
 
             $table->foreign('role_id')->references('id')->on('roles')
             ->onUpdate('cascade')->onDelete('cascade');
         });
+
+
     }
 
     /**
@@ -42,6 +46,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
+
     }
 }
