@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
@@ -10,6 +12,8 @@ use App\User;
 use Carbon\Carbon;
 use Session;
 use Artisaninweb\SoapWrapper\SoapWrapper;
+
+
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 
@@ -55,19 +59,32 @@ class AuthController extends Controller
             'language'      =>  $request->lang
         ]);
        
-        
-
-        ini_set("soap.wsdl_cache_enabled", "0");
-        $sms_client = new \SoapClient('http://api.payamak-panel.com/post/send.asmx?wsdl', array('encoding'=>'UTF-8'));
         $FourDigitRandom = rand(1000,9999);
-        $parameters['username'] =   "09388387058";
-        $parameters['password'] =   "3907";
-        $parameters['to']       =   $request->phoneNumber;
-        $parameters['from']     =   "50001060689251";
-        $parameters['text']     =   $FourDigitRandom;
-        $parameters['isflash']  =   false;
 
-        $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
+        try{
+            
+            $client = new \nusoap_client('http://api.payamak-panel.com/post/send.asmx?wsdl',true);
+            $err = $client->getError();
+    
+            if ($err){
+            
+            return 'ارسال پیام با مشکل مواجه شده است' . $err;
+        
+            }
+    
+            $parameters['username'] =   "09388387058";
+            $parameters['password'] =   "3907";
+            $parameters['to']       =   $user->phoneNumber;
+            $parameters['from']     =   "50001060689251";
+            $parameters['text']     =   $FourDigitRandom;
+            $parameters['isflash']  =   false;
+    
+    
+            $result = $client->call('SendSimpleSMS2', $parameters);
+        }
+        catch(Exception $e){
+            $e->getMessage();
+        }
         
     
         
@@ -104,6 +121,7 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
+        
         $status = 'App\User'::where('phoneNumber',$request->phoneNumber)->exists();
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         if($status !=True){
@@ -111,20 +129,36 @@ class AuthController extends Controller
         }
 
         $user   = 'App\User'::where('phoneNumber',$request->phoneNumber)->firstOrFail();
-        
-        ini_set("soap.wsdl_cache_enabled", "0");
-        $sms_client = new \SoapClient('http://api.payamak-panel.com/post/send.asmx?wsdl', array('encoding'=>'UTF-8'));
-        $FourDigitRandom = rand(1000,9999);
-        $parameters['username'] =   "09388387058";
-        $parameters['password'] =   "3907";
-        $parameters['to']       =   $request->phoneNumber;
-        $parameters['from']     =   "50001060689251";
-        $parameters['text']     =   $FourDigitRandom;
-        $parameters['isflash']  =   false;
-
-        $sms_client->SendSimpleSMS2($parameters)->SendSimpleSMS2Result;
        
         
+        $FourDigitRandom = rand(1000,9999);
+        
+        
+        try{
+            
+            $client = new \nusoap_client('http://api.payamak-panel.com/post/send.asmx?wsdl',true);
+            $err = $client->getError();
+    
+            if ($err){
+            
+            return 'ارسال پیام با مشکل مواجه شده است' . $err;
+        
+            }
+    
+            $parameters['username'] =   "09388387058";
+            $parameters['password'] =   "3907";
+            $parameters['to']       =   $user->phoneNumber;
+            $parameters['from']     =   "50001060689251";
+            $parameters['text']     =   $FourDigitRandom;
+            $parameters['isflash']  =   false;
+    
+    
+            $result = $client->call('SendSimpleSMS2', $parameters);
+        }
+        catch(Exception $e){
+            $e->getMessage();
+        }
+
         $response = array (
             'DigitValidate' => $FourDigitRandom,
             'user_id'       => $user->id 

@@ -8,6 +8,7 @@
         "php": "^7.2",
         "artisaninweb/laravel-soap": "0.3.0.9",
         "cviebrock/eloquent-sluggable": "^6.0",
+        "econea/nusoap": "^0.9.7",
         "firebase/php-jwt": "^5.0",
         "flipbox/lumen-generator": "^6.0",
         "intergo/sms.to-laravel-lumen": "^0.0.28",
