@@ -42,7 +42,7 @@
       }
     },
     created(){
-      this.checkToken();
+      // this.checkToken();
     },
     mounted(){
       this.checkToken();

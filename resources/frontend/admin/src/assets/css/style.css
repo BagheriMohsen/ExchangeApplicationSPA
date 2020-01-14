@@ -67,3 +67,6 @@ label{
   .form-group select{
     padding: 0.3rem 0.75rem;
   }
+  #sidenav-collapse-main{
+      background-color: #2a2a2a;
+  }

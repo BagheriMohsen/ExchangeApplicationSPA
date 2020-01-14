@@ -4,7 +4,8 @@
 
             <!--Toggler-->
             <navbar-toggle-button @click.native="showSidebar">
-                <span class="navbar-toggler-icon"></span>
+                <!-- <span class="navbar-toggler-icon"></span> -->
+                <span><i class="fa fa-bars text-white"></i></span>
             </navbar-toggle-button>
             <!-- <router-link class="navbar-brand" to="/">
                 <img :src="logo" class="navbar-brand-img" alt="...">
@@ -23,48 +24,12 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </base-dropdown> -->
-                    <base-dropdown class="nav-item" position="right">
-                        <a slot="title" class="nav-link" href="#" role="button">
-                            <div class="media align-items-center">
-                              <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="img/theme/user-avatar.png">
-                              </span>
-                            </div>
-                        </a>
-
-                        <div class=" dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">خوش آمدید!</h6>
-                        </div>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
-                            <span>پروفایل من</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-settings-gear-65"></i>
-                            <span>تنظیمات</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>فعالیت ها</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-support-16"></i>
-                            <span>پشتیبانی</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-bell-55"></i>
-                            <span>اطلاعیه ها</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-email-83"></i>
-                            <span>پیام ها</span>
-                        </router-link>
-                        <div class="dropdown-divider"></div>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-user-run"></i>
-                            <span>خروج</span>
-                        </router-link>
-                    </base-dropdown>
+                    <li class="nav-item">
+                      <router-link to="#" class="text-light">
+                          <i class="ni ni-user-run"></i>
+                          <span>خروج</span>
+                      </router-link>
+                    </li>
                 </ul>
             </slot>
             <slot></slot>

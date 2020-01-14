@@ -111,7 +111,9 @@ $router->get('/', ['middleware' => ['cors'], function () {
     return view('app');
 }]);
 $router->get('/admin', ['middleware' => ['cors'], function () {
-   
     return view('admin');
+}]);
+$router->get('/login', ['middleware' => ['cors'], function () {
+    return view('auth/login');
 }]);
 

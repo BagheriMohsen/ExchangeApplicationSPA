@@ -12,8 +12,8 @@
                 <card shadow type="secondary">
                     <h4 class="mb-3">افزودن پیام جدید:</h4>
                     <form @submit.prevent="postNotif" class="row">
-                        <div class="col-sm-8">
-                            <div class="form-row flex-nowrap">
+                        <div class="col-sm-10">
+                            <div class="form-row">
                                 <div class="form-group">
                                     <select v-model="farx.pair" class="form-control" required style="padding: 0.55rem 0.5rem;">
                                        <option value="">ارز</option>

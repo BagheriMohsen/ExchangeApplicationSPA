@@ -68,7 +68,7 @@
                                 <h3 class="mb-0">لیست پلن ها</h3>
                             </div>
                         </div>
-                        <table class="table text-center">
+                        <table class="table table-responsive text-center">
                             <thead>
                                 <tr>
                                     <th scope="col">بخش</th>

@@ -26,7 +26,7 @@ import VueToastr from "vue-toastr";
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import {ClientTable} from 'vue-tables-2';
 axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.baseURL = 'https://app.utsignal.com/'
+axios.defaults.baseURL = 'http://localhost:8000/'
 Vue.use( CKEditor );
 Vue.use(VueToastr);
 Vue.prototype.$http = axios

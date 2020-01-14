@@ -1,8 +1,8 @@
 <template>
-    <div class="col-12">
+    <div class="col-12 mb-3">
         <form @submit.prevent="updateNotif" class="row">
             <div class="col-sm-9">
-                <div class="form-row flex-nowrap">
+                <div class="form-row">
                     <div class="form-group">
                         <input v-model="notif.pair" type="text" class="form-control" id="currency" placeholder="ارز" disabled>
                     </div>
@@ -41,7 +41,7 @@
                     
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-sm-3">
                 <div v-show="!loading">
                     <button type="submit" class="btn btn-sm mx-1">Send</button>
                     <button @click="expireNotif" type="button" class="btn btn-sm btn-danger mx-1">Expire</button>
@@ -57,15 +57,20 @@
                 </template>
                 <h5>توضیحات فارسی</h5>
                           <div>
-                              <textarea class="form-control" v-model="notif.fa_desc" rows="5"></textarea>
+                              <textarea class="form-control" v-model="notif.fa_desc" rows="3"></textarea>
                           </div>
                           <h5 class="mt-2">توضیحات عربی</h5>
                           <div>
-                              <textarea class="form-control" v-model="notif.ar_desc" rows="5"></textarea>
+                              <textarea class="form-control" v-model="notif.ar_desc" rows="3"></textarea>
                           </div>
                           <h5 class="mt-2">توضیحات انگلیسی</h5>
                           <div>
-                              <textarea class="form-control text-left" v-model="notif.en_desc" rows="5"></textarea>
+                              <textarea class="form-control text-left" v-model="notif.en_desc" rows="3"></textarea>
+                          </div>
+                          <div class="mt-2">
+                              <button class="btn btn-danger" type="button" @click="showModal = false">
+                                  بستن
+                              </button>
                           </div>
             </modal>
             

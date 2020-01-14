@@ -1,8 +1,8 @@
 <template>
     <div class="col-12">
         <form @submit.prevent="updateNotif" class="row">
-            <div class="col-sm-8">
-                <div class="form-row flex-nowrap">
+            <div class="col-sm-10">
+                <div class="form-row">
                     <div class="form-group">
                         <input v-model="notif.pair" type="text" class="form-control" id="currency" placeholder="ارز" disabled>
                     </div>
