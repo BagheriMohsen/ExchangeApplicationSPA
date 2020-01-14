@@ -77,7 +77,7 @@ export default {
     },
     methods:{
         getPlans(){
-            this.$http.get('https://exchange.tipsy.ir/plans/')
+            this.$http.get('plans/')
                 .then(resp => {
                     this.plans = resp.data;
                     this.setFarx();
@@ -99,7 +99,7 @@ export default {
             }else if(plan.type == 'both' && planList.includes('forex')){
                this.$fire(this.errorBuy)
             }else{
-                this.$http.get('https://exchange.tipsy.ir/plans/StorePlanForUser/'+plan.id, {
+                this.$http.get('plans/StorePlanForUser/'+plan.id, {
                     params:{
                         user_id:this.user.id,
                     }

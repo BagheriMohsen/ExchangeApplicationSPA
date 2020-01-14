@@ -29,7 +29,7 @@
     methods:{
       fetchArticle(){
 
-            this.$http.get('https://exchange.tipsy.ir/categories/ArticleSingle/' + this.id)
+            this.$http.get('categories/ArticleSingle/' + this.id)
                 .then((response) => {this.article = response.data;this.convertJalali()});
       },
       convertJalali(){

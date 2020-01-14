@@ -27,8 +27,8 @@
       return {
         items:'',
         arabicItems: 'باستخدام Unic لتبادل العملات عبر الإنترنت ، يمكنك استبدال أموالك الإلكترونية والعملات الرقمية تلقائيًا بأقل مبلغ من الرسوم دون الحاجة إلى استخدام الأنظمة المصرفية الداخلية. هدفنا في هذه المجموعة هو توفير دخل العملات الأجنبية لأحبائك.',
-        englishItems: 'English About',
-        persianItems: 'With the unique online currency exchange system, you can automatically exchange your electronic money and digital currencies with the lowest fees, without having to use internal banking systems. Our goal in this set is to provide foreign exchange income for your loved ones',
+        englishItems: 'With the unique online currency exchange system, you can automatically exchange your electronic money and digital currencies with the lowest fees, without having to use internal banking systems. Our goal in this set is to provide foreign exchange income for your loved ones',
+        persianItems: 'با استفاده از سیستم ارز منحصر به فرد ارز آنلاین ، می توانید بطور خودکار پول الکترونیکی و ارزهای دیجیتال خود را با کمترین هزینه ، بدون نیاز به استفاده از سیستم های بانکی داخلی ، با کمترین هزینه مبادله کنید. هدف ما در این مجموعه تأمین درآمد ارزی برای شما عزیزان است',
       }
     },
     methods:{

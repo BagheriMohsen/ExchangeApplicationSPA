@@ -107,7 +107,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
       receiveCode(){
         if(this.$refs.form.validate()){
           this.loading = true;
-          this.$http.post('https://exchange.tipsy.ir/register',{
+          this.$http.post('register',{
             FullName : this.user.name,
             phoneNumber:this.user.phone,
             role_id:'2',
@@ -126,7 +126,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
       },
       verifyCode(){
         if(this.code.userInput == this.code.sms){
-           this.$http.get('https://exchange.tipsy.ir/sendVerfySms',{
+           this.$http.get('sendVerfySms',{
               params:{
                 user_id: this.user.id
               }

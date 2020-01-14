@@ -5,9 +5,11 @@ import axios from 'axios'
 import vuetify from './plugins/vuetify';
 import '@/assets/css/custom.css';
 import VueSimpleAlert from "vue-simple-alert";
- 
+
 Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false
+
+axios.defaults.baseURL = 'http://localhost:8000/'
 Vue.prototype.$http = axios
 
 new Vue({

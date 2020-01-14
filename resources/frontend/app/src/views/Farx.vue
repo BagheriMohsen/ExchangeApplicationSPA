@@ -44,7 +44,7 @@
     },
     methods:{
       fetchNotif(){
-        this.$http.get('https://exchange.tipsy.ir/forex/AllForex')
+        this.$http.get('forex/AllForex')
           .then(res => {
             this.notifs = res.data;
           })

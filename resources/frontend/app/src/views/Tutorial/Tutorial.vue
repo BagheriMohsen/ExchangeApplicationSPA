@@ -1,6 +1,7 @@
 <template>
     <section>
       <v-container fluid>
+        {{tutorialDialog}}
         <v-row>
           <v-col cols="6" v-for="item in items" v-bind:key="item.title">
             <v-card  router :to="item.route"
@@ -20,12 +21,30 @@
                 <v-card-text class="text-center pa-0">
                     {{item.title}}
                 </v-card-text>
-
-              
             </v-card>
           </v-col>
         </v-row>
       </v-container>
+      <v-dialog
+          v-model="tutorialDialog"
+          max-width="290"
+          
+        >
+          <v-card class="mx-auto pt-2">
+            <v-card-text class="pb-0">
+              لطفاابتدا به لینک زیر رفته و آموزش استفاده از اپلیکیشن را مطالعه فرمایید
+            </v-card-text>
+            <v-checkbox class="py-0 pr-4"
+                v-model="checkbox"
+                label="دیگر این پیام را نشان نده"
+              >
+            </v-checkbox>
+            <v-card-actions center style="justify-content: center;">
+              <v-btn color="success" v-on:click="handleRead">بریم بخونیم</v-btn>
+              <v-btn color="info" v-on:click="handleLater">بعدا میخونم</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
     </section>
     
 </template>
@@ -48,7 +67,9 @@
         persianItems: [
                 {title: 'فارکس',route: '/tutorial/farx',img: '/img/money-growth.png'},
                 {title: 'باینری',route: '/tutorial/binary',img: '/img/graph.png'}
-        ]
+        ],
+        tutorialDialog: false,
+        checkbox:false
       }
     },
     methods:{
@@ -60,6 +81,22 @@
           }else{
               this.items = this.persianItems;
           }
+      },
+      handleLater(){
+        this.tutorialDialog = false;
+        if(this.checkbox == true){
+          this.$http.get('user-guide-check/' + this.user.id)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        }
+      },
+      handleRead(){
+        this.tutorialDialog = false;
+        if(this.checkbox == true){
+          this.$http.get('user-guide-check/' + this.user.id)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        }
       }
     },
     watch:{
@@ -71,11 +108,16 @@
     },
     mounted(){
       this.checkLanguage();
+      if(this.user.guide_check_date){
+        this.tutorialDialog = false
+      }else{
+        this.tutorialDialog = true
+      }
     }
   }
 </script>
 <style scoped>
   .v-card__text{
-    font-size: 5vw;
+    font-size: 16px;
   }
 </style>

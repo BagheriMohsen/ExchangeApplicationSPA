@@ -26,14 +26,12 @@ export default {
         if(this.token == ''){
           this.$router.push('/login');
         }else{
-          this.$http.get('https://exchange.tipsy.ir/token',{params:{token:this.token}})
+          this.$http.get('token',{params:{token:this.token}})
             .then(response => {
               this.user = response.data;
               }).catch(err => {
                 console.log(err);
-                // if(err.response.status == 400 || err.response.status == 401){
-                  this.$router.push('/login');
-                // }
+                this.$router.push('/login');
               });
         }
     },

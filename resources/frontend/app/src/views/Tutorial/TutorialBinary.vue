@@ -69,7 +69,7 @@
     methods:{
       fetchArticles(){
         this.$http
-          .get('https://exchange.tipsy.ir/categories/1/AllSubCategoriesList/' + this.user.id)
+          .get('categories/1/AllSubCategoriesList/' + this.user.id)
           .then((response) =>{
             console.log('article',response.data);
             this.articles = response.data;
@@ -77,7 +77,7 @@
       },
       fetchTags(){
         this.$http
-          .get('https://exchange.tipsy.ir/categories/1/subCategories/' + this.user.id)
+          .get('categories/1/subCategories/' + this.user.id)
           .then( response =>{
             if(this.user.language == 'ar'){
               this.articleTags = response.data.map((item) => {

@@ -88,20 +88,20 @@
     },
     methods: {
         fetchCurrency(){
-            this.$http.get('https://exchange.tipsy.ir/currency/')
+            this.$http.get('currency/')
                 .then(response => {this.currencies = response.data;console.log(response.data)})
                 .catch(e => this.errors.push(e));
         },
         addCurrency(id){
             if(id == 1){
-                this.$http.post('https://exchange.tipsy.ir/currency/store/'+id , {
+                this.$http.post('currency/store/'+id , {
                 name: this.binary_currency
                 }).then(response => console.log(response))
                 .catch(e => {
                     this.errors.push(e)
                 });
             }else if(id == 2){
-                this.$http.post('https://exchange.tipsy.ir/currency/store/'+id , {
+                this.$http.post('currency/store/'+id , {
                 name: this.farx_currency
                 }).then(response => console.log(response))
                 .catch(e => {
@@ -111,7 +111,7 @@
             this.fetchCurrency();
         },
         removeCurrency(id){
-            this.$http.get('https://exchange.tipsy.ir/currency/destroy/'+id)
+            this.$http.get('currency/destroy/'+id)
                 .then(response => alert('ارز با موفقیت حذف شد'))
                 .catch(e => this.errors.push(e));
             this.fetchCurrency();
