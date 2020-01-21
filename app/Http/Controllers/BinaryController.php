@@ -42,8 +42,15 @@ class BinaryController extends Controller
             'endTime'       =>  $request->endTime,
             'close'         =>  $request->close
         ]); 
+       
+        
+
+        /** send pusher */
+
         $Binary = 'App\Binary'::latest('updated_at')->get();
         event(new \App\Events\BinaryNotif($Binary));
+
+        
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('باینری با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
@@ -102,6 +109,7 @@ class BinaryController extends Controller
         $binary->update(['close'=>1]);
         $Binary = 'App\Binary'::latest('updated_at')->get();
         event(new \App\Events\BinaryNotif($Binary));
+
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }

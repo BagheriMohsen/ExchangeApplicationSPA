@@ -11,6 +11,7 @@
         "econea/nusoap": "^0.9.7",
         "firebase/php-jwt": "^5.0",
         "flipbox/lumen-generator": "^6.0",
+        "guzzlehttp/guzzle": "~6.0",
         "intergo/sms.to-laravel-lumen": "^0.0.28",
         "laravel/lumen-framework": "^6.0",
         "league/flysystem-aws-s3-v3": "~1.0",

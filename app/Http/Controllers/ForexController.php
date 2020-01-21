@@ -32,7 +32,7 @@ class ForexController extends Controller
     |--------------------------------------------------------------------------
     */
     public function AllForex(){
-
+       
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))->latest('updated_at')->get();
@@ -74,6 +74,7 @@ class ForexController extends Controller
             $query->select('id','name');
         }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
+
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
@@ -132,6 +133,7 @@ class ForexController extends Controller
             $query->select('id','name');
         }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
+
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('منقضی شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
@@ -147,6 +149,7 @@ class ForexController extends Controller
             $query->select('id','name');
         }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
+
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('بسته شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }

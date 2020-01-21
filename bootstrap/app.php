@@ -118,7 +118,7 @@ $app->singleton('filesystem', function ($app) {
 
 $app->configure('broadcasting');
 $app->configure('filesystems');
-
+$app->configure('app');
 
 /*
 |--------------------------------------------------------------------------

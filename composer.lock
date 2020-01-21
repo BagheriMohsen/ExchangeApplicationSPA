@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65877351e8d18fa637cab585e8fd09df",
+    "content-hash": "bcc717bb838d4f9e0e18e405f734333a",
     "packages": [
         {
             "name": "artisaninweb/laravel-soap",

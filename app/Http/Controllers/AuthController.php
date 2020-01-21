@@ -68,7 +68,7 @@ class AuthController extends Controller
     
             if ($err){
             
-            return 'ارسال پیام با مشکل مواجه شده است' . $err;
+                return 'ارسال پیام با مشکل مواجه شده است' . $err;
         
             }
     
@@ -141,7 +141,7 @@ class AuthController extends Controller
     
             if ($err){
             
-            return 'ارسال پیام با مشکل مواجه شده است' . $err;
+                return 'ارسال پیام با مشکل مواجه شده است' . $err;
         
             }
     
