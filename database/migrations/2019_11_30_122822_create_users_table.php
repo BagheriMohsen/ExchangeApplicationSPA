@@ -13,16 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name',100);
-            $table->string('persianName',100);
-            $table->timestamps();
-        });
 
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('role_id')->unsigned();
             $table->string('fullName',100);
             $table->string('phoneNumber',100)->unique();
             $table->string('language')->default('fa');
@@ -31,11 +24,19 @@ class CreateUsersTable extends Migration
             $table->boolean('guide_check')->default(False);
             $table->Date('guide_check_date')->nullable();
             $table->timestamps();
-
-            $table->foreign('role_id')->references('id')->on('roles')
-            ->onUpdate('cascade')->onDelete('cascade');
+;
         });
 
+
+
+        Schema::create('admins', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('family');
+            $table->string('username');
+            $table->string('password');
+            $table->timestamps();
+        });
 
     }
 
@@ -46,8 +47,9 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('admins');
+
 
     }
 }

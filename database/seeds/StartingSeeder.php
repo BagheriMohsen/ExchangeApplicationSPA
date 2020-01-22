@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\Hash;
 class StartingSeeder extends Seeder
 {
     /**
@@ -17,15 +17,13 @@ class StartingSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         #1.Create Admin
-        app('db')->table('roles')->insert([
-            'name'          =>  'admin',
-            'persianName'   =>  'ادمین'
+        'App\AdminUser'::create([
+            'name'          =>  'عباس',
+            'family'        =>  'ملکی',
+            'username'      =>  'abbasmaleki',
+            'password'      =>  Hash::make('admin2020'),
         ]);
-        #2.Create Admin
-        app('db')->table('roles')->insert([
-            'name'          =>  'normalUser',
-            'persianName'   =>  'کاربر عادی'
-        ]);
+
         #3.Create Admin
         // app('db')->table('roles')->insert([
         //     'name'          =>  'freeTrialUser',
@@ -40,13 +38,11 @@ class StartingSeeder extends Seeder
         'App\User'::create([
             'FullName'      => 'ادمین سایت',
             'phoneNumber'   =>  '09102222222',
-            'role_id'       =>  1,
         ]);
         #2.Create Normal User
         'App\User'::create([
             'FullName'      => 'کاربر عادی',
             'phoneNumber'   =>  '09102222502',
-            'role_id'       =>  2,
         ]);
        
         /*
