@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Middleware;
-
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
@@ -35,14 +34,19 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-
-            $header = ['Content-Type' => 'application/json;charset=utf8'];
-            return response()->json([
-                'You Are Not Login' => 'شما عضو نیستید'
-            ],401, array($header),JSON_UNESCAPED_UNICODE);
-            
+        
+        if(!isset($_SESSION['user_id'])){
+            return redirect('admin-login');
         }
+       
+        // $user_id = $_SESSION['user_id'];
+        // $user_status = 'App\AdminUser'::where('username',$req->username)->exists();
+
+        // if (!$user_status) {
+
+        //     return redirect('admin_login');
+            
+        // }
 
         return $next($request);
     }

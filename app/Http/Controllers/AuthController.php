@@ -263,4 +263,25 @@ class AuthController extends Controller
         return response()->json($result,200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
+
+    public function admin_login(Request $req){
+
+        $user_status = 'App\AdminUser'::where('username',$req->username)->exists();
+
+        if(!$user_status){
+            return redirect('/admin-login');
+        }
+        $user = 'App\AdminUser'::where('username',$req->username)->firstOrFail();
+        if (Hash::check($req->pass, $user->password)) {
+            $_SESSION['user_id'] = $user->id;
+            return redirect('/admin');
+        }else{
+            return redirect('/admin-login');
+        }
+
+
+
+
+    }
+
 }

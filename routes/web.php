@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
@@ -18,10 +19,14 @@ $router->group(['middleware'=>['cors'],'as'=>'auth.'], function () use ($router)
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-$router->group(['middleware'=>'cors','prefix' => '/admin/','middleware'=>'auth','as'=>'admin.'], function () use ($router) {
-    $router->get('/', 'HomeController@index');
-
+Route::get('/admin-login',function(){
+   return view('admin_auth.login');
 });
+Route::get('/admin-logout',function(){
+    session_destroy();
+    return redirect('/admin-login');
+ });
+Route::post('/login_admin','AuthController@admin_login');
 /*
 |--------------------------------------------------------------------------
 | Article And Category Routes
@@ -119,7 +124,7 @@ $router->group(['middleware'=>'cors','prefix' => '/push/','as'=>'push.'], functi
 $router->get('/', ['middleware' => ['cors'], function () {
     return view('app');
 }]);
-$router->get('/admin', ['middleware' => ['cors'], function () {
+$router->get('/admin', ['middleware' => ['auth'], function () {
     return view('admin');
 }]);
 $router->get('/login', ['middleware' => ['cors'], function () {
