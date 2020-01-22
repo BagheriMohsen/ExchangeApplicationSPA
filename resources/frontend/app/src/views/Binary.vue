@@ -50,7 +50,8 @@
     data () {
       return {
         notifs:[],
-        showNotif: null
+        showNotif: null,
+        audio: new Audio('https://freesound.org/data/previews/66/66136_606715-lq.mp3')
       }
     },
     methods:{
@@ -58,7 +59,6 @@
         this.$http.get('binaries/AllBinaries')
           .then(res => {
             this.notifs = res.data;
-            console.log('binary',res.data);
           })
           .catch(err => console.log(err));
       },

@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-2">
                 <div class="">
                     <button type="submit" class="btn btn-sm mx-1">Send</button>
                     <button @click="closeNotif" type="button" class="btn btn-sm btn-warning mx-1">Close</button>

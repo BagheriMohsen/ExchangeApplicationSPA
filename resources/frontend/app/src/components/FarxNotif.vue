@@ -7,7 +7,7 @@
             </div>
 
             <div class="d-flex flex-row">
-              <div v-if="notifInfo.buy_sell" class="px-2" style="align-self: center;">{{notifInfo.buy_sell}}</div>
+              <div v-if="notifInfo.buy_sell" class="px-2 buy_sell_pill">{{notifInfo.buy_sell}}</div>
               <div v-if="!notifInfo.close && !notifInfo.expire" class="px-2" style="align-self: center;">فعال</div>
               <div v-if="notifInfo.close" class="px-2" style="align-self: center;">ببند</div>
               <div v-if="notifInfo.expire" class="px-2" style="align-self: center;">منقضی</div>
@@ -21,8 +21,13 @@
           max-width="290"
         >
           <v-card>
-            <v-card-text v-if="notifInfo.close || notifInfo.expire">
-              تاریخ آپدیت پیام:
+            <v-card-text v-if="notifInfo.close">
+              تاریخ بستن پیام:
+              <br>
+              {{jalali_update}}
+            </v-card-text>
+            <v-card-text v-if="notifInfo.expire">
+              تاریخ انقضا پیام:
               <br>
               {{jalali_update}}
             </v-card-text>
@@ -116,18 +121,10 @@
         this.jalali_update = moment(this.notifInfo.update_at).format('HH:mm:ss - YY/M/D');
         this.jalali_create = moment(this.notifInfo.created_at).format('HH:mm:ss - YY/M/D');
       },
-      buySell :function(){
-        if(this.notifInfo.buy_sell == 'buy'){
-          this.notifInfo.buy_sell = 'خرید'
-        }else if(this.notifInfo.buy_sell == 'sell'){
-          this.notifInfo.buy_sell = 'فروش'
-        }
-      }
-     
     },
     created () {
       this.convertJalali();
-      this.buySell();
+      // this.buySell();
     },
     updated(){
     },
@@ -189,5 +186,13 @@
   }
   .v-dialog > .v-card > .v-card__text{
     padding:0 18px 20px;
+  }
+  .buy_sell_pill{
+    align-self: center;
+    background: #e8e827;
+    color: #252323;
+    border-radius: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
   }
  </style>

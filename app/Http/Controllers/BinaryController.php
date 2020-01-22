@@ -123,7 +123,7 @@ class BinaryController extends Controller
             ['close','=',1]
         ])->latest()->get();
         $Binary = 'App\Binary'::latest('updated_at')->get();
-        event(new \App\Events\BinaryNotif($Binary));
+        // event(new \App\Events\BinaryNotif($Binary));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);
     }

@@ -24,7 +24,7 @@
             <div class="container-fluid">
             <div class="row">
                 <div class="col-12" v-for="notif in binaryNotifs" v-bind:key="notif.id">
-                    <binary-notif :binaryInfo="notif"></binary-notif>
+                    <!-- <binary-notif :binaryInfo="notif"></binary-notif> -->
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12" v-for="notif in farxNotifs" v-bind:key="notif.id">
-                        <farx-notif :notifInfo="notif"></farx-notif>
+                        <!-- <farx-notif :notifInfo="notif"></farx-notif> -->
                     </div>
                 </div>
             </div>
@@ -44,16 +44,16 @@
 </template>
 <script>
 
-    import FarxNotif from '@/components/FarxNotif.vue'
-    import BinaryNotif from '@/components/BinaryNotif.vue'
+    // import FarxNotif from '@/components/FarxNotif.vue'
+    // import BinaryNotif from '@/components/BinaryNotif.vue'
     // import Pusher from 'pusher-js'
     // var moment = require('jalali-moment');
     // moment.locale('fa', { useGregorianParser: true }); 
 
     export default {
         components:{
-            FarxNotif,
-            BinaryNotif
+            // FarxNotif,
+            // BinaryNotif
         },
         data () {
             return {
