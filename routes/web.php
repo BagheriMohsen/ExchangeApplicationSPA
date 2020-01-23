@@ -11,6 +11,7 @@ $router->group(['middleware'=>['cors'],'as'=>'auth.'], function () use ($router)
     $router->post('/login', 'AuthController@login');
     $router->get('sendVerfySms','AuthController@sendVerfySms');
     $router->get('/token','AuthController@token');
+    $router->get('/logout/{user_id}','AuthController@logout');
     $router->get('/user-guide-check/{user_id}','AuthController@user_guide_check');
 });
 

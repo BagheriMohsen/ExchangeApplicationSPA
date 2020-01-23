@@ -124,16 +124,24 @@ class AuthController extends Controller
         
         $status = 'App\User'::where('phoneNumber',$request->phoneNumber)->exists();
         $header = ['Content-Type' => 'application/json;charset=utf8'];
+        //if this number is exists in users table
         if($status !=True){
             return response()->json('همچین شماره ای در سیستم ثبت نشده',200, array($header),JSON_UNESCAPED_UNICODE);
         }
 
         $user   = 'App\User'::where('phoneNumber',$request->phoneNumber)->firstOrFail();
-       
-        
+        // message for user login in another device
+        if($user->login_status){
+            $login_status_message  = 'این کاربر با یک دیوایس دیگر به سیستم وارد شده است.';
+            $login_status_message .= 'لطفا ابتدا از گوشی قبلی خارج شوید تا بتوانید لاگین کنید';
+            $login_status_message .= 'لطفا در صورت بروز مشکل با بخش پشتیبانی اپلیکیشن تماس بگیرید';
+            return response()->json($login_status_message,200, array($header),JSON_UNESCAPED_UNICODE);
+        }
+
+        //create random four digit number
         $FourDigitRandom = rand(1000,9999);
         
-        
+        //send sms with nusoap protocol
         try{
             
             $client = new \nusoap_client('http://api.payamak-panel.com/post/send.asmx?wsdl',true);
@@ -169,8 +177,10 @@ class AuthController extends Controller
            
     }
 
-    public function logout(){
-        return response()->json('logout');
+    public function logout($user_id){
+        $user = User::findOrFail($user_id);
+        $user->update(['login_status'=>False]);//now user can login another device
+        return response()->json('logout');//remove user token
     }
 
     public function token(Request $request){

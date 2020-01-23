@@ -21,7 +21,7 @@ class StartingSeeder extends Seeder
             'name'          =>  'عباس',
             'family'        =>  'ملکی',
             'username'      =>  'abbasmaleki',
-            'password'      =>  Hash::make('admin2020'),
+            'password'      =>  Hash::make('uWIEbjp1V7Y/x16zuPKOo7zd2D6LRn4V2oLZWmgg'),
         ]);
 
         #3.Create Admin
@@ -35,15 +35,15 @@ class StartingSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         #1.Create Admin User
-        'App\User'::create([
-            'FullName'      => 'ادمین سایت',
-            'phoneNumber'   =>  '09102222222',
-        ]);
+        // 'App\User'::create([
+        //     'FullName'      => 'ادمین سایت',
+        //     'phoneNumber'   =>  '09102222222',
+        // ]);
         #2.Create Normal User
-        'App\User'::create([
-            'FullName'      => 'کاربر عادی',
-            'phoneNumber'   =>  '09102222502',
-        ]);
+        // 'App\User'::create([
+        //     'FullName'      => 'کاربر عادی',
+        //     'phoneNumber'   =>  '09102222502',
+        // ]);
        
         /*
         |--------------------------------------------------------------------------

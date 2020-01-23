@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('language')->default('fa');
             $table->boolean('freeTime')->default(True);
             $table->string('api_key')->nullable();
+            $table->boolean('login_status')->default(False);
             $table->boolean('guide_check')->default(False);
             $table->Date('guide_check_date')->nullable();
             $table->timestamps();
