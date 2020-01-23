@@ -2,11 +2,6 @@
   <div id="app" class="back">
     <v-app id="inspire">
       <router-view/>
-      <!-- <Navbar/>
-      <v-content>
-        
-      </v-content>
-      <Footer/> -->
     </v-app>
   </div>
 </template>

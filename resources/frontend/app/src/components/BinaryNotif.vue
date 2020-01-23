@@ -7,7 +7,7 @@
             </div>
 
             <div class="d-flex flex-row">
-              <div v-if="binaryInfo.buy_sell" class="px-2" style="align-self: center;">{{binaryInfo.buy_sell}}</div>
+              <div v-if="binaryInfo.buy_sell" class="px-2 buy_sell_pill">{{binaryInfo.buy_sell}}</div>
               <div v-if="!binaryInfo.close" class="px-2" style="align-self: center;">فعال</div>
               <div v-if="binaryInfo.close" class="px-2" style="align-self: center;">ببند</div>
             </div>
@@ -17,12 +17,12 @@
           max-width="290"
         >
           <v-card>
-            <v-card-text>
-              تاریخ پیام:
+            <v-card-text v-if="binaryInfo.close">
+              تاریخ انقضا پیام:
               <br>
               {{binaryInfo.jalali_update}}
             </v-card-text>
-            <v-card-text v-if="binaryInfo.close || binaryInfo.expire">
+            <v-card-text>
               تاریخ شروع پیام :
               <br>
               {{binaryInfo.jalali_create}}
@@ -69,18 +69,18 @@
         this.binaryInfo.jalali_update = moment(this.binaryInfo.updated_at).format('HH:mm:ss - YY/M/D');
         this.binaryInfo.jalali_create = moment(this.binaryInfo.created_at).format('HH:mm:ss - YY/M/D');
       },
-      buySell :function(){
-        if(this.binaryInfo.buy_sell == 'buy'){
-          this.binaryInfo.buy_sell = 'خرید'
-        }else if(this.binaryInfo.buy_sell == 'sell'){
-          this.binaryInfo.buy_sell = 'فروش'
-        }
-      }
+      // buySell :function(){
+      //   if(this.binaryInfo.buy_sell == 'buy'){
+      //     this.binaryInfo.buy_sell = 'خرید'
+      //   }else if(this.binaryInfo.buy_sell == 'sell'){
+      //     this.binaryInfo.buy_sell = 'فروش'
+      //   }
+      // }
     },
     
     created () {
       this.convertJalali();
-      this.buySell();
+      // this.buySell();
      
     },
     updated(){
@@ -133,6 +133,13 @@
   .notif-icon i{
     font-size: 1rem;
   }
- 
+ .buy_sell_pill{
+    align-self: center;
+    background: #e8e827;
+    color: #252323;
+    border-radius: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
   
  </style>

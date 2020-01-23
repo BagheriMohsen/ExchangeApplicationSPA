@@ -39,7 +39,7 @@
     data () {
       return {
         notifs:[],
-        showNotif: null
+        showNotif: null,
       }
     },
     methods:{
@@ -71,7 +71,7 @@
              this.showNotif = 'dontShow';
           }
         }
-      }
+      },
     },
     watch:{
       user:{
@@ -88,7 +88,7 @@
       this.checkUserSubscribe();
       this.fetchNotif();
       this.subscribe();
-    }
+    },
   }
 </script>
 
