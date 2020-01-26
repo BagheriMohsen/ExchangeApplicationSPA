@@ -136,7 +136,7 @@ class AuthController extends Controller
             $login_status_message .= 'لطفا در صورت بروز مشکل با بخش پشتیبانی اپلیکیشن تماس بگیرید';
             return response()->json($login_status_message,200, array($header),JSON_UNESCAPED_UNICODE);
         }
-
+        $user->update(['login_status'=>True]);
         //create random four digit number
         $FourDigitRandom = rand(1000,9999);
         

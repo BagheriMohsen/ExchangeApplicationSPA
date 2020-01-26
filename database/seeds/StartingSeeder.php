@@ -21,7 +21,14 @@ class StartingSeeder extends Seeder
             'name'          =>  'عباس',
             'family'        =>  'ملکی',
             'username'      =>  'abbasmaleki',
-            'password'      =>  Hash::make('uWIEbjp1V7Y/x16zuPKOo7zd2D6LRn4V2oLZWmgg'),
+            'password'      =>  Hash::make('  uWIEbjp1V7Y/x16zuPKOo7zd2D6LRn4V2oLZWmgg'),
+        ]);
+        #1.Create Admin
+        'App\AdminUser'::create([
+            'name'          =>  'ابوالفضل',
+            'family'        =>  'ملکی',
+            'username'      =>  'abolfazlmaleki',
+            'password'      =>  Hash::make('  uW156IEbjp1156Rhx[V7Y/LHGyug1?56ikjnmtg'),
         ]);
 
         #3.Create Admin
