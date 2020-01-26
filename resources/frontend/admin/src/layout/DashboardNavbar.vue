@@ -5,10 +5,10 @@
               expand>
        <ul class="navbar-nav align-items-center d-none d-md-flex mr-auto">
             <li class="nav-item">
-              <router-link to="#" class="text-light">
+              <a href="http://localhost:8000/admin-logout" class="text-light">
                   <i class="ni ni-user-run"></i>
                   <span>خروج</span>
-              </router-link>
+              </a>
             </li>
             <!-- <li class="nav-item ml-3">
               <base-dropdown class="nav-item" position="right">

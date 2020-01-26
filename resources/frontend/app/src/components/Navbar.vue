@@ -93,8 +93,13 @@ export default {
     },
     methods:{
         logout(){
-            localStorage.removeItem('token');
-            this.$router.push('/login');
+            this.$http.get('logout/'+ this.user.id)
+                .then( res => {
+                    console.log(res);
+                    localStorage.removeItem('token');
+                    this.$router.push('/login');
+                })
+                .catch(err => console.log(err));
         },
         checkLanguage(){
             if(this.user.language == 'ar'){
