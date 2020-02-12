@@ -5,7 +5,7 @@
               expand>
        <ul class="navbar-nav align-items-center d-none d-md-flex mr-auto">
             <li class="nav-item">
-              <a href="http://localhost:8000/admin-logout" class="text-light">
+              <a href="https://app.utsignal.com/admin-logout" class="text-light">
                   <i class="ni ni-user-run"></i>
                   <span>خروج</span>
               </a>

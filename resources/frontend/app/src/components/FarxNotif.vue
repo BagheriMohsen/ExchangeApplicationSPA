@@ -1,6 +1,6 @@
 <template>
     <div>
-       <div :class="{'bg-close':notifInfo.close,'bg-expire': notifInfo.expire}" class="d-flex bg-open notif_header">
+       <div :class="{'bg-close':notifInfo.close == '1','bg-expire': notifInfo.expire == '1'}" class="d-flex bg-open notif_header">
             <div class="px-2 ml-auto d-flex flex-row">
               <div class="notif-icon"><v-icon @click.stop="timeDialog = true" class="white--text" style="font">schedule</v-icon></div>
               <div class="mr-1 mt-1"> {{jalali_update_date}}</div>
@@ -8,9 +8,9 @@
 
             <div class="d-flex flex-row">
               <div v-if="notifInfo.buy_sell" class="px-2 buy_sell_pill">{{notifInfo.buy_sell}}</div>
-              <div v-if="!notifInfo.close && !notifInfo.expire" class="px-2" style="align-self: center;">فعال</div>
-              <div v-if="notifInfo.close" class="px-2" style="align-self: center;">ببند</div>
-              <div v-if="notifInfo.expire" class="px-2" style="align-self: center;">منقضی</div>
+              <div v-if="notifInfo.close == '0' && notifInfo.expire == '0'" class="px-2" style="align-self: center;">فعال</div>
+              <div v-if="notifInfo.close == '1'" class="px-2" style="align-self: center;">ببند</div>
+              <div v-if="notifInfo.expire == '1'" class="px-2" style="align-self: center;">منقضی</div>
               <div v-if="userLang == 'fa' && notifInfo.fa_desc" class="notif-icon"><v-icon @click.stop="descDialogFa = true" class="white--text" style="font">description</v-icon></div>
               <div v-if="userLang == 'en' && notifInfo.en_desc" class="notif-icon"><v-icon @click.stop="descDialogEn = true" class="white--text" style="font">description</v-icon></div>
               <div v-if="userLang == 'ar' && notifInfo.ar_desc" class="notif-icon"><v-icon @click.stop="descDialogAr = true" class="white--text" style="font">description</v-icon></div>
@@ -21,12 +21,12 @@
           max-width="290"
         >
           <v-card>
-            <v-card-text v-if="notifInfo.close">
+            <v-card-text v-if="notifInfo.close == '1'">
               تاریخ بستن پیام:
               <br>
               {{jalali_update}}
             </v-card-text>
-            <v-card-text v-if="notifInfo.expire">
+            <v-card-text v-if="notifInfo.expire == '1'">
               تاریخ انقضا پیام:
               <br>
               {{jalali_update}}

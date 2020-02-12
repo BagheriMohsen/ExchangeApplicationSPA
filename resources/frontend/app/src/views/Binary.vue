@@ -1,5 +1,6 @@
 <template>
     <section>
+       
         <div v-if="showNotif == 'show'" class="container-fluid">
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
@@ -8,8 +9,7 @@
             </div>
         </div>
         <div v-if="showNotif == 'dontShow'" class="white--text">
-          <v-card class="mx-1 bg-unique" dark router :to="'/subscription'"
-        >
+          <v-card class="mx-1 bg-unique" dark router :to="'/subscription'">
             <div class="d-flex flex-no-wrap justify-content-center">
                 <div>
                     <v-card-subtitle center class="mt-0"> اشتراک رایگان شما به پایان رسیده است،لطفا برای خرید اشتراک باینری اقدام نمایید</v-card-subtitle>
@@ -22,14 +22,6 @@
             </div>
         </v-card>
         </div>
-
-        <!-- <div class="container-fluid">
-            <div class="row">
-                <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
-                    <binary-notif :binaryInfo="notif"></binary-notif>
-                </div>
-            </div>
-        </div> -->
     </section>
    
 </template>
@@ -37,8 +29,6 @@
 
   import BinaryNotif from '@/components/BinaryNotif.vue'
   import Pusher from 'pusher-js'
-  // var moment = require('jalali-moment');
-  // moment.locale('fa', { useGregorianParser: true }); 
 
   export default {
     props:{
@@ -51,7 +41,6 @@
       return {
         notifs:[],
         showNotif: null,
-        audio: new Audio('https://freesound.org/data/previews/66/66136_606715-lq.mp3')
       }
     },
     methods:{

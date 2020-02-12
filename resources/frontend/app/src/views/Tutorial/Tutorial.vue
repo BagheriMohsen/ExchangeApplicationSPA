@@ -24,29 +24,7 @@
           </v-col>
         </v-row>
       </v-container>
-      <v-dialog
-          v-model="tutorialDialog"
-          max-width="290"
-          
-        >
-          <v-card class="mx-auto pt-2">
-            <v-card-text class="pb-0">
-              لطفاابتدا به لینک زیر رفته و آموزش استفاده از اپلیکیشن را مطالعه فرمایید
-            </v-card-text>
-            <v-checkbox class="py-0 pr-4"
-                v-model="checkbox"
-                label="دیگر این پیام نشان داده نشود"
-              >
-            </v-checkbox>
-            <v-card-actions center style="justify-content: center;">
-              
-              <v-btn color="success" v-on:click="handleRead">
-                <a class="white--text" style="text-decoration: none" href="http://www.sarafi.com">خواندن مقاله</a>
-              </v-btn>
-              <v-btn color="info" v-on:click="handleLater">بعدا </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+     
     </section>
     
 </template>
@@ -70,8 +48,7 @@
                 {title: 'فارکس',route: '/tutorial/farx',img: '/img/money-growth.png'},
                 {title: 'باینری',route: '/tutorial/binary',img: '/img/graph.png'}
         ],
-        tutorialDialog: false,
-        checkbox:false
+        
       }
     },
     methods:{
@@ -84,35 +61,7 @@
               this.items = this.persianItems;
           }
       },
-      handleLater(){
-        this.tutorialDialog = false;
-        if(this.checkbox == true){
-          this.$http.get('user-guide-check/' + this.user.id)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-          this.$emit('checkToken');
-        }
-        
-      },
-      handleRead(){
-        this.tutorialDialog = false;
-        if(this.checkbox == true){
-          this.$http.get('user-guide-check/' + this.user.id)
-            .then(res => console.log(res))
-            .then(() => window.location.href = 'http://www.sarafi.com')
-            .catch(err => console.log(err));
-          this.$emit('checkToken');
-          window.location.href = 'http://www.sarafi.com';
-        }
-        
-      },
-      checkUserGuide(){
-        if(this.user.guide_check == '1'){
-          this.tutorialDialog = false
-        }else if(this.user.guide_check == '0'){
-          this.tutorialDialog = true
-        }
-      }
+      
     },
     watch:{
         user:{

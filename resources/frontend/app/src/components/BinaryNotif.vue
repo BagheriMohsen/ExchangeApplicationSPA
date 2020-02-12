@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div :class="{'bg-close':binaryInfo.close}" class="d-flex bg-open notif_header">
+        <div :class="{'bg-close':binaryInfo.close == '1'}" class="d-flex bg-open notif_header">
             <div class="px-2 ml-auto d-flex flex-row">
               <div class="notif-icon"><v-icon @click.stop="timeDialog = true" class="white--text" style="font">schedule</v-icon></div>
               <div class="mr-1 mt-1"> {{jalali_update_date}}</div>
@@ -8,8 +8,8 @@
 
             <div class="d-flex flex-row">
               <div v-if="binaryInfo.buy_sell" class="px-2 buy_sell_pill">{{binaryInfo.buy_sell}}</div>
-              <div v-if="!binaryInfo.close" class="px-2" style="align-self: center;">فعال</div>
-              <div v-if="binaryInfo.close" class="px-2" style="align-self: center;">ببند</div>
+              <div v-if="binaryInfo.close != '1'" class="px-2" style="align-self: center;">فعال</div>
+              <div v-if="binaryInfo.close == '1'" class="px-2" style="align-self: center;">ببند</div>
             </div>
         </div>
         <v-dialog
@@ -17,15 +17,15 @@
           max-width="290"
         >
           <v-card>
-            <v-card-text v-if="binaryInfo.close">
+            <v-card-text v-if="binaryInfo.close == '1'">
               تاریخ انقضا پیام:
               <br>
-              {{binaryInfo.jalali_update}}
+              {{jalali_update}}
             </v-card-text>
             <v-card-text>
               تاریخ شروع پیام :
               <br>
-              {{binaryInfo.jalali_create}}
+              {{jalali_create}}
             </v-card-text>
           </v-card>
         </v-dialog>
@@ -60,14 +60,16 @@
     data () {
       return {
         jalali_update_date:'',
+        jalali_update:'',
+        jalali_create:'',
         timeDialog: false,
       }
     },
     methods:{
       convertJalali(){
         this.jalali_update_date = moment(this.binaryInfo.updated_at).format('HH:mm:ss');
-        this.binaryInfo.jalali_update = moment(this.binaryInfo.updated_at).format('HH:mm:ss - YY/M/D');
-        this.binaryInfo.jalali_create = moment(this.binaryInfo.created_at).format('HH:mm:ss - YY/M/D');
+        this.jalali_update = moment(this.binaryInfo.updated_at).format('HH:mm:ss - YY/M/D');
+        this.jalali_create = moment(this.binaryInfo.created_at).format('HH:mm:ss - YY/M/D');
       },
       // buySell :function(){
       //   if(this.binaryInfo.buy_sell == 'buy'){
@@ -82,6 +84,12 @@
       this.convertJalali();
       // this.buySell();
      
+    },
+    watch:{
+      binaryInfo: function() { 
+        console.log('updated')
+        this.convertJalali();
+      }
     },
     updated(){
       

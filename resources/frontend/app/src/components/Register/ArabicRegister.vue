@@ -106,6 +106,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
     methods: {
       receiveCode(){
         if(this.$refs.form.validate()){
+          this.error.info = '';
           this.loading = true;
           this.$http.post('register',{
             FullName : this.user.name,

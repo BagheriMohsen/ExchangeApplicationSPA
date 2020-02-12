@@ -25,10 +25,10 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                     </base-dropdown> -->
                     <li class="nav-item">
-                      <router-link to="#" class="text-light">
+                      <a href="https://app.utsignal.com/admin-logout" class="text-light">
                           <i class="ni ni-user-run"></i>
-                          <span>خروج</span>
-                      </router-link>
+                          <!-- <span>خروج</span> -->
+                      </a>
                     </li>
                 </ul>
             </slot>
