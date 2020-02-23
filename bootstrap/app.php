@@ -101,11 +101,7 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 // config/broadcasting
 $app->singleton(
     Illuminate\Broadcasting\BroadcastManager::class,
-    Illuminate\Contracts\Broadcasting\Broadcaster::class,
-    Illuminate\Broadcasting\BroadcastManager::class
-);
-
-$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
+    Illuminate\Contracts\Broadcasting\Broadcaster::class,my_secret_server_keyider::class);
 
 $app->singleton('filesystem', function ($app) {
     return $app->loadComponent(
@@ -114,11 +110,14 @@ $app->singleton('filesystem', function ($app) {
         'filesystem'
     );
 });
-
-
+$app->register(LaravelFCM\FCMServiceProvider::class);
+class_alias(\LaravelFCM\Facades\FCM::class, 'FCM');
+class_alias(\LaravelFCM\Facades\FCMGroup::class, 'FCMGroup');
 $app->configure('broadcasting');
 $app->configure('filesystems');
 $app->configure('app');
+$app->configure('fcm');
+
 
 /*
 |--------------------------------------------------------------------------

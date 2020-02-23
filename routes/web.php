@@ -132,3 +132,12 @@ $router->get('/login', ['middleware' => ['cors'], function () {
     return view('auth/login');
 }]);
 
+
+$router->get('/sendFCM','FCM\FcmController@send_notif');
+$router->get('/take-fcm-token','FCM\FcmController@take_token');
+
+
+
+
+
+
