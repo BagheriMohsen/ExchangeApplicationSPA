@@ -68,7 +68,9 @@
               </v-col>
             </v-row>
 </template>
+
 <script>
+
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
   export default {
     components:{
@@ -139,8 +141,21 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
         }else{
           this.error.code = 'رمز وارد شده اشتباه می باشد';
         }
-      }
+      },
+      // setOneSignal(){
+      //   OneSignal.push(()=>{
+      //     OneSignal.getUserId().then(userId => {
+      //       console.log(userId);
+      //       this.oneSignalId = userId;
+      //       alert(userId);
+      //       alert(this.oneSignalId);
+      //     });
+      //   });
+      // }
     },
+    created(){
+      // this.setOneSignal();
+    }
   }
 </script>
 <style scoped>

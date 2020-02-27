@@ -46,6 +46,7 @@
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import Pusher from 'pusher-js'
+// import {OneSignal} from '../main'
 export default {
   name: 'App',
   components: {Navbar,Footer},
@@ -67,6 +68,7 @@ export default {
           this.$http.get('token',{params:{token:this.token}})
             .then(response => {
               this.user = response.data;
+              this.initOneSignal();
               this.checkSubscribe();
               }).catch(err => {
                 console.log(err);
@@ -146,10 +148,78 @@ export default {
     },
     playSound(){
       this.audio.play();
+    },
+    initOneSignal(){
+      var OneSignal = window.OneSignal || [];
+      OneSignal.push(() => {
+        OneSignal.on('subscriptionChange', (isSubscribed) => {
+        console.log("The user's subscription state is now:",isSubscribed);
+          OneSignal.push(()=> {
+            OneSignal.getUserId((userId) => {
+              console.log("OneSignal User ID:", userId);
+              this.$http.get('take-token/' + userId,{
+                params:{
+                  api_key : this.user.api_key
+                }
+              })
+              .then(res=>console.log(res))
+              .catch(err=>console.log(err))
+            });
+          });
+        });
+      });
+
+        OneSignal.push(["init", {
+          appId: "ff1ec971-1cab-4a8e-9225-d3fb2d3ef701",
+          autoRegister: false,
+          promptOptions: {
+              /* My prompt options */
+          },
+          welcomeNotification: {
+              //my options
+          },
+          notifyButton: {
+            enable: true,
+            showCredit: false,
+            prenotify: true,
+            position: 'bottom-left',
+            text: {
+              /*My text options */
+          },
+          colors: { // My custom colors
+          }
+        }
+      }]);
+      // OneSignal.push(function() {
+      //   OneSignal.init({
+      //     appId: "ff1ec971-1cab-4a8e-9225-d3fb2d3ef701",
+      //   });
+      // });
+      // OneSignal.push(()=>{
+      //   OneSignal.getUserId().then(userId => {
+      //     console.log(userId);
+      //     // this.oneSignalId = userId;
+      //     alert(userId);
+      //     // alert(this.oneSignalId);
+      //   });
+      // });
+      // OneSignal.push(function() {
+      //   OneSignal.on('subscriptionChange', function (isSubscribed) {
+      //   console.log("The user's subscription state is now:",isSubscribed);
+      //     OneSignal.push(function() {
+      //       OneSignal.getUserId(function(userId) {
+      //         console.log("OneSignal User ID:", userId);
+      //         alert(userId);
+      //       });
+      //     });
+      //   });
+      // });
     }
   },
-  created(){
+  mounted(){
     this.checkToken();
+    // this.initOneSignal();
+    this.checkUserGuide();
   },
   updated(){
   },
@@ -160,9 +230,6 @@ export default {
           }
         }
   },
-  mounted(){
-    this.checkUserGuide();
-  }
 };
 </script>
 
