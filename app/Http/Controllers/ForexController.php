@@ -59,7 +59,7 @@ class ForexController extends Controller
     */
     public function forexStore(Request $request){
 
-        'App\Forex'::create([
+        $new_forex = 'App\Forex'::create([
             'forex_category_id' =>  $request->forex_category_id,
             'pair'              =>  $request->pair,
             'startingPrice'     =>  $request->startingPrice,
@@ -70,11 +70,27 @@ class ForexController extends Controller
             'ar_desc'           =>  $request->ar_desc,
             'en_desc'           =>  $request->en_desc
         ]);
+
+
+       
+
+        // if($new_forex->buy_sell == 1){
+        //     $body = "خرید";
+        // }else{
+        //     $body = "فروش";
+        // }
+
+        // app('App\Http\Controllers\FCM\FcmController')
+        // ->send_notif_topic($new_forex->pair,$body);
+
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))->latest('updated_at')->get();
         event(new \App\Events\ForexNotifEvent($Forex));
 
+        
+        
+        
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }

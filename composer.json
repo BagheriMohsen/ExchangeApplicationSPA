@@ -14,6 +14,7 @@
         "flipbox/lumen-generator": "^6.0",
         "guzzlehttp/guzzle": "~6.0",
         "intergo/sms.to-laravel-lumen": "^0.0.28",
+        "kreait/laravel-firebase": "^1.4",
         "laravel/lumen-framework": "^6.0",
         "league/flysystem-aws-s3-v3": "~1.0",
         "predis/predis": "^1.1",

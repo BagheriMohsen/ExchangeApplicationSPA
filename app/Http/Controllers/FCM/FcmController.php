@@ -8,9 +8,15 @@ use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 use FCM;
+use LaravelFCM\Message\Topics;
 
 class FcmController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Send Notification
+    |--------------------------------------------------------------------------
+    */
     public function send_notif() {
         
         $optionBuilder = new OptionsBuilder();
@@ -43,10 +49,36 @@ class FcmController extends Controller
 
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Send Notification to topic
+    |--------------------------------------------------------------------------
+    */
+    public function send_notif_topic($body,$title) {
+
+
+        $notificationBuilder = new PayloadNotificationBuilder($title);
+        $notificationBuilder->setBody($body)
+                            ->setSound('default');
+
+        $notification = $notificationBuilder->build();
+
+        $topic = new Topics();
+        $topic->topic('allDevices');
+
+        $topicResponse = FCM::sendToTopic($topic, null, $notification, null);
+
+        echo $topicResponse->isSuccess();
+        echo $topicResponse->shouldRetry();
+        echo $topicResponse->error();
+
+        
+    }
+
+
     public function take_token(Request $req) {
-        return response()->json([
-            'messsage'      =>  'token save',
-            'token is :'    =>  $req->token
+        app('db')->table('tokens')->insert([
+            'token'=>$req->token
         ]);
     }
 

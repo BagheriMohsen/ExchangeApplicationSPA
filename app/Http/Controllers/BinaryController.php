@@ -43,7 +43,10 @@ class BinaryController extends Controller
             'close'         =>  $request->close
         ]); 
        
-        
+        /**  send push notif with one signal */
+        $users = "App\User"::latest()->get();
+        app('App\Http\Controllers\OneSignal\OneSignalController')
+         ->sendMessage($users);
 
         /** send pusher */
 
