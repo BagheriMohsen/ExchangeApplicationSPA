@@ -42,10 +42,10 @@ class StartingSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         #1.Create Admin User
-        // 'App\User'::create([
-        //     'FullName'      => 'ادمین سایت',
-        //     'phoneNumber'   =>  '09102222222',
-        // ]);
+        'App\User'::create([
+            'FullName'      => 'محسن باقری',
+            'phoneNumber'   =>  '09106769465',
+        ]);
         #2.Create Normal User
         // 'App\User'::create([
         //     'FullName'      => 'کاربر عادی',
@@ -263,9 +263,11 @@ class StartingSeeder extends Seeder
         'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
         'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
         'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
+    
+
+      
 
 
-       
         
     }
     

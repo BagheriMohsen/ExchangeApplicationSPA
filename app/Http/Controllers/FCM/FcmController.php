@@ -33,7 +33,7 @@ class FcmController extends Controller
         $notification = $notificationBuilder->build();
         $data = $dataBuilder->build();
 
-        $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsdW1lbi1qd3QiLCJzdWIiOjE3LCJpYXQiOjE1ODI0NTg4NzgsImV4cCI6MTYxMzk5NDg3OH0.xMqz3wMWcGgiQe_MPv836EnRhIop3ayVi2ZxuNYvPxo";
+        $token = "e67DTUwiBXeqrKmB8b_Teb:APA91bGIR6Wz2WLHBZ7PF2XIxo-TsWA7wnPo3ynX5UXJwbrzIzEoyAPieMcJ5uG3cK60Rzo3oYr6QJDrRrBJwM5zbgZp_VOr7Fz7VRWtR9lxjJPeHZz15UweZTIKoSpu93Age_70aUnU";
        
         $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
         
@@ -81,5 +81,42 @@ class FcmController extends Controller
             'token'=>$req->token
         ]);
     }
+
+
+    public function send_notif_with_php($users , $title , $body) {
+        $url = "https://fcm.googleapis.com/fcm/send";
+    
+        $tokens = array();
+
+        foreach( $users as $user ) {
+            $tokens[] = $user->api_key;
+        }
+        
+        $serverKey = 'AAAAWFyvqJk:APA91bHUHAGKsvl-2SM5G34-RJYJOCHNWN2-zbwQLAKm1bOxFp6Lpd-AemvClgJUbzsGb-_-8x2DVUfW9_PqpFvA_v3lCRrO4ulP-prB75uCqXDV-yCLu1m4S8hGjzvgX2V2pw4JEHya';
+    
+        $title = "Notification title";
+        $body = "Hello I am from Your php server";
+        $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
+        $arrayToSend = array('registration_ids' => $tokens, 'notification' => $notification,'priority'=>'high');
+        $json = json_encode($arrayToSend);
+        $headers = array();
+        $headers[] = 'Content-Type: application/json';
+        $headers[] = 'Authorization: key='. $serverKey;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+        curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+        //Send the request
+        $response = curl_exec($ch);
+        //Close request
+        if ($response === FALSE) {
+        die('FCM Send Error: ' . curl_error($ch));
+        }
+        curl_close($ch);
+
+    }
+
+
 
 }

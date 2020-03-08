@@ -221,9 +221,7 @@ class AuthController extends Controller
         $diff   =   $user->created_at->diffInDays($now);
 
         // store token into api-key 
-        $user->update([
-            'api_key'   =>  $token
-        ]);
+      
 
         // for user free trial
         if($diff > 14){
