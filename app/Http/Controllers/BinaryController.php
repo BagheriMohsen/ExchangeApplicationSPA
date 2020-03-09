@@ -34,8 +34,9 @@ class BinaryController extends Controller
     | Binary Store
     |--------------------------------------------------------------------------
     */
-    public function store(Request $request){
-        'App\Binary'::create([
+    public function store(Request $request) {
+
+        $binary = 'App\Binary'::create([
             'pair'          =>  $request->pair,
             'buy_sell'      =>  $request->buy_sell,
             'time_expire'   =>  $request->time_expire,
@@ -43,7 +44,19 @@ class BinaryController extends Controller
             'close'         =>  $request->close
         ]); 
        
+        /**  send push notif with one signal */
+
         
+        $users = "App\User"::latest()->get();
+      
+        $status = "Ready";
+        
+        $title      =   "Binary : ".$binary->pair;
+        $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
+        
+        
+        return app('App\Http\Controllers\FCM\FcmController')
+         ->send_notif_with_php($users , $title , $content);
 
         /** send pusher */
 
@@ -81,6 +94,26 @@ class BinaryController extends Controller
             'close'         =>  $request->close
         ]);
         $Binary = 'App\Binary'::latest('updated_at')->get();
+        
+        /**  send push notif with one signal */
+        $users = "App\User"::latest()->get();
+  
+        if( $binary->buy_sell == "sell" ) {
+            $status = "B/S/E : Sell "; 
+        }elseif( $binary->buy_sell == "buy" ) {
+            $status = "B/S/E : Buy ";
+        }else{
+            $status = "Ready";
+        }
+        
+        $title      =   "Binary : ".$binary->pair;
+        $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
+        
+        
+        return app('App\Http\Controllers\FCM\FcmController')
+         ->send_notif_with_php($users , $title , $content);
+        
+        
         event(new \App\Events\BinaryNotif($Binary));
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت به روز رسانی شد',200, array($header),JSON_UNESCAPED_UNICODE);
@@ -107,8 +140,22 @@ class BinaryController extends Controller
     public function close(Request $request,$id){
         $binary = 'App\Binary'::findOrFail($id);
         $binary->update(['close'=>1]);
+        
+
+        /**  send push notif with one signal */
+        $users      =   "App\User"::latest()->get();
+        $status     =   "B/S/E : Expire ";
+        $title      =   "Binary : ".$binary->pair;
+        $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
+        
+        
+        return app('App\Http\Controllers\FCM\FcmController')
+         ->send_notif_with_php($users , $title , $content);
+
+
         $Binary = 'App\Binary'::latest('updated_at')->get();
         event(new \App\Events\BinaryNotif($Binary));
+
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);

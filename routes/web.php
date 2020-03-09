@@ -134,9 +134,12 @@ $router->get('/login', ['middleware' => ['cors'], function () {
 
 
 $router->get('/sendFCM','FCM\FcmController@send_notif');
+// $router->get('/sendFCM-topic','FCM\FcmController@send_notif_topic');
 $router->get('/take-fcm-token','FCM\FcmController@take_token');
 
 
+
+$router->get("/take-token/{user_id}","OneSignal\OneSignalController@take_app_token");
 
 
 
