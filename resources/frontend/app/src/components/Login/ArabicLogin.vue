@@ -14,7 +14,7 @@
                       v-model="user.phone"
                       :rules="phoneRules"
                       :counter="11"
-                      label="شماره همراه"
+                      label=" رقم الهاتف"
                       required
                       ></v-text-field>
 
@@ -25,7 +25,7 @@
                       class="mt-3"
                       @click.prevent="receiveCode"
                       >
-                      <span v-if="!loading">ورود</span>
+                      <span v-if="!loading">تسجيل الدخول</span>
                       <clip-loader v-if="loading" :color="'white'" :size="'26px'"></clip-loader>
                       </v-btn>
                       <div v-if="error.info" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error.info}}</div>
@@ -40,7 +40,7 @@
                     <v-text-field
                     dark
                     v-model="code.userInput"
-                    label="کد ارسالی را وارد نمایید"
+                    label="أدخل رمز الإرسال"
                     :counter="4"
                     required
                     ></v-text-field>
@@ -50,14 +50,14 @@
                     class="mt-3"
                     @click.prevent="verifyCode"
                     >
-                    ارسال کد
+                   ارسال الکد
                     </v-btn>
                     <div v-if="error.code" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error.code}}</div>
                 </v-form>
                 </v-col>
                 <v-col cols="12" :class="'text-center'">
                     <router-link color="white" to="/register">
-                      <span class="white--text"> هنوز ثبت نام نکرده اید؟ لطفا اینجا کلیک کنید</span>
+                      <span class="white--text"> غير مسجل حتى الآن؟ الرجاء الضغط هنا</span>
                     </router-link>
                 </v-col>
             </v-row>
@@ -86,9 +86,9 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
       },
       lang:'fa',
       phoneRules: [
-        v => !!v || 'شماره همراه الزامی است',
-        v => /^[0-9]*$/.test(v) || 'شماره همراه معتبر نیست',
-        v => (v && v.length == 11) || 'شماره همراه بایستی 11 رقمی باشد',
+        v => !!v || 'رقم الخلية مطلوب',
+        v => /^[0-9]*$/.test(v) || 'رقم الهاتف غير صالح',
+        v => (v && v.length == 11) || 'يجب أن يكون رقم الخلية 11 رقما',
       ]
     }),
 
@@ -124,7 +124,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
               this.$router.push('/');
             }).catch(err => console.log(err));
         }else{
-          this.error.code = 'رمز وارد شده اشتباه می باشد';
+          this.error.code = 'كلمة المرور التي أدخلتها غير صحيحة';
         }
       }
     },

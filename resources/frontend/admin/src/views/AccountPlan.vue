@@ -9,7 +9,12 @@
 
         <div class="container-fluid mt--7">
             <div class="row">
-                 <div class="col-xl-12 mb-5 mb-xl-0">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                     <card shadow type="secondary">
+                      دسترسی به این بخش محدود شده است
+                    </card>
+                </div>
+                 <!-- <div class="col-xl-12 mb-5 mb-xl-0">
                     <card shadow type="secondary">
                         <div slot="header" class="bg-white row align-items-center">
                             <div class="col">
@@ -95,7 +100,7 @@
                             </tbody>
                         </table>
                     </card>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -192,7 +197,7 @@
         
     },
     created(){
-        this.getPlan();
+        // this.getPlan();
     }
   };
 </script>

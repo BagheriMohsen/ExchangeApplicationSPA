@@ -3,30 +3,30 @@
         <Navbar :user="user"/>
 
         <v-content style="padding-left: 4px;padding-right: 4px;">
-            <button style="display:none" @click="playSound">play</button>
+            <!-- <button style="display:none" @click="playSound">play</button> -->
             <router-view :user="user" @checkToken="checkToken"></router-view>
         </v-content>
 
         <v-dialog v-model="tutorialDialog" max-width="290">
           <v-card class="mx-auto pt-2">
             <v-card-text class="pb-0">
-              لطفاابتدا به لینک زیر رفته و آموزش استفاده از اپلیکیشن را مطالعه فرمایید
+              {{items.dialog}}
             </v-card-text>
             <v-checkbox class="py-0 pr-4"
                 v-model="checkbox"
-                label="دیگر این پیام نشان داده نشود"
+                :label="items.label"
               >
             </v-checkbox>
             <v-card-actions center style="justify-content: center;">
               
               <v-btn color="success" v-on:click="handleRead">
-                <a class="white--text" style="text-decoration: none" href="http://www.sarafi.com">خواندن مقاله</a>
+                <a class="white--text" style="text-decoration: none" href="http://www.sarafi.com"> {{items.read}}</a>
               </v-btn>
-              <v-btn color="info" v-on:click="handleLater">بعدا </v-btn>
+              <v-btn color="info" v-on:click="handleLater">{{items.later}} </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog v-model="notifDialog" max-width="290">
+        <!-- <v-dialog v-model="notifDialog" max-width="290">
           <v-card class="mx-auto pt-2">
             <v-card-text class="pb-0">
             لطفا جهت پخش صدای نوتیف ها کلیک کنید
@@ -35,7 +35,7 @@
               <v-btn @click="handleNotifClick" color="info">فعالسازی </v-btn>
             </v-card-actions>
           </v-card>
-        </v-dialog>
+        </v-dialog> -->
 
 
         <Footer :user="user"/>
@@ -46,7 +46,9 @@
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import Pusher from 'pusher-js'
-// import {OneSignal} from '../main'
+
+var messaging = window.messaging;
+
 export default {
   name: 'App',
   components: {Navbar,Footer},
@@ -55,9 +57,28 @@ export default {
       token:localStorage.getItem('token'),
       user:'',
       audio: new Audio('https://freesound.org/data/previews/66/66136_606715-lq.mp3'),
-      notifDialog:false,
+      // notifDialog:false,
       tutorialDialog: false,
-      checkbox:false
+      checkbox:false,
+      items:{},
+      arabicItems:{
+        dialog: 'لطفاابتدا به لینک زیر رفته و آموزش استفاده از اپلیکیشن را مطالعه فرمایید',
+        label:'دیگر این پیام نشان داده نشود',
+        later:'بعدا',
+        read:'خواندن مقاله'
+      },
+      persianItems:{
+        dialog: 'لطفاابتدا به لینک زیر رفته و آموزش استفاده از اپلیکیشن را مطالعه فرمایید',
+        label:'دیگر این پیام نشان داده نشود',
+        later:'بعدا',
+        read:'خواندن مقاله'
+      },
+      englishItems:{
+        dialog: 'Please go to the link below and read the tutorial on how to use app',
+        label:"Don't show this again",
+        later:'Later',
+        read:'Read now'
+      }
     }
   },
   methods:{
@@ -68,10 +89,12 @@ export default {
           this.$http.get('token',{params:{token:this.token}})
             .then(response => {
               this.user = response.data;
-              this.initOneSignal();
+              this.initFCM();
+              this.checkLanguage();
               this.checkSubscribe();
               }).catch(err => {
                 console.log(err);
+                localStorage.removeItem('token');
                 this.$router.push('/login');
               });
         }
@@ -142,84 +165,36 @@ export default {
         this.tutorialDialog = true
       }
     },
-    handleNotifClick(){
-      this.notifDialog = false;
-      this.audio.play();
-    },
-    playSound(){
-      this.audio.play();
-    },
-    initOneSignal(){
-      var OneSignal = window.OneSignal || [];
-      OneSignal.push(() => {
-        OneSignal.on('subscriptionChange', (isSubscribed) => {
-        console.log("The user's subscription state is now:",isSubscribed);
-          OneSignal.push(()=> {
-            OneSignal.getUserId((userId) => {
-              console.log("OneSignal User ID:", userId);
-              this.$http.get('take-token/' + userId,{
-                params:{
-                  api_key : this.user.api_key
-                }
-              })
-              .then(res=>console.log(res))
-              .catch(err=>console.log(err))
-            });
-          });
-        });
-      });
-
-        OneSignal.push(["init", {
-          appId: "ff1ec971-1cab-4a8e-9225-d3fb2d3ef701",
-          autoRegister: false,
-          promptOptions: {
-              /* My prompt options */
-          },
-          welcomeNotification: {
-              //my options
-          },
-          notifyButton: {
-            enable: true,
-            showCredit: false,
-            prenotify: true,
-            position: 'bottom-left',
-            text: {
-              /*My text options */
-          },
-          colors: { // My custom colors
+    checkLanguage(){
+          if(this.user.language == 'ar'){
+              this.items = this.arabicItems;
+          }else if(this.user.language == 'en'){
+              this.items = this.englishItems;
+          }else{
+              this.items = this.persianItems;
           }
-        }
-      }]);
-      // OneSignal.push(function() {
-      //   OneSignal.init({
-      //     appId: "ff1ec971-1cab-4a8e-9225-d3fb2d3ef701",
-      //   });
-      // });
-      // OneSignal.push(()=>{
-      //   OneSignal.getUserId().then(userId => {
-      //     console.log(userId);
-      //     // this.oneSignalId = userId;
-      //     alert(userId);
-      //     // alert(this.oneSignalId);
-      //   });
-      // });
-      // OneSignal.push(function() {
-      //   OneSignal.on('subscriptionChange', function (isSubscribed) {
-      //   console.log("The user's subscription state is now:",isSubscribed);
-      //     OneSignal.push(function() {
-      //       OneSignal.getUserId(function(userId) {
-      //         console.log("OneSignal User ID:", userId);
-      //         alert(userId);
-      //       });
-      //     });
-      //   });
-      // });
+    },
+    initFCM(){
+      messaging.requestPermission()
+        .then((res)=>{
+            console.log(res,'permission granted')
+            return messaging.getToken();
+        }).then((token)=>{
+            this.$http.get('take-token/' + this.user.id,{
+              params:{
+                api_key : token
+              }
+            }).then(res=>console.log(res))
+              .catch(err=>console.log(err))
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
   },
   mounted(){
     this.checkToken();
-    // this.initOneSignal();
     this.checkUserGuide();
+    // this.initFCM();
   },
   updated(){
   },

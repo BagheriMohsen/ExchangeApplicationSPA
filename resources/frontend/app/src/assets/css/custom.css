@@ -4,6 +4,9 @@
     font-weight: normal;
     font-style: normal
 }
+body{
+  overflow: hidden;
+}
 h1,h2,h3,h4,h5,h6,p,span,a,button,div{
     font-family:Yekan,sans-serif!important;
 }
@@ -61,4 +64,7 @@ html { overflow-y: auto }
   }
   *{
     text-transform: initial;
+  }
+  .v-item-group.v-bottom-navigation{
+    bottom: -3px;
   }

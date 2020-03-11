@@ -34,15 +34,25 @@
       FarxNotif,
     },
     props:{
-        user:Object
+        // user:Object
     },
     data () {
       return {
         notifs:[],
         showNotif: null,
+        user:null,
       }
     },
     methods:{
+      checkToken(){
+        this.$http.get('token',{params:{token:localStorage.getItem('token')}})
+        .then(response => {
+          this.user = response.data;
+          this.checkUserSubscribe();
+        }).catch(err => {
+          console.log(err);
+        });
+      },
       fetchNotif(){
         this.$http.get('forex/AllForex')
           .then(res => {
@@ -73,19 +83,20 @@
         }
       },
     },
-    watch:{
-      user:{
-        immediate:true,
-        handler(){
-          this.checkUserSubscribe();
-        }
-      }
-    },
+    // watch:{
+    //   user:{
+    //     immediate:true,
+    //     handler(){
+    //       this.checkUserSubscribe();
+    //     }
+    //   }
+    // },
     computed:{
 
     },
-    created(){
-      this.checkUserSubscribe();
+    mounted(){
+      this.checkToken();
+      // this.checkUserSubscribe();
       this.fetchNotif();
       this.subscribe();
     },

@@ -18,7 +18,8 @@
         <sidebar-item :link="{name: 'باینری آپشن', icon: 'fas fa-money-check-alt text-light', path: '/binary'}"/>
         <sidebar-item :link="{name: 'مقالات', icon: 'fas fa-newspaper text-light', path: '/articles'}"/>
         <sidebar-item :link="{name: 'لیست ارزها', icon: 'fas fa-list text-light', path: '/add-currency'}"/>
-        <sidebar-item :link="{name: 'اشتراک کاربری', icon: 'fas fa-list text-light', path: '/account-plan'}"/>
+        <sidebar-item :link="{name: 'اشتراک کاربری', icon: 'fas fa-address-card text-light', path: '/account-plan'}"/>
+        <sidebar-item :link="{name: 'کاربران', icon: 'fas fa-user text-light', path: '/users-list'}"/>
         <!-- <sidebar-item :link="{name: 'تیکت ها', icon: 'ni ni-support-16 text-yellow', path: '/tickets'}"/>
         <sidebar-item :link="{name: 'حساب کاربری', icon: 'ni ni-circle-08 text-red', path: '/profile'}"/>
         <sidebar-item :link="{name: 'حساب های بانکی', icon: 'ni ni-credit-card text-green', path: '/bank'}"/> -->

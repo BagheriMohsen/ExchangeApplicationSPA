@@ -11,7 +11,7 @@
                     dark
                     v-model="user.name"
                     :rules="nameRules"
-                    label="نام و نام خانوادگی"
+                    label="الاسم واللقب"
                     required
                   ></v-text-field>
 
@@ -20,7 +20,7 @@
                     v-model="user.phone"
                     :rules="phoneRules"
                     :counter="11"
-                    label="شماره همراه"
+                    label="رقم الهاتف"
                     required
                   ></v-text-field>
 
@@ -31,7 +31,7 @@
                     class="mt-3"
                     @click="receiveCode"
                     >
-                    <span v-show="!loading">عضویت</span>
+                    <span v-show="!loading">العضوية</span>
                     <clip-loader v-if="loading" :color="'white'" :size="'26px'"></clip-loader>
                     </v-btn>
                     <div v-if="error.info" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error.info}}</div>
@@ -46,7 +46,7 @@
                   <v-text-field
                   dark
                   v-model="code.userInput"
-                  label="کد ارسالی را وارد نمایید"
+                  label="أدخل رمز الإرسال"
                   required
                   ></v-text-field>
                   <v-btn
@@ -56,14 +56,14 @@
                   class="mt-3"
                   @click.prevent="verifyCode"
                   >
-                  ارسال کد
+                  ارسال الکد
                   </v-btn>
                   <div v-if="error.code" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error.code}}</div>
               </v-form>
               </v-col>
                 <v-col cols="12" :class="'text-center'">
                   <router-link color="white" to="/login">
-                    <span class="white--text"> قبلا ثبت نام کرده اید؟ اینجا کلیک کنید</span>
+                    <span class="white--text"> مسجل بالفعل؟ اضغط هنا</span>
                   </router-link>
               </v-col>
             </v-row>

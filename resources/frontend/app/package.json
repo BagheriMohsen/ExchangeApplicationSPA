@@ -5,9 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "rm -rf ../../../public/assets/app/{js,css,img} && vue-cli-service build --no-clean",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "capacitor-copy": "vue-cli-service capacitor-copy",
+    "capacitor-init": "vue-cli-service capacitor-init",
+    "capacitor-open": "vue-cli-service capacitor-open",
+    "capacitor-update": "vue-cli-service capacitor-update"
   },
   "dependencies": {
+    "@capacitor/cli": "^1.0.0-alpha.38",
+    "@capacitor/core": "^1.0.0-alpha.38",
     "axios": "^0.19.0",
     "core-js": "^3.4.3",
     "jalali-moment": "^3.3.3",
@@ -18,18 +24,20 @@
     "vue-router": "^3.1.3",
     "vue-simple-alert": "^1.1.1",
     "vue-spinner": "^1.0.3",
-    "vuetify": "^2.1.0"
+    "vuetify": "^2.1.0",
+    "workbox-webpack-plugin": "^5.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-plugin-pwa": "^4.2.2",
+    "@vue/cli-plugin-pwa": "^4.2.3",
     "@vue/cli-service": "^4.1.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
+    "vue-cli-plugin-pwa": "^1.0.0-alpha.1",
     "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-template-compiler": "^2.6.10",
     "vuetify-loader": "^1.3.0"

@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>unique-app</title>
+    <link rel="manifest" href="<%= BASE_URL %>manifest.json">
+   
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"> -->
+    <!-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
     <link rel="stylesheet"  href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'>
   </head>
@@ -16,5 +19,28 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-messaging.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyAFsD8KzVcrkg9eogMoC5PznU0Ztsjes-s",
+    authDomain: "webpush-2096d.firebaseapp.com",
+    databaseURL: "https://webpush-2096d.firebaseio.com",
+    projectId: "webpush-2096d",
+    storageBucket: "webpush-2096d.appspot.com",
+    messagingSenderId: "379512137881",
+    appId: "1:379512137881:web:d07cfc5ee290feb1a1f008",
+    measurementId: "G-7EQFJSDNNM"
+  };
+  // Initialize Firebase
+  var firebase = window.firebase || [];
+  firebase.initializeApp(firebaseConfig);
+  var messaging = firebase.messaging();
+  navigator.serviceWorker.register('./firebase-messaging-sw.js')
+  .then((registration) => {
+    messaging.useServiceWorker(registration);
+  });
+</script>
   </body>
 </html>

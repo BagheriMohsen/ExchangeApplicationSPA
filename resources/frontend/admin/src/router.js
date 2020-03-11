@@ -36,6 +36,11 @@ export default new Router({
           path: '/account-plan',
           name: ' اشتراک ',
           component: () => import(/* webpackChunkName: "demo" */ './views/AccountPlan.vue')
+        },
+        {
+          path: '/users-list',
+          name: ' کاربران ',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Users.vue')
         }
       ]
     }

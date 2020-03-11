@@ -25,7 +25,7 @@
                       class="mt-3"
                       @click.prevent="receiveCode"
                       >
-                      <span v-if="!loading">ورود</span>
+                      <span v-if="!loading">Login</span>
                       <clip-loader v-if="loading" :color="'white'" :size="'26px'"></clip-loader>
                       </v-btn>
                       <div v-if="error.info" class="error mt-3 py-1 white--text" style="font-size:.8rem">{{error.info}}</div>

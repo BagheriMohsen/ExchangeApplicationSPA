@@ -31,7 +31,11 @@
             <v-list>
                 <v-list-item>
                     <v-list-item-content >
-                        <v-list-item-title class="caption"> {{user.fullName}}</v-list-item-title>
+                        <v-list-item-title
+                            class="caption"
+                            style="font-size:16px!important;font-weight:bold">
+                            {{user.fullName}}
+                        </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item  v-for="item in items" :key="item.title" link router :to='item.route'
@@ -65,22 +69,25 @@ export default {
         return{
             test:false,
             persianItems: [
+                { title: 'خرید اشتراک ', icon: 'payment', route:'/subscription'},
                 { title: 'درباره ی ما', icon: 'info',route:'/about' },
                 { title: 'تماس با ما', icon: 'contacts', route:'/contact' },
-                { title: 'عضویت ', icon: 'assignment_turned_in', route:'/register'},
-                { title: 'اشتراک ', icon: 'payment', route:'/subscription'}
+                // { title: 'عضویت ', icon: 'assignment_turned_in', route:'/register'},
+               
             ],
             englishItems: [
+                { title: 'Buy account ', icon: 'payment', route:'/subscription'},
                 { title: 'About Us', icon: 'info',route:'/about' },
                 { title: 'Contact Us', icon: 'contacts', route:'/contact' },
-                { title: 'Register', icon: 'assignment_turned_in', route:'/register'},
-                { title: 'Subscription ', icon: 'payment', route:'/subscription'}
+                // { title: 'Register', icon: 'assignment_turned_in', route:'/register'},
+                
             ],
             arabicItems: [
-                { title: 'معلومات عنا', icon: 'info',route:'/about' },
-                { title: 'اتصل بنا', icon: 'contacts', route:'/contact' },
-                { title: 'تسجيل', icon: 'assignment_turned_in', route:'/register'},
-                { title: 'اشتراك ', icon: 'payment', route:'/subscription'}
+                { title: 'الاشتراک ', icon: 'payment', route:'/subscription'},
+                { title: 'خصوصیاتنا', icon: 'info',route:'/about' },
+                { title: 'الاتصال بنا', icon: 'contacts', route:'/contact' },
+                // { title: 'تسجيل', icon: 'assignment_turned_in', route:'/register'},
+                
             ],
             items:'',
             persianExit:'خروج',

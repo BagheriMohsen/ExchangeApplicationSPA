@@ -7,13 +7,18 @@ import '@/assets/css/custom.css';
 import VueSimpleAlert from "vue-simple-alert";
 import './registerServiceWorker'
 
+
+
+
+
+
 Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://app.utsignal.com/'
+axios.defaults.baseURL = 'http://localhost:8000/'
 Vue.prototype.$http = axios
 
-export var OneSignal = window.OneSignal || [];
+// export var OneSignal = window.OneSignal || [];
 
 new Vue({
   router,

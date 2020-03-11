@@ -1,6 +1,5 @@
 <template>
     <section>
-       
         <div v-if="showNotif == 'show'" class="container-fluid">
             <div class="row">
                 <div class="col-12" v-for="notif in notifs" v-bind:key="notif.id">
@@ -32,7 +31,7 @@
 
   export default {
     props:{
-      user:Object
+      // user:Object
     },
     components:{
       BinaryNotif
@@ -41,9 +40,20 @@
       return {
         notifs:[],
         showNotif: null,
+        user:null
       }
     },
     methods:{
+      checkToken(){
+        this.$http.get('token',{params:{token:localStorage.getItem('token')}})
+        .then(response => {
+          this.user = response.data;
+          this.checkUserSubscribe();
+          console.log(this.user);
+        }).catch(err => {
+          console.log(err);
+        });
+      },
       fetchNotif(){
         this.$http.get('binaries/AllBinaries')
           .then(res => {
@@ -74,16 +84,17 @@
         }
       }
     },
-    watch:{
-      user:{
-        immediate:true,
-        handler(){
-          this.checkUserSubscribe();
-        }
-      }
-    },
-    created () {
-      this.checkUserSubscribe();
+    // watch:{
+    //   user:{
+    //     immediate:true,
+    //     handler(){
+    //       this.checkUserSubscribe();
+    //     }
+    //   }
+    // },
+    mounted () {
+      this.checkToken();
+      // this.checkUserSubscribe();
       this.fetchNotif();
       this.subscribe();
     },
