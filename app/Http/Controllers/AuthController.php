@@ -103,6 +103,7 @@ class AuthController extends Controller
         // $DigitValidate  =   $request->FourDigitRandom;
         $user_id        =   $request->user_id;   
         $user = 'App\User'::findOrFail($request->user_id);
+        $user->update(['login_status'=>True]);
             return response()->json([
                 'token' => $this->jwt($user)
             ], 200);
@@ -136,7 +137,7 @@ class AuthController extends Controller
             $login_status_message .= 'لطفا در صورت بروز مشکل با بخش پشتیبانی اپلیکیشن تماس بگیرید';
             return response()->json($login_status_message,200, array($header),JSON_UNESCAPED_UNICODE);
         }
-        $user->update(['login_status'=>True]);
+       
         //create random four digit number
         $FourDigitRandom = rand(1000,9999);
         
@@ -224,7 +225,7 @@ class AuthController extends Controller
       
 
         // for user free trial
-        if($diff > 14){
+        if($diff > 7){
             $user->update([
                 'freeTime'  =>  False
             ]);
@@ -238,6 +239,7 @@ class AuthController extends Controller
             if(strpos($diffPlan, 'before') == True){
                 
                 'App\PlanUserExpire'::create([
+                    'type'          =>  $plan->type,
                     'plan_id'       =>  $plan->plan_id,
                     'user_id'       =>  $plan->user_id,
                     'expireTime'    =>  $plan->expireTime,

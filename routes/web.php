@@ -110,13 +110,24 @@ $router->group(['middleware'=>'cors','prefix' => '/plans/','as'=>'plans.'], func
 });
 /*
 |--------------------------------------------------------------------------
-| User Panel Routes
+| Push Notif Panel Routes
 |--------------------------------------------------------------------------
 */
 $router->group(['middleware'=>'cors','prefix' => '/push/','as'=>'push.'], function () use ($router) {
     Route::get('send','PushNotifsController@send_for_push');
     Route::get('call_python','PushNotifsController@call_python');
 });
+
+/*
+|--------------------------------------------------------------------------
+| User Panel Routes
+|--------------------------------------------------------------------------
+*/
+$router->group(['middleware'=>'cors','prefix' => '/users/','as'=>'users.'], function () use ($router) {
+    Route::get('','UserController@all_users');
+    Route::get('users-who-buied/','UserController@users_who_buied');
+});
+
 /*
 |--------------------------------------------------------------------------
 | User Panel Routes

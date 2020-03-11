@@ -72,16 +72,39 @@ class ForexController extends Controller
         ]);
 
 
-       
+      /** Find User who but binary plan  */
+      $user_ids = "App\PlanUser"::where("type","forex")
+      ->orWhere("type","both")
+      ->get("user_id");
+      $users_id = "App\User"::where("freeTime",True)->get("id");
+      $user_ids = $user_ids->merge($users_id);
+      $user_ids = $user_ids->all();
 
-        // if($new_forex->buy_sell == 1){
-        //     $body = "خرید";
-        // }else{
-        //     $body = "فروش";
-        // }
+      $users = array();
+      foreach( $user_ids as $user_id ) {
 
-        // app('App\Http\Controllers\FCM\FcmController')
-        // ->send_notif_topic($new_forex->pair,$body);
+          if( isset( $user_id->user_id ) ){
+              $users[] = "App\User"::findOrFail($user_id->user_id);
+          }elseif( isset( $user_id->id ) ) {
+              $users[] = "App\User"::findOrFail($user_id->id);
+          }
+          
+      }
+
+      /**  send push notif with one signal */
+      if( $new_forex->buy_sell == "sell" ) {
+          $status = "B/S/E : Sell "; 
+      }elseif( $new_forex->buy_sell == "buy" ) {
+          $status = "B/S/E : Buy ";
+      }else{
+          $status = "Ready";
+      }
+      
+      $title      =   "Forex : ".$new_forex->pair;
+      $content    =   "Trading Info : T.T.:".$new_forex->time_expire." min ".$status;
+      
+      return app('App\Http\Controllers\FCM\FcmController')
+       ->send_notif_with_php($users , $title , $content);
 
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
@@ -130,6 +153,44 @@ class ForexController extends Controller
             'en_desc'           =>  $request->en_desc
 
         ]);
+
+
+
+    /** Find User who but binary plan  */
+    $user_ids = "App\PlanUser"::where("type","forex")
+    ->orWhere("type","both")
+    ->get("user_id");
+    $users_id = "App\User"::where("freeTime",True)->get("id");
+    $user_ids = $user_ids->merge($users_id);
+    $user_ids = $user_ids->all();
+
+    $users = array();
+    foreach( $user_ids as $user_id ) {
+
+        if( isset( $user_id->user_id ) ){
+            $users[] = "App\User"::findOrFail($user_id->user_id);
+        }elseif( isset( $user_id->id ) ) {
+            $users[] = "App\User"::findOrFail($user_id->id);
+        }
+        
+    }
+
+      /**  send push notif with one signal */
+  
+      $status = $forex->forexCategory->name;
+     
+      
+      $title      =   "Forex : ".$forex->pair;
+      $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
+      
+      return app('App\Http\Controllers\FCM\FcmController')
+       ->send_notif_with_php($users , $title , $content);
+
+
+
+
+
+
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))->latest('updated_at')->get();
@@ -145,6 +206,45 @@ class ForexController extends Controller
     public function forexExpire(Request $request,$id){
         $forex = 'App\Forex'::findOrFail($id);
         $forex->update(['expire'=>1]);
+
+
+
+       /** Find User who but binary plan  */
+       $user_ids = "App\PlanUser"::where("type","forex")
+       ->orWhere("type","both")
+       ->get("user_id");
+       $users_id = "App\User"::where("freeTime",True)->get("id");
+       $user_ids = $user_ids->merge($users_id);
+       $user_ids = $user_ids->all();
+ 
+       $users = array();
+       foreach( $user_ids as $user_id ) {
+ 
+           if( isset( $user_id->user_id ) ){
+               $users[] = "App\User"::findOrFail($user_id->user_id);
+           }elseif( isset( $user_id->id ) ) {
+               $users[] = "App\User"::findOrFail($user_id->id);
+           }
+           
+       }
+
+      /**  send push notif with one signal */
+     
+      $status = "Expire";
+  
+      $title      =   "Forex : ".$forex->pair;
+      $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
+      
+      return app('App\Http\Controllers\FCM\FcmController')
+       ->send_notif_with_php($users , $title , $content);
+
+
+
+
+
+
+
+
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))->latest('updated_at')->get();
@@ -161,6 +261,46 @@ class ForexController extends Controller
     public function forexClose(Request $request,$id){
         $forex = 'App\Forex'::findOrFail($id);
         $forex->update(['close'=>1]);
+
+
+
+
+
+      /** Find User who but binary plan  */
+      $user_ids = "App\PlanUser"::where("type","forex")
+      ->orWhere("type","both")
+      ->get("user_id");
+      $users_id = "App\User"::where("freeTime",True)->get("id");
+      $user_ids = $user_ids->merge($users_id);
+      $user_ids = $user_ids->all();
+
+      $users = array();
+      foreach( $user_ids as $user_id ) {
+
+          if( isset( $user_id->user_id ) ){
+              $users[] = "App\User"::findOrFail($user_id->user_id);
+          }elseif( isset( $user_id->id ) ) {
+              $users[] = "App\User"::findOrFail($user_id->id);
+          }
+          
+      }
+
+      /**  send push notif with one signal */
+     
+      $status = "close";
+  
+      $title      =   "Forex : ".$forex->pair;
+      $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
+      
+      return app('App\Http\Controllers\FCM\FcmController')
+       ->send_notif_with_php($users , $title , $content);
+
+
+
+
+
+
+
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))->latest('updated_at')->get();

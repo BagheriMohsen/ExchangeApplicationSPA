@@ -21,14 +21,15 @@ class StartingSeeder extends Seeder
             'name'          =>  'عباس',
             'family'        =>  'ملکی',
             'username'      =>  'abbasmaleki',
-            'password'      =>  Hash::make('  uWIEbjp1V7Y/x16z'),
+            'password'      =>   Hash::make('  uWIEbjp1V7Y/x16z'),
         ]);
+        
         #1.Create Admin
         'App\AdminUser'::create([
             'name'          =>  'ابوالفضل',
             'family'        =>  'ملکی',
             'username'      =>  'abolfazlmaleki',
-            'password'      =>  Hash::make('  LHGyug1?56ikjnmtg'),
+            'password'      =>   Hash::make('  LHGyug1?56ikjnmtg'),
         ]);
 
         #3.Create Admin
@@ -263,9 +264,95 @@ class StartingSeeder extends Seeder
         'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
         'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
         'App\Currency'::create(['name'=>'eu-ok','type_id'=>2]);
-    
+            
+        /*
+        |--------------------------------------------------------------------------
+        | Plan
+        |--------------------------------------------------------------------------
+        */
+        #1
+        "App\Plan"::create([
+            'type'          =>  "binary",
+            'title'         =>  "باینری آپشن",
+            'price'         =>  500000,
+            'expire_day'    =>  30,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
 
-      
+        #2
+        "App\Plan"::create([
+            'type'          =>  "binary",
+            'title'         =>  "باینری آپشن",
+            'price'         =>  1350000,
+            'expire_day'    =>  90,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
+        #3
+        "App\Plan"::create([
+            'type'          =>  "binary",
+            'title'         =>  "باینری آپشن",
+            'price'         =>  4800000,
+            'expire_day'    =>  365,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
+        // forex
+        #4
+        "App\Plan"::create([
+            'type'          =>  "forex",
+            'title'         =>  "فارکس",
+            'price'         =>  500000,
+            'expire_day'    =>  30,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
+        #5
+        "App\Plan"::create([
+            'type'          =>  "forex",
+            'title'         =>  "فارکس",
+            'price'         =>  1350000,
+            'expire_day'    =>  90,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
+        #6
+        "App\Plan"::create([
+            'type'          =>  "forex",
+            'title'         =>  "فارکس",
+            'price'         =>  4800000,
+            'expire_day'    =>  365,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
+        // Both
+         #6
+         "App\Plan"::create([
+            'type'          =>  "both",
+            'title'         =>  "باینری و فارکس",
+            'price'         =>  500000,
+            'expire_day'    =>  30,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
+         #7
+         "App\Plan"::create([
+            'type'          =>  "both",
+            'title'         =>  "باینری و فارکس",
+            'price'         =>  1350000,
+            'expire_day'    =>  90,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
+         #8
+         "App\Plan"::create([
+            'type'          =>  "both",
+            'title'         =>  "باینری و فارکس",
+            'price'         =>  4800000,
+            'expire_day'    =>  365,
+            'desc'          =>  "توضیحات در مورد این پلن"
+        ]);
+
 
 
         

@@ -30,7 +30,7 @@ class PlanController extends Controller
             'type'              =>  $request->type,
             'title'             =>  $request->title,
             'price'             =>  $request->price,
-            'expireDay'         =>  $request->expireDay,
+            'expire_day'        =>  $request->expireDay,
             'desc'              =>  $request->desc
         ]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
@@ -57,7 +57,7 @@ class PlanController extends Controller
             'type'              =>  $request->type,
             'title'             =>  $request->title,
             'price'             =>  $request->price,
-            'expireDay'         =>  $request->expireDay,
+            'expire_day'         =>  $request->expireDay,
             'desc'              =>  $request->desc
         ]);
         $header = ['Content-Type' => 'application/json;charset=utf8'];
@@ -80,9 +80,13 @@ class PlanController extends Controller
     */
     public function StorePlanForUser(Request $request,$id){
         $plan = Plan::findOrFail($id);
-        $expireTime = Carbon::now()->addDays($plan->expireDay);
+        $expireTime = Carbon::now()->addDays($plan->expire_day);
         
+        $user = "App\User"::findOrFail($request->user_id);
+        $user->update(['freeTime'=>False]);
+
         PlanUser::create([
+            'type'          =>  $plan->type,
             'plan_id'       =>  $id,
             'user_id'       =>  $request->user_id,
             'expireTime'    =>  $expireTime,

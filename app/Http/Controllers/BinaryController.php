@@ -18,6 +18,7 @@ class BinaryController extends Controller
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | All Binaries
@@ -29,6 +30,7 @@ class BinaryController extends Controller
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json($binaries,200, array($header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | Binary Store
@@ -43,12 +45,41 @@ class BinaryController extends Controller
             'endTime'       =>  $request->endTime,
             'close'         =>  $request->close
         ]); 
+    
+
+        /** Find User who but binary plan  */
+        $user_ids = "App\PlanUser"::where("type","binary")
+        ->orWhere("type","both")
+        ->get("user_id");
+        $users_id = "App\User"::where("freeTime",True)->get("id");
+        $user_ids = $user_ids->merge($users_id);
+        $user_ids = $user_ids->all();
+
+        $users = array();
+        foreach( $user_ids as $user_id ) {
+
+            if( isset( $user_id->user_id ) ){
+                $users[] = "App\User"::findOrFail($user_id->user_id);
+            }elseif( isset( $user_id->id ) ) {
+                $users[] = "App\User"::findOrFail($user_id->id);
+            }
+            
+        }
+
+        $users = array();
+        foreach( $user_ids as $user_id ) {
+
+            if( isset( $user_id->user_id ) ){
+                $users[] = "App\User"::findOrFail($user_id->user_id);
+            }elseif( isset( $user_id->id ) ) {
+                $users[] = "App\User"::findOrFail($user_id->id);
+            }
+            
+        }
        
         /**  send push notif with one signal */
 
         
-        $users = "App\User"::latest()->get();
-      
         $status = "Ready";
         
         $title      =   "Binary : ".$binary->pair;
@@ -67,6 +98,7 @@ class BinaryController extends Controller
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('باینری با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | Binary Edit
@@ -79,6 +111,7 @@ class BinaryController extends Controller
         return response()->json($binary,200, array($header),JSON_UNESCAPED_UNICODE);
         
     }
+
     /*
     |--------------------------------------------------------------------------
     | Binary Update
@@ -95,9 +128,26 @@ class BinaryController extends Controller
         ]);
         $Binary = 'App\Binary'::latest('updated_at')->get();
         
+        /** Find User who but binary plan  */
+        $user_ids = "App\PlanUser"::where("type","binary")
+        ->orWhere("type","both")
+        ->get("user_id");
+        $users_id = "App\User"::where("freeTime",True)->get("id");
+        $user_ids = $user_ids->merge($users_id);
+        $user_ids = $user_ids->all();
+
+        $users = array();
+        foreach( $user_ids as $user_id ) {
+
+            if( isset( $user_id->user_id ) ){
+                $users[] = "App\User"::findOrFail($user_id->user_id);
+            }elseif( isset( $user_id->id ) ) {
+                $users[] = "App\User"::findOrFail($user_id->id);
+            }
+            
+        }
+
         /**  send push notif with one signal */
-        $users = "App\User"::latest()->get();
-  
         if( $binary->buy_sell == "sell" ) {
             $status = "B/S/E : Sell "; 
         }elseif( $binary->buy_sell == "buy" ) {
@@ -109,7 +159,6 @@ class BinaryController extends Controller
         $title      =   "Binary : ".$binary->pair;
         $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
         
-        
         return app('App\Http\Controllers\FCM\FcmController')
          ->send_notif_with_php($users , $title , $content);
         
@@ -119,6 +168,7 @@ class BinaryController extends Controller
         return response()->json('با موفقیت به روز رسانی شد',200, array($header),JSON_UNESCAPED_UNICODE);
         
     }
+    
     /*
     |--------------------------------------------------------------------------
     | Binary Delete
@@ -132,6 +182,7 @@ class BinaryController extends Controller
         return response()->json('با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
         
     }
+
     /*
     |--------------------------------------------------------------------------
     | Binary close
@@ -141,9 +192,25 @@ class BinaryController extends Controller
         $binary = 'App\Binary'::findOrFail($id);
         $binary->update(['close'=>1]);
         
+        /** Find User who but binary plan  */
+        $user_ids = "App\PlanUser"::where("type","binary")
+        ->orWhere("type","both")
+        ->get("user_id");
+        $users_id = "App\User"::where("freeTime",True)->get("id");
+        $user_ids = $user_ids->merge($users_id);
+        $user_ids = $user_ids->all();
 
+        $users = array();
+        foreach( $user_ids as $user_id ) {
+
+            if( isset( $user_id->user_id ) ){
+                $users[] = "App\User"::findOrFail($user_id->user_id);
+            }elseif( isset( $user_id->id ) ) {
+                $users[] = "App\User"::findOrFail($user_id->id);
+            }
+            
+        }
         /**  send push notif with one signal */
-        $users      =   "App\User"::latest()->get();
         $status     =   "B/S/E : Expire ";
         $title      =   "Binary : ".$binary->pair;
         $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
@@ -160,6 +227,7 @@ class BinaryController extends Controller
         $header = ['Content-Type' => 'application/json;charset=utf8'];
         return response()->json('با موفقیت حذف شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
+    
     /*
     |--------------------------------------------------------------------------
     | List of binary close
