@@ -9,6 +9,7 @@ class PlanUser extends Model
     protected $table = 'plan_user';
     public $timestamps = false;
     protected $fillable = [
+        'type',
         'plan_id',
         'user_id',
         'expireTime',

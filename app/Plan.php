@@ -9,8 +9,9 @@ class Plan extends Model
     protected $fillable = [
         'type',
         'title',
+        'image',
         'price',
-        'expireTime',
+        'expire_day',
         'desc'
     ];
 

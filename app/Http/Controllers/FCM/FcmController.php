@@ -92,12 +92,31 @@ class FcmController extends Controller
             $tokens[] = $user->api_key;
         }
         
+
+        $image = base_path()."/img/logo-for-splash-screen.png";
+
         $serverKey = 'AAAAWFyvqJk:APA91bHUHAGKsvl-2SM5G34-RJYJOCHNWN2-zbwQLAKm1bOxFp6Lpd-AemvClgJUbzsGb-_-8x2DVUfW9_PqpFvA_v3lCRrO4ulP-prB75uCqXDV-yCLu1m4S8hGjzvgX2V2pw4JEHya';
-    
-        $title = "Notification title";
-        $body = "Hello I am from Your php server";
-        $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
-        $arrayToSend = array('registration_ids' => $tokens, 'notification' => $notification,'priority'=>'high');
+
+        $notification = array(
+            'title'         =>  $title ,
+            'body'          =>  $body,
+            "icon"          =>  "ic_launcher",
+            'sound'         =>  'default',
+            'badge'         =>  '1',
+            'click_action'  =>  '',
+            'image'         =>  $image
+        );
+
+        $data = array(
+            'image' => $title 
+        );
+
+        $arrayToSend = array(
+            'registration_ids'  =>  $tokens,
+             'notification'     =>  $notification,
+             "data"             =>  $data,
+             'priority'         =>  'high'
+        );
         $json = json_encode($arrayToSend);
         $headers = array();
         $headers[] = 'Content-Type: application/json';
