@@ -83,7 +83,7 @@ class FcmController extends Controller
     }
 
 
-    public function send_notif_with_php($users , $title , $body) {
+    public function send_notif_with_php($users , $title , $body, $url) {
         $url = "https://fcm.googleapis.com/fcm/send";
     
         $tokens = array();
@@ -93,28 +93,23 @@ class FcmController extends Controller
         }
         
 
-        $image = base_path()."/img/logo-for-splash-screen.png";
+        $image = "https://app.utsignal.com/img/logo-for-splash-screen.png";
 
         $serverKey = 'AAAAWFyvqJk:APA91bHUHAGKsvl-2SM5G34-RJYJOCHNWN2-zbwQLAKm1bOxFp6Lpd-AemvClgJUbzsGb-_-8x2DVUfW9_PqpFvA_v3lCRrO4ulP-prB75uCqXDV-yCLu1m4S8hGjzvgX2V2pw4JEHya';
+
 
         $notification = array(
             'title'         =>  $title ,
             'body'          =>  $body,
-            "icon"          =>  "ic_launcher",
+            "icon"          =>  $image,
             'sound'         =>  'default',
             'badge'         =>  '1',
-            'click_action'  =>  '',
-            'image'         =>  $image
-        );
-
-        $data = array(
-            'image' => $title 
+            'click_action'  =>  $url,
         );
 
         $arrayToSend = array(
             'registration_ids'  =>  $tokens,
              'notification'     =>  $notification,
-             "data"             =>  $data,
              'priority'         =>  'high'
         );
         $json = json_encode($arrayToSend);

@@ -99,12 +99,12 @@ class ForexController extends Controller
       }else{
           $status = "Ready";
       }
-      
+      $url = "https://app.utsignal.com/#/farx";
       $title      =   "Forex : ".$new_forex->pair;
       $content    =   "Trading Info : T.T.:".$new_forex->time_expire." min ".$status;
       
       return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content);
+       ->send_notif_with_php($users , $title , $content, $url);
 
         $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
             $query->select('id','name');
@@ -179,12 +179,12 @@ class ForexController extends Controller
   
       $status = $forex->forexCategory->name;
      
-      
+      $url = "https://app.utsignal.com/#/farx";
       $title      =   "Forex : ".$forex->pair;
       $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
       
       return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content);
+       ->send_notif_with_php($users , $title , $content, $url);
 
 
 
@@ -231,12 +231,12 @@ class ForexController extends Controller
       /**  send push notif with one signal */
      
       $status = "Expire";
-  
+      $url = "https://app.utsignal.com/#/farx";
       $title      =   "Forex : ".$forex->pair;
       $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
       
       return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content);
+       ->send_notif_with_php($users , $title , $content, $url);
 
 
 
@@ -288,12 +288,12 @@ class ForexController extends Controller
       /**  send push notif with one signal */
      
       $status = "close";
-  
+      $url = "https://app.utsignal.com/#/farx";
       $title      =   "Forex : ".$forex->pair;
       $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
       
       return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content);
+       ->send_notif_with_php($users , $title , $content, $url);
 
 
 

@@ -81,13 +81,13 @@ class BinaryController extends Controller
 
         
         $status = "Ready";
-        
+        $url = "https://app.utsignal.com/#/binary";
         $title      =   "Binary : ".$binary->pair;
         $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
         
         
         return app('App\Http\Controllers\FCM\FcmController')
-         ->send_notif_with_php($users , $title , $content);
+         ->send_notif_with_php($users , $title , $content, $url);
 
         /** send pusher */
 
@@ -155,12 +155,12 @@ class BinaryController extends Controller
         }else{
             $status = "Ready";
         }
-        
+        $url = "https://app.utsignal.com/#/binary";
         $title      =   "Binary : ".$binary->pair;
         $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
         
         return app('App\Http\Controllers\FCM\FcmController')
-         ->send_notif_with_php($users , $title , $content);
+         ->send_notif_with_php($users , $title , $content, $url);
         
         
         event(new \App\Events\BinaryNotif($Binary));
@@ -211,13 +211,14 @@ class BinaryController extends Controller
             
         }
         /**  send push notif with one signal */
+        $url = "https://app.utsignal.com/#/binary";
         $status     =   "B/S/E : Expire ";
         $title      =   "Binary : ".$binary->pair;
         $content    =   "Trading Info : T.T.:".$binary->time_expire." min ".$status;
         
         
         return app('App\Http\Controllers\FCM\FcmController')
-         ->send_notif_with_php($users , $title , $content);
+         ->send_notif_with_php($users , $title , $content, $url);
 
 
         $Binary = 'App\Binary'::latest('updated_at')->get();

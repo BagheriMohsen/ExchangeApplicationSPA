@@ -29,7 +29,8 @@ class UserController extends Controller
     */
     public function users_who_buied() {
 
-        $users = "App\PlanUser"::with(["user","plan"])->latest()->get();
+        $users = "App\PlanUser"::with(["plan","user"])->latest()->get();
+
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
 
