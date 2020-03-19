@@ -26,17 +26,26 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <!-- <v-dialog v-model="notifDialog" max-width="290">
+        <v-dialog v-model="notifDialog" max-width="290">
           <v-card class="mx-auto pt-2">
             <v-card-text class="pb-0">
-            لطفا جهت پخش صدای نوتیف ها کلیک کنید
+         لطفا امکان ارسال نوتیفیکیشن را با فشردن دکمه زیر حتما فعال کنید تا از آخرین سیگنال های ما سریعا مطلع شوید
             </v-card-text>
             <v-card-actions center style="justify-content: center;">
               <v-btn @click="handleNotifClick" color="info">فعالسازی </v-btn>
             </v-card-actions>
           </v-card>
-        </v-dialog> -->
+        </v-dialog>
 
+        <v-dialog v-model="notifDialogDenied" max-width="290">
+          <v-card class="mx-auto pt-2">
+            <v-card-text class="pb-0">
+              امکان ارسال نوتیفیکشن در دستگاه شما محدود شده است، لطفا طبق آموزش زیر حتما امکان ارسال نوتیفیکیشن را بدهید
+            </v-card-text>
+            <v-card-actions center style="justify-content: center;">
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
         <Footer :user="user"/>
     </div>
@@ -57,7 +66,8 @@ export default {
       token:localStorage.getItem('token'),
       user:'',
       audio: new Audio('https://freesound.org/data/previews/66/66136_606715-lq.mp3'),
-      // notifDialog:false,
+      notifDialog:false,
+      notifDialogDenied:false,
       tutorialDialog: false,
       checkbox:false,
       items:{},
@@ -89,7 +99,8 @@ export default {
           this.$http.get('token',{params:{token:this.token}})
             .then(response => {
               this.user = response.data;
-              this.initFCM();
+              this.checkNotifSetting();
+              // this.initFCM();
               this.checkLanguage();
               this.checkSubscribe();
               }).catch(err => {
@@ -103,7 +114,6 @@ export default {
       if(this.user.freeTime){
         this.farxSubscribe();
         this.binarySubscribe();
-        this.notifDialog = true;
       }else{
         let planList =[]
         this.user.plans.forEach(function(item){
@@ -112,17 +122,13 @@ export default {
         if(planList.includes('forex') && planList.includes('binary')){
           this.farxSubscribe();
           this.binarySubscribe();
-          this.notifDialog = true;
         }else if(planList.includes('both')){
           this.farxSubscribe();
           this.binarySubscribe();
-          this.notifDialog = true;
         }else if(planList.includes('forex')){
           this.farxSubscribe();
-          this.notifDialog = true;
         }else if(planList.includes('binary')){
           this.binarySubscribe();
-          this.notifDialog = true;
         }
       }
     },
@@ -189,6 +195,21 @@ export default {
         }).catch((err)=>{
             console.log(err)
         })
+    },
+    checkNotifSetting(){
+      console.log(window.Notification.permission);
+      var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+      if(Notification.permission === 'granted'){
+        this.initFCM();
+      }else if(Notification.permission === 'denied'){
+        this.notifDialogDenied = true;
+      }else{
+        this.notifDialog = true;
+      }
+    },
+    handleNotifClick(){
+      this.notifDialog = false;
+      this.initFCM();
     }
   },
   mounted(){

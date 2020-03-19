@@ -14,16 +14,32 @@ var firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const messaging = firebase.messaging();
-
+  messaging.setBackgroundMessageHandler(function(payload) {
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+    // Customize notification here
+    // alert('test');
+    const notificationTitle = payload.data.title;
+    const notificationOptions = {
+      body: payload.data.body,
+      icon: './img/icons/icon-192x192.png',
+      badge: './img/icons/icon-72x72.png'
+    };
+  
+    return self.registration.showNotification(notificationTitle,
+      notificationOptions);
+  });
+  
 
 
   
 
 
+
+
   importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
   importScripts(
-    "/precache-manifest.1b2f4ed947517533114764f9a33de4be.js"
+    "/precache-manifest.72ed1c3d5d5ea023d27975068bcd43d1.js"
   );
   
   workbox.core.setCacheNameDetails({prefix: "unique-app"});
@@ -41,5 +57,4 @@ var firebaseConfig = {
    */
   self.__precacheManifest = [].concat(self.__precacheManifest || []);
   workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-  
   
