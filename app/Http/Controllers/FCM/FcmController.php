@@ -91,7 +91,7 @@ class FcmController extends Controller
         foreach( $users as $user ) {
             $tokens[] = $user->api_key;
         }
-        
+    
 
         $image = "https://app.utsignal.com/img/logo-for-splash-screen.png";
 

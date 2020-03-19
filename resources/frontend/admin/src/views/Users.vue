@@ -23,6 +23,25 @@
                         <div class="col-12" v-if="usersType === 'subscribed'">
                             <v-client-table :data="subscribed.tableData" :columns="subscribed.columns" :options="subscribed.options"/>
                         </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                              <li class="page-item" 
+                                :class="{'disabled':!pagination.prev_page_url}">
+                                
+                                <a @click.prevent="prevPage"  class="page-link" href="#"><i class="ni ni-curved-next"></i></a>
+                              </li>
+                              <li v-for="page in pages"
+                                v-bind:key="page" 
+                                class="page-item" 
+                                :class="{'active': pagination.current_page == page,'disabled':pagination.current_page == page}">
+                                <a @click.prevent="goToPage(page)" class="page-link" href="#">{{page}}</a>
+                              </li>
+                              <li class="page-item" 
+                                :class="{'disabled':!pagination.next_page_url}">
+                                <a @click.prevent="nextPage"  class="page-link" href="#"><i class="ni ni-curved-next" style="transform: scaleX(-1);"></i></a>
+                              </li>
+                            </ul>
+                        </nav>
                     </card>
                 </div>
             </div>
@@ -44,21 +63,22 @@ export default {
                 columns: ["id","fullName","phoneNumber","language","freeTime","login_status"],
                 tableData: [],
                 options: {
-                    // see the options API
+                    filterable:false,
                 },
             },
             subscribed:{
                 columns: ["id","fullName","phoneNumber","plan"],
                 tableData: [],
                 options: {
-                    // see the options API
+                    filterable:false,
                 },
-            }
-            
+            },
+            pagination:'',
         }
     },
     methods: {
         sortSubscribedUsers(users){
+            this.subscribed.tableData = [];
             users.forEach((user)=>{
                 let object = [];
                 object.id = user.user.id;
@@ -67,20 +87,83 @@ export default {
                 object.plan = user.plan.title;
                 this.subscribed.tableData.push(object);
             });
-            
+        },
+        prevPage(){
+        this.$http.get(this.pagination.prev_page_url)
+          .then(res =>{
+                if(this.usersType === 'all'){
+                     this.allUsers.tableData = res.data.data;
+                }else{
+                    this.sortSubscribedUsers(res.data.data);
+                }
+            this.pagination = res.data;
+          }).catch(err =>console.log(err));
+        },
+        nextPage(){
+            this.$http.get(this.pagination.next_page_url)
+            .then(res =>{
+                if(this.usersType === 'all'){
+                    this.allUsers.tableData = res.data.data;
+                }else{
+                    this.sortSubscribedUsers(res.data.data);
+                }
+                this.pagination = res.data;
+            }).catch(err =>console.log(err));
+        },
+        goToPage(page){
+            this.$http.get(this.pagination.path + '?page='+page)
+            .then(res =>{
+                if(this.usersType === 'all'){
+                     this.allUsers.tableData = res.data.data;
+                }else{
+                    this.sortSubscribedUsers(res.data.data);
+                }
+                this.pagination = res.data;
+            }).catch(err =>console.log(err));
+        },
+        getProUsers(){
+             this.$http.get('users/users-who-buied')
+            .then(res=>{
+                console.log('pro users',res);
+                this.sortSubscribedUsers(res.data.data);
+                this.pagination = res.data;
+            }).catch(err=>console.log(err));
+        },
+        getAllUsers(){
+            this.$http.get('users')
+            .then(res=>{
+                console.log('allusers',res);
+                this.allUsers.tableData = res.data.data;
+                this.pagination = res.data;
+            }).catch(err=>console.log(err));
         }
     },
     mounted(){
         this.$http.get('users')
             .then(res=>{
-                console.log(res.data.data);
-                this.allUsers.tableData = res.data.data;}
-            ).catch(err=>console.log(err));
-        this.$http.get('users/users-who-buied')
-            .then(res=>{
-                console.log(res);
-                this.sortSubscribedUsers(res.data);
+                console.log('allusers',res);
+                this.allUsers.tableData = res.data.data;
+                this.pagination = res.data;
             }).catch(err=>console.log(err));
+       
+    },
+    computed:{
+      pages: function(){
+        let pages = [];
+        for(let i=1;this.pagination.last_page>=i;i++){
+          pages.push(i);
+        }
+        return pages;
+      }
+    },
+    watch:{
+        usersType: function(val){
+            if(val === 'all'){
+                this.getAllUsers();
+            }else{
+                this.getProUsers();
+            }
+        }
     }
 };
 </script>
@@ -95,6 +178,15 @@ export default {
         font-size: 12px;
         margin-right: 14px;
     }
+    .active a {
+        background: #2a2a2a!important;
+        color: white!important;
+        font-weight: normal!important;
+    }
+    .VuePagination,.VueTables__limit {
+        display: none;
+    }
+
     
 </style>
  

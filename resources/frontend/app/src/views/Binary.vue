@@ -69,7 +69,7 @@
         })
       },
       checkUserSubscribe(){
-        if(this.user.freeTime){
+        if(this.user.freeTime == '1'){
           this.showNotif = 'show';
         }else{
           let planList =[]
