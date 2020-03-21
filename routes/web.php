@@ -120,12 +120,26 @@ $router->group(['middleware'=>'cors','prefix' => '/push/','as'=>'push.'], functi
 
 /*
 |--------------------------------------------------------------------------
+| ID-Pay Routes
+|--------------------------------------------------------------------------
+*/
+$router->group(['middleware'=>'cors','prefix' => '/idPays/','as'=>'idPays.'], function () use ($router) {
+    Route::get('transaction','IDPay\IDPayController@transaction');
+    Route::get('successfull_pay','IDPay\IDPayController@successfull_pay');
+
+   
+});
+
+/*
+|--------------------------------------------------------------------------
 | User Panel Routes
 |--------------------------------------------------------------------------
 */
 $router->group(['middleware'=>'cors','prefix' => '/users/','as'=>'users.'], function () use ($router) {
     Route::get('','UserController@all_users');
     Route::get('users-who-buied/','UserController@users_who_buied');
+    Route::get('logout-users/{user_id}','UserController@logout_users');
+
 });
 
 /*

@@ -29,12 +29,7 @@ class UserController extends Controller
     */
     public function users_who_buied() {
 
-<<<<<<< HEAD
-        $users = "App\PlanUser"::with(["plan","user"])->latest()->get();
-
-=======
         $users = "App\PlanUser"::with(["user","plan"])->latest()->paginate(5);
->>>>>>> 702f70ca708e34aaa83569bc1b769f09193fc900
 
         $header = ['Content-Type' => 'application/json;charset=utf8'];
 
@@ -42,5 +37,21 @@ class UserController extends Controller
 
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Logout Users
+    |--------------------------------------------------------------------------
+    */
+    public function logout_users($user_id) {
+
+        $user = User::findOrFail($user_id);
+        $user->update([
+            "login_status" => False
+        ]);
+
+        return response()->json("user logout now",200, array($header),JSON_UNESCAPED_UNICODE);
+
+
+    }
 
 }
