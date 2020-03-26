@@ -48,6 +48,7 @@ class UserController extends Controller
         $user->update([
             "login_status" => False
         ]);
+        $header = ['Content-Type' => 'application/json;charset=utf8'];
 
         return response()->json("user logout now",200, array($header),JSON_UNESCAPED_UNICODE);
 

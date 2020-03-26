@@ -18,7 +18,16 @@
                             </div>
                         </div>
                         <div v-if="usersType === 'all'" class="col-12">
-                            <v-client-table :data="allUsers.tableData" :columns="allUsers.columns" :options="allUsers.options"/>
+                            <v-client-table :data="allUsers.tableData" :columns="allUsers.columns" :options="allUsers.options">
+                                 <div class="login_status" slot="login_status" slot-scope="props">
+                                     <span v-if="props.row.login_status == '1'">In</span>
+                                     <span v-else>Out</span>
+                                      <a v-if="props.row.login_status == '1'" href="#" @click.prevent="logout(props.row.id)">
+                                         <i class="fas fa-sign-out-alt fa-lg text-danger"></i>
+                                     </a>
+                                 </div>
+                                
+                            </v-client-table>
                         </div>
                         <div class="col-12" v-if="usersType === 'subscribed'">
                             <v-client-table :data="subscribed.tableData" :columns="subscribed.columns" :options="subscribed.options"/>
@@ -136,6 +145,17 @@ export default {
                 this.allUsers.tableData = res.data.data;
                 this.pagination = res.data;
             }).catch(err=>console.log(err));
+        },
+        logout(user_id){
+            this.$http.get('users/logout-users/'+ user_id)
+            .then(res=>{
+                console.log(res);
+                this.$toastr.s("کاربر از حساب کاربری خارج شد");
+                this.getAllUsers();
+            }).catch(err=>{
+                console.log(err);
+                this.$toastr.e("مشکلی در سرور پیش آمده است");
+            })
         }
     },
     mounted(){
@@ -186,7 +206,11 @@ export default {
     .VuePagination,.VueTables__limit {
         display: none;
     }
-
-    
+    table{
+        text-align: center;
+    }
+    .login_status span{
+       padding: 0 1rem;
+    }
 </style>
  
