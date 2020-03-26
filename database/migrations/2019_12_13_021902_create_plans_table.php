@@ -31,6 +31,10 @@ class CreatePlansTable extends Migration
             $table->string('type')->nullable();
             $table->bigInteger('plan_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
+            $table->string("track_id");
+            $table->string("id_pay_unique_id");
+            $table->string("card_number");
+            $table->string("hashed_card");
             $table->Date('expireTime');
             $table->timestamps();
 
@@ -47,6 +51,10 @@ class CreatePlansTable extends Migration
             $table->string('type')->nullable();
             $table->bigInteger('plan_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
+            $table->string("track_id");
+            $table->string("id_pay_unique_id");
+            $table->string("card_number");
+            $table->string("hashed_card");
             $table->Date('expireTime');
             
             $table->foreign('user_id')->references('id')->on('users')

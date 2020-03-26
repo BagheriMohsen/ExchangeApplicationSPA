@@ -12,6 +12,11 @@ class PlanUser extends Model
         'type',
         'plan_id',
         'user_id',
+        'track_id',
+        'id_pay_unique_id',
+        'card_number',
+        'hashed_card',
+        
         'expireTime',
     ];
 
