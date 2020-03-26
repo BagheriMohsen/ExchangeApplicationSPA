@@ -124,7 +124,7 @@ $router->group(['middleware'=>'cors','prefix' => '/push/','as'=>'push.'], functi
 |--------------------------------------------------------------------------
 */
 $router->group(['middleware'=>'cors','prefix' => '/idPays/','as'=>'idPays.'], function () use ($router) {
-    Route::get('transaction/{token}/{plan_id}','IDPay\IDPayController@transaction');
+    Route::get('transaction/{user_id}/{plan_id}','IDPay\IDPayController@transaction');
     Route::post('successfull_pay','IDPay\IDPayController@successfull_pay');
 
    
