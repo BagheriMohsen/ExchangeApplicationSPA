@@ -16,15 +16,14 @@ use App\PlanUser;
 class IDPayController extends Controller
 {
     
-    public function transaction(Request $req, $token, $plan_id) {
-        
-        $_SESSION["user_id"] = find_user_with_token($token);
-
+    public function transaction(Request $req, $user_id, $plan_id) {
       
-        $user_id = $_SESSION["user_id"];
-    
-       $user    =   User::findOrFail($user_id);
-       $plan    =   Plan::findOrFail($plan_id);
+      $_SESSION["user_id"] =  $user_id;
+
+
+  
+      $user    =   User::findOrFail($user_id);
+      $plan    =   Plan::findOrFail($plan_id);
 
 
 
@@ -51,8 +50,8 @@ class IDPayController extends Controller
       $result = curl_exec($ch);
       curl_close($ch);
 
-        return $result;
-          
+      return $result;
+            
           
     }
 
