@@ -36,25 +36,25 @@ var firebaseConfig = {
 
 
 
-  importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+  // importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-  importScripts(
-    "/precache-manifest.72ed1c3d5d5ea023d27975068bcd43d1.js"
-  );
+  // importScripts(
+  //   "/precache-manifest.72ed1c3d5d5ea023d27975068bcd43d1.js"
+  // );
   
-  workbox.core.setCacheNameDetails({prefix: "unique-app"});
+  // workbox.core.setCacheNameDetails({prefix: "unique-app"});
   
-  self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-      self.skipWaiting();
-    }
-  });
+  // self.addEventListener('message', (event) => {
+  //   if (event.data && event.data.type === 'SKIP_WAITING') {
+  //     self.skipWaiting();
+  //   }
+  // });
   
-  /**
-   * The workboxSW.precacheAndRoute() method efficiently caches and responds to
-   * requests for URLs in the manifest.
-   * See https://goo.gl/S9QRab
-   */
-  self.__precacheManifest = [].concat(self.__precacheManifest || []);
-  workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+  // /**
+  //  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+  //  * requests for URLs in the manifest.
+  //  * See https://goo.gl/S9QRab
+  //  */
+  // self.__precacheManifest = [].concat(self.__precacheManifest || []);
+  // workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
   

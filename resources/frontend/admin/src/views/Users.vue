@@ -17,7 +17,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div v-if="usersType === 'all'" class="col-12">
+                        <div v-show="usersType === 'all'" class="col-12">
                             <v-client-table :data="allUsers.tableData" :columns="allUsers.columns" :options="allUsers.options">
                                  <div class="login_status" slot="login_status" slot-scope="props">
                                      <span v-if="props.row.login_status == '1'">In</span>
@@ -26,10 +26,9 @@
                                          <i class="fas fa-sign-out-alt fa-lg text-danger"></i>
                                      </a>
                                  </div>
-                                
                             </v-client-table>
                         </div>
-                        <div class="col-12" v-if="usersType === 'subscribed'">
+                        <div class="col-12" v-show="usersType === 'subscribed'">
                             <v-client-table :data="subscribed.tableData" :columns="subscribed.columns" :options="subscribed.options"/>
                         </div>
                         <nav aria-label="Page navigation example">
