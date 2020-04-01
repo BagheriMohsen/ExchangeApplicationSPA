@@ -157,6 +157,9 @@ $router->get('/admin', ['middleware' => ['auth'], function () {
 $router->get('/login', ['middleware' => ['cors'], function () {
     return view('auth/login');
 }]);
+$router->get('/pay-result', ['middleware' => ['cors'], function () {
+    return view('payResult');
+}]);
 
 
 $router->get('/sendFCM','FCM\FcmController@send_notif');

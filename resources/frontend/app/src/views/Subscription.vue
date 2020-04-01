@@ -163,15 +163,14 @@ export default {
             }else if(plan.type == 'both' && planList.includes('forex')){
                this.$fire(this.errorBuy)
             }else{
-                this.$http.get(`idPays/transaction/${localStorage.getItem('token')}/${plan.id}`,{
-                    params:{
-                        
-                    }
-                })
+                this.$http.get(`idPays/transaction/${this.user.id}/${plan.id}`)
                 .then(response => {
                     console.log(response);
-                    this.$fire(this.successBuy)
-                    this.$emit('checkToken');
+                    let payment_url = response.data.link;
+                    // let payment_id = response.data.id;
+                    window.location.replace(payment_url);
+                    // this.$fire(this.successBuy)
+                    // this.$emit('checkToken');
                 })
                 .catch(e => {
                     this.errors.push(e)

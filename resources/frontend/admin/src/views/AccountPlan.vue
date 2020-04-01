@@ -9,12 +9,12 @@
 
         <div class="container-fluid mt--7">
             <div class="row">
-                <div class="col-xl-12 mb-5 mb-xl-0">
+                <!-- <div class="col-xl-12 mb-5 mb-xl-0">
                      <card shadow type="secondary">
                       دسترسی به این بخش محدود شده است
                     </card>
-                </div>
-                 <!-- <div class="col-xl-12 mb-5 mb-xl-0">
+                </div> -->
+                 <div class="col-xl-12 mb-5 mb-xl-0">
                     <card shadow type="secondary">
                         <div slot="header" class="bg-white row align-items-center">
                             <div class="col">
@@ -51,10 +51,16 @@
                                         <input v-model="plan.expireDay" type="number" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-4 form-group d-none">
                                     <div class="form-group">
                                         <label>توضیحات پلن:</label>
                                         <textarea v-model="plan.desc" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <div class="form-group">
+                                        <label>تصویر پلن:</label>
+                                        <input type='file' class="form-control"></input>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -80,7 +86,8 @@
                                     <th scope="col">نام پلن</th>
                                     <th scope="col">هزینه (تومان)</th>
                                     <th scope="col">زمان (روز)</th>
-                                    <th scope="col">توضیحات</th>
+                                    <!-- <th scope="col">توضیحات</th> -->
+                                    <th scope="col">تصویر</td>
                                     <th scope="col">عملیات</th>
                                 </tr>
                             </thead>
@@ -90,7 +97,8 @@
                                     <td>{{plan.title}}</td>
                                     <td>{{plan.price}}</td>
                                     <td>{{plan.expireDay}}</td>
-                                    <td>{{plan.desc}}</td>
+                                    <td>{{plan.image}}</td>
+                                    <!-- <td>{{plan.desc}}</td> -->
                                     <td>
                                         <a href="javascript:void(0)" @click.prevent="editHandler(plan)" class="m-1">
                                             <i class="fas fa-edit text-danger"></i>
@@ -100,7 +108,7 @@
                             </tbody>
                         </table>
                     </card>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
