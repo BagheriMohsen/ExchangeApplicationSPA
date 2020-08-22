@@ -18,19 +18,12 @@ class StartingSeeder extends Seeder
         */
         #1.Create Admin
         'App\AdminUser'::create([
-            'name'          =>  'عباس',
-            'family'        =>  'ملکی',
-            'username'      =>  'abbasmaleki',
-            'password'      =>   Hash::make('  uWIEbjp1V7Y/x16z'),
+            'name'          =>  'سرخوشان',
+            'family'        =>  'مست',
+            'username'      =>  'tipsy',
+            'password'      =>   Hash::make('admin2020'),
         ]);
-        
-        #1.Create Admin
-        'App\AdminUser'::create([
-            'name'          =>  'ابوالفضل',
-            'family'        =>  'ملکی',
-            'username'      =>  'abolfazlmaleki',
-            'password'      =>   Hash::make('  LHGyug1?56ikjnmtg'),
-        ]);
+
 
         #3.Create Admin
         // app('db')->table('roles')->insert([

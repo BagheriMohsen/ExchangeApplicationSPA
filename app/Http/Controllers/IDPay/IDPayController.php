@@ -60,65 +60,65 @@ class IDPayController extends Controller
   }
 
 
-  public function successfull_pay(Request $req) {
+public function successfull_pay(Request $req) {
 
     
     
-    $order_ids = explode(".",$req->order_id);
-    
-    $order_id = $order_ids[0];
-    $user_id  = $order_ids[1];
-    
-    $callback = array(
-        "status"            =>  $req->status,
-        "track_id"          =>  $req->track_id,
-        "id_pay_unique_id"  =>  $req->id,
-        "order_id"          =>  $order_id,
-        "user_id"           =>  $user_id,
-        "amount"            =>  $req->amount,
-        "card_number"       =>  $req->card_no,
-        "hashed_card"       =>  $req->hashed_card_no,
-        "date"              =>  $req->date
-    );
+  $order_ids = explode(".",$req->order_id);
+  
+  $order_id = $order_ids[0];
+  $user_id  = $order_ids[1];
+  
+  $callback = array(
+      "status"            =>  $req->status,
+      "track_id"          =>  $req->track_id,
+      "id_pay_unique_id"  =>  $req->id,
+      "order_id"          =>  $order_id,
+      "user_id"           =>  $user_id,
+      "amount"            =>  $req->amount,
+      "card_number"       =>  $req->card_no,
+      "hashed_card"       =>  $req->hashed_card_no,
+      "date"              =>  $req->date
+  );
 
     
 
 
-      //   
-      $header = ['Content-Type' => 'application/json;charset=utf8'];
-      if($req->status == 100) {
+    //   
+    $header = ['Content-Type' => 'application/json;charset=utf8'];
+    if($req->status == 100) {
 
-        return $this->store_plan($callback);
+      return $this->store_plan($callback);
+    }
+    
+    elseif($req->status == 10) {
+
+      $status = PlanUser::where([
+          ["id_pay_unique_id","=",$req->id],
+          ["user_id","=",$user_id]
+          
+      ])->exists();
+
+      if($status) {
+          $message = "شما قبلا این مراحل رو طی کردید";
+        return view("payResult",compact("callback","message"));
       }
+      // $this->verify_tracking($req);
+      // var_dump($result);
+
+
       
-      elseif($req->status == 10) {
 
-        $status = PlanUser::where([
-            ["id_pay_unique_id","=",$req->id],
-            ["user_id","=",$user_id]
-            
-        ])->exists();
-
-        if($status) {
-            $message = "شما قبلا این مراحل رو طی کردید";
-          return view("payResult",compact("callback","message"));
-        }
-        // $this->verify_tracking($req);
-        // var_dump($result);
-
-
-        
-
-        $this->store_plan($callback);    
-        return view("payResult",compact("callback"));
-      }
-      else{  
-        return view("payResult",compact("callback"));
-      }
+      $this->store_plan($callback);    
+      return view("payResult",compact("callback"));
+    }
+    else{  
+      return view("payResult",compact("callback"));
+    }
 
     
 
-  }
+}
   
   public function verify_tracking($req) {
       

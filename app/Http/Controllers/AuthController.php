@@ -20,6 +20,9 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class AuthController extends Controller
 {
     
+    public $username;
+    public $password;
+    public $from;
     /**
      * Create a new controller instance.
      *
@@ -27,7 +30,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        //
+       $this->username =    "09388387058"; // sms username
+       $this->password =    "3907";  // sms password
+       $this->from     =    "50001060689251"; //
     }
 
     protected function jwt($user) {
@@ -42,7 +47,12 @@ class AuthController extends Controller
         // be used to decode the token in the future.
         return JWT::encode($payload, env('JWT_SECRET'));
     } 
-    
+
+    /** 
+     * @Author: mohsen bagheri 
+     * @Date: 2020-08-16 02:21:28 
+     * @Desc:  this function is register user into site
+     */
     public function register(Request $request){
         
         $status = 'App\User'::where('phoneNumber',$request->phoneNumber)->exists();
@@ -60,6 +70,7 @@ class AuthController extends Controller
        
         $FourDigitRandom = rand(1000,9999);
 
+        // try with nosoup library
         try{
             
             $client = new \nusoap_client('http://api.payamak-panel.com/post/send.asmx?wsdl',true);
@@ -70,14 +81,14 @@ class AuthController extends Controller
                 return 'ارسال پیام با مشکل مواجه شده است' . $err;
         
             }
-    
-            $parameters['username'] =   "09388387058";
-            $parameters['password'] =   "3907";
+            
+            // all paramters for sending sms
+            $parameters['username'] =   $this->username;
+            $parameters['password'] =   $this->password;
             $parameters['to']       =   $user->phoneNumber;
-            $parameters['from']     =   "50001060689251";
+            $parameters['from']     =   $this->from;
             $parameters['text']     =   $FourDigitRandom;
             $parameters['isflash']  =   false;
-    
     
             $result = $client->call('SendSimpleSMS2', $parameters);
         }
@@ -97,39 +108,46 @@ class AuthController extends Controller
         
     }
 
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-23 00:39:37
+     * @param Request $request
+     * @Desc: when user filled digital number and submit then 
+     */
     public function sendVerfySms(Request $request){
-        // turn off the WSDL cache
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        // $DigitValidate  =   $request->FourDigitRandom;
+        
+        // find user bu user_id
         $user_id        =   $request->user_id;   
         $user = 'App\User'::findOrFail($request->user_id);
+
+        // change login status to true and response token for js local storage
         $user->update(['login_status'=>True]);
             return response()->json([
                 'token' => $this->jwt($user)
             ], 200);
-        // if($DigitValidate == $request->DigitValidate){
-        //     $user = 'App\User'::findOrFail($request->user_id);
-        //     return response()->json([
-        //         'token' => $this->jwt($user)
-        //     ], 200);
-        // }else{
-        //     return response()->json('شماره درست نیست',200, array($header),JSON_UNESCAPED_UNICODE);
-        // }
-        
-        
         
     }
 
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-23 00:42:20 
+     * @Desc: Login 
+     */
     public function login(Request $request){
         
-        $status = 'App\User'::where('phoneNumber',$request->phoneNumber)->exists();
+        $status = 'App\User'::where('phoneNumber',$request->phoneNumber)
+            ->exists(); // check this phone number is exists or not
+
         $header = ['Content-Type' => 'application/json;charset=utf8'];
+
         //if this number is exists in users table
         if($status !=True){
             return response()->json('همچین شماره ای در سیستم ثبت نشده',200, array($header),JSON_UNESCAPED_UNICODE);
         }
 
+        // select user by user phone number
         $user   = 'App\User'::where('phoneNumber',$request->phoneNumber)->firstOrFail();
+        
         // message for user login in another device
         if($user->login_status){
             $login_status_message  = 'این کاربر با یک دیوایس دیگر به سیستم وارد شده است.';
@@ -138,7 +156,7 @@ class AuthController extends Controller
             return response()->json($login_status_message,200, array($header),JSON_UNESCAPED_UNICODE);
         }
        
-        //create random four digit number
+        //create random four digit number for verify user
         $FourDigitRandom = rand(1000,9999);
         
         //send sms with nusoap protocol
@@ -153,10 +171,10 @@ class AuthController extends Controller
         
             }
     
-            $parameters['username'] =   "09388387058";
-            $parameters['password'] =   "3907";
+            $parameters['username'] =   $this->username;
+            $parameters['password'] =   $this->password;
             $parameters['to']       =   $user->phoneNumber;
-            $parameters['from']     =   "50001060689251";
+            $parameters['from']     =   $this->from;
             $parameters['text']     =   $FourDigitRandom;
             $parameters['isflash']  =   false;
     
@@ -177,33 +195,53 @@ class AuthController extends Controller
            
     }
 
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-23 00:44:19 
+     * @Desc: Logout 
+     */
     public function logout($user_id){
         $user = User::findOrFail($user_id);
         $user->update(['login_status'=>False]);//now user can login another device
         return response()->json('logout');//remove user token
     }
 
+
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-23 00:44:29 
+     * @Desc: check token is valid or not
+     */
     public function token(Request $request){
         $token = $request->get('token');
         $header = ['Content-Type' => 'application/json;charset=utf8'];
+
+        // if token not found then
         if(!$token) {
+            
             // Unauthorized response if token not there
             return response()->json([
                 'خطا' => 'توکنی برای پردازش دریافت نشده'
             ], 401,array($header),JSON_UNESCAPED_UNICODE);
         }
         try {
+            // decode jwt token for proccess
             $credentials = JWT::decode($token, env('JWT_SECRET'), ['HS256']);
+
+            // if token is expire
         } catch(ExpiredException $e) {
             return response()->json([
                 'خطا' => 'توکن دریافتی منقضی شده است'
             ], 400,array($header),JSON_UNESCAPED_UNICODE);
+
+            // if token decode is not true
         } catch(Exception $e) {
             return response()->json([
                 'خطا' => 'در پردازش توکن مشکلی وجود دارد'
             ], 400,array($header),JSON_UNESCAPED_UNICODE);
         }
        
+        // find logged in user with plans
         $user = User::with(['plans'=>function($query){
             $query->select('id','plan_id','user_id','expireTime')
             ->with('plan')->get();
@@ -212,26 +250,20 @@ class AuthController extends Controller
         
         // Now let's put the user in the request class so that you can grab it from there
         $request->auth = $user;
-        // return $next($request);
-        // $users = app('db')->table('users')
-        // ->select('select * from users where id = ?', [$user->id])
-        // ->join('roles', 'users.role_id', '=', 'roles.id')
-        // ->get();
-        $thisUser = $user;
-        $now    =   Carbon::now();
-        $diff   =   $user->created_at->diffInDays($now);
 
-        // store token into api-key 
-      
+        $thisUser   =   $user;
+        $now        =   Carbon::now();
+        $diff       =   $user->created_at->diffInDays($now);
 
-        // for user free trial
+        // check user free trial and when user register time is more than 7
+        // then change freeTime field to False
         if($diff > 7){
             $user->update([
                 'freeTime'  =>  False
             ]);
         }
-        // for user plan expire
-       
+
+        // check user plan expire
         foreach($user->plans as $plan){
             $planExpireTime = Carbon::parse($plan->expireTime);
             $diffPlan = $planExpireTime->diffForHumans($now); 
@@ -255,6 +287,12 @@ class AuthController extends Controller
         return response()->json($thisUser,200, array($header),JSON_UNESCAPED_UNICODE);
     }
 
+
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-23 00:46:58 
+     * @Desc: User guide check
+     */
     public function user_guide_check($user_id){
 
 
@@ -273,13 +311,21 @@ class AuthController extends Controller
     }
 
 
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-23 00:47:18 
+     * @Desc: Admin login
+     */
     public function admin_login(Request $req){
 
         $user_status = 'App\AdminUser'::where('username',$req->username)->exists();
 
+        // if username dosent exists
         if(!$user_status){
             return redirect('/admin-login');
         }
+
+        // find user by username and set the custom session for authentication
         $user = 'App\AdminUser'::where('username',$req->username)->firstOrFail();
         if (Hash::check($req->pass, $user->password)) {
             $_SESSION['user_id'] = $user->id;
@@ -287,10 +333,7 @@ class AuthController extends Controller
         }else{
             return redirect('/admin-login');
         }
-
-
-
-
     }
+
 
 }
