@@ -15,15 +15,13 @@ import './registerServiceWorker'
 Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://app.utsignal.com/'
+axios.defaults.baseURL = 'https://signal.tipsy.ir/'
 Vue.prototype.$http = axios
 
 // export var OneSignal = window.OneSignal || [];
 
 new Vue({
-  router,
-  vuetify,
-  render: h => h(App)
+    router,
+    vuetify,
+    render: h => h(App)
 }).$mount('#app')
-
-
