@@ -119,7 +119,6 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 user_id: this.user.id
               }
             }).then(res => {
-              console.log(res);
               localStorage.setItem('token',res.data.token);
               this.$router.push('/');
             }).catch(err => console.log(err));
