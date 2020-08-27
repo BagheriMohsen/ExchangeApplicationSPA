@@ -3,9 +3,9 @@ module.exports = {
         "vuetify"
     ],
     // proxy API requests to Valet during development
-    devServer: {
-        proxy: 'http://localhost:8000'
-    },
+    // devServer: {
+    //     proxy: 'http://localhost:8000'
+    // },
 
     // output built static files to Laravel's public dir.
     // note the "build" script in package.json needs to be modified as well.
