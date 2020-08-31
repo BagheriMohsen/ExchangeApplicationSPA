@@ -20,7 +20,7 @@ class StartingSeeder extends Seeder
         'App\AdminUser'::create([
             'name'          =>  'سرخوشان',
             'family'        =>  'مست',
-            'username'      =>  'tipsy',
+            'username'      =>  'rhino',
             'password'      =>   Hash::make('admin2020'),
         ]);
 

@@ -1,10 +1,96 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
+use App\Forex;
+use App\PlanUser;
+use App\ForexCategory;
 use Illuminate\Http\Request;
+use App\Events\ForexNotifEvent;
 use Illuminate\Support\Facades\Event;
+
 class ForexController extends Controller
 {
+
+    public $url;
+
+    public $header;
+
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-31 05:43:40 
+     * @Desc: construct function
+     */
+    public function __construct() {
+        $this->url = "https://app.utsignal.com/#/farx";
+        $this->header = ['Content-Type' => 'application/json;charset=utf8'] ;
+    }
+
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-31 05:20:52 
+     * @Desc: find user who buys forex
+     * @return $users json array 
+     */
+    public function binary_users() {
+
+        // find all forex user id
+        $user_ids = PlanUser::where("type","forex")
+            ->orWhere("type","both")
+            ->get("user_id");
+
+        // find and merge free time true users
+        $users_id = User::where("freeTime",True)->get("id");
+        $user_ids = $user_ids->merge($users_id);
+        $user_ids = $user_ids->all();
+
+        // find all user by id
+        $users = array();
+        foreach( $user_ids as $user_id ) {
+
+            if( isset( $user_id->user_id ) ){
+                $users[] = User::findOrFail($user_id->user_id);
+            }elseif( isset( $user_id->id ) ) {
+                $users[] = User::findOrFail($user_id->id);
+            }
+            
+        }
+
+        return $users;
+    }
+
+     /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-31 05:18:55 
+     * @Desc: farex trading info for one signal
+     */
+    public function send_fcm($forex, $status) {
+
+        $users  = $this->binary_users();
+
+        $title      =   "Forex : ".$forex->pair;
+        $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
+      
+        app('App\Http\Controllers\FCM\FcmController')
+            ->send_notif_with_php($users , $title , $content, $this->url);
+
+    }
+
+
+
+    /** 
+     * @Author: Mohsen bagheri 
+     * @Date: 2020-08-31 05:26:55 
+     * @Desc:  update forex event
+     */
+    public function update_event() {
+
+        $Forex = Forex::with(['forexCategory' => function($query) {
+            $query->select('id','name');
+        }])->latest('updated_at')->get();
+
+        event(new ForexNotifEvent($Forex));
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -13,19 +99,18 @@ class ForexController extends Controller
     */
     public function index(){
 
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+        $Forex = Forex::with(['forexCategory'=>function($query){
             $query->select('id','name');
-        }))
+        }])
         ->where([
-            ['close','=',0],
-            ['expire','=',0]
+            ['close','=',false],
+            ['expire','=',false]
         ])
         ->latest()->get();
-        
 
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json($Forex,200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($Forex,200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | All Forex
@@ -33,13 +118,13 @@ class ForexController extends Controller
     */
     public function AllForex(){
        
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+        $Forex = Forex::with(['forexCategory'=>function($query){
             $query->select('id','name');
-        }))->latest('updated_at')->get();
+        }])->latest('updated_at')->get();
 
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json($Forex,200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($Forex,200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | Forex Categories
@@ -47,76 +132,37 @@ class ForexController extends Controller
     */
     public function forexCategories(){
         
-        $categories = 'App\ForexCategory'::latest()->get(['id','name']);
+        $categories = ForexCategory::latest()->get(['id','name']);
 
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json($categories,200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($categories,200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
-    /*
+
+    /* 
     |--------------------------------------------------------------------------
     | Forex store
     |--------------------------------------------------------------------------
     */
     public function forexStore(Request $request){
 
-        $new_forex = 'App\Forex'::create([
-            'forex_category_id' =>  $request->forex_category_id,
-            'pair'              =>  $request->pair,
-            'startingPrice'     =>  $request->startingPrice,
-            'tp'                =>  $request->tp,
-            'sl'                =>  $request->sl,
-            'buy_sell'          =>  $request->buy_sell,
-            'fa_desc'           =>  $request->fa_desc,
-            'ar_desc'           =>  $request->ar_desc,
-            'en_desc'           =>  $request->en_desc
-        ]);
+        $data = $request->all();
+        $new_forex = Forex::create($data);
 
+        /**  check forex status */
+        if( $new_forex->buy_sell == "sell" ) {
+            $status = "B/S/E : Sell "; 
+        }elseif( $new_forex->buy_sell == "buy" ) {
+            $status = "B/S/E : Buy ";
+        }else{
+            $status = "Ready";
+        }
 
-      /** Find User who but binary plan  */
-      $user_ids = "App\PlanUser"::where("type","forex")
-      ->orWhere("type","both")
-      ->get("user_id");
-      $users_id = "App\User"::where("freeTime",True)->get("id");
-      $user_ids = $user_ids->merge($users_id);
-      $user_ids = $user_ids->all();
+        $this->send_fcm($new_forex, $status);
 
-      $users = array();
-      foreach( $user_ids as $user_id ) {
+        $this->update_event();
 
-          if( isset( $user_id->user_id ) ){
-              $users[] = "App\User"::findOrFail($user_id->user_id);
-          }elseif( isset( $user_id->id ) ) {
-              $users[] = "App\User"::findOrFail($user_id->id);
-          }
-          
-      }
-
-      /**  send push notif with one signal */
-      if( $new_forex->buy_sell == "sell" ) {
-          $status = "B/S/E : Sell "; 
-      }elseif( $new_forex->buy_sell == "buy" ) {
-          $status = "B/S/E : Buy ";
-      }else{
-          $status = "Ready";
-      }
-      $url = "https://app.utsignal.com/#/farx";
-      $title      =   "Forex : ".$new_forex->pair;
-      $content    =   "Trading Info : T.T.:".$new_forex->time_expire." min ".$status;
-      
-      return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content, $url);
-
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
-            $query->select('id','name');
-        }))->latest('updated_at')->get();
-        event(new \App\Events\ForexNotifEvent($Forex));
-
-        
-        
-        
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json('با موفقیت ذخیره شد',200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json('با موفقیت ذخیره شد',200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | Forex Edit
@@ -124,13 +170,13 @@ class ForexController extends Controller
     */
     public function forexEdit($id){
         
-        $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+        $forex = Forex::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))->findOrFail($id);
 
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json($forex,200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | Forex Update
@@ -138,199 +184,68 @@ class ForexController extends Controller
     */
     public function forexUpdate(Request $request,$id){
 
-        $forex = 'App\Forex'::findOrFail($id);
-        $forex->update([
-            'forex_category_id' =>  $request->forex_category_id,
-            'pair'              =>  $request->pair,
-            'startingPrice'     =>  $request->startingPrice,
-            'tp'                =>  $request->tp,
-            'sl'                =>  $request->sl,
-            'buy_sell'          =>  $request->buy_sell,
-            'expire'            =>  $request->expire,
-            'close'             =>  $request->close,
-            'fa_desc'           =>  $request->fa_desc,
-            'ar_desc'           =>  $request->ar_desc,
-            'en_desc'           =>  $request->en_desc
-
-        ]);
-
-
-
-    /** Find User who but binary plan  */
-    $user_ids = "App\PlanUser"::where("type","forex")
-    ->orWhere("type","both")
-    ->get("user_id");
-    $users_id = "App\User"::where("freeTime",True)->get("id");
-    $user_ids = $user_ids->merge($users_id);
-    $user_ids = $user_ids->all();
-
-    $users = array();
-    foreach( $user_ids as $user_id ) {
-
-        if( isset( $user_id->user_id ) ){
-            $users[] = "App\User"::findOrFail($user_id->user_id);
-        }elseif( isset( $user_id->id ) ) {
-            $users[] = "App\User"::findOrFail($user_id->id);
-        }
+        $forex = Forex::findOrFail($id);
         
+        $data = $request->all();
+
+        $forex->update($data);
+
+        $status = $forex->forexCategory->name;
+        $this->send_fcm($forex, $status);
+
+        $this->update_event();
+
+        return response()->json('با موفقیت به روز رسانی شد',200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
 
-      /**  send push notif with one signal */
-  
-      $status = $forex->forexCategory->name;
-     
-      $url = "https://app.utsignal.com/#/farx";
-      $title      =   "Forex : ".$forex->pair;
-      $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
-      
-      return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content, $url);
-
-
-
-
-
-
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
-            $query->select('id','name');
-        }))->latest('updated_at')->get();
-        event(new \App\Events\ForexNotifEvent($Forex));
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json('با موفقیت به روز رسانی شد',200, array($header),JSON_UNESCAPED_UNICODE);
-    }
     /*
     |--------------------------------------------------------------------------
     | Forex Expire
     |--------------------------------------------------------------------------
     */
     public function forexExpire(Request $request,$id){
-        $forex = 'App\Forex'::findOrFail($id);
-        $forex->update(['expire'=>1]);
 
+        $forex = Forex::findOrFail($id);
+        $forex->update(['expire'=>true]);
 
+        $status = "Expire";
+        $this->send_fcm($forex, $status);
 
-       /** Find User who but binary plan  */
-       $user_ids = "App\PlanUser"::where("type","forex")
-       ->orWhere("type","both")
-       ->get("user_id");
-       $users_id = "App\User"::where("freeTime",True)->get("id");
-       $user_ids = $user_ids->merge($users_id);
-       $user_ids = $user_ids->all();
- 
-       $users = array();
-       foreach( $user_ids as $user_id ) {
- 
-           if( isset( $user_id->user_id ) ){
-               $users[] = "App\User"::findOrFail($user_id->user_id);
-           }elseif( isset( $user_id->id ) ) {
-               $users[] = "App\User"::findOrFail($user_id->id);
-           }
-           
-       }
+        $this->update_event();
 
-      /**  send push notif with one signal */
-     
-      $status = "Expire";
-      $url = "https://app.utsignal.com/#/farx";
-      $title      =   "Forex : ".$forex->pair;
-      $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
-      
-      return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content, $url);
-
-
-
-
-
-
-
-
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
-            $query->select('id','name');
-        }))->latest('updated_at')->get();
-        event(new \App\Events\ForexNotifEvent($Forex));
-
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json('منقضی شد',200, array($header),JSON_UNESCAPED_UNICODE);
+        return response()->json('منقضی شد',200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | Forex Close
     |--------------------------------------------------------------------------
     */
     public function forexClose(Request $request,$id){
-        $forex = 'App\Forex'::findOrFail($id);
-        $forex->update(['close'=>1]);
 
-
-
-
-
-      /** Find User who but binary plan  */
-      $user_ids = "App\PlanUser"::where("type","forex")
-      ->orWhere("type","both")
-      ->get("user_id");
-      $users_id = "App\User"::where("freeTime",True)->get("id");
-      $user_ids = $user_ids->merge($users_id);
-      $user_ids = $user_ids->all();
-
-      $users = array();
-      foreach( $user_ids as $user_id ) {
-
-          if( isset( $user_id->user_id ) ){
-              $users[] = "App\User"::findOrFail($user_id->user_id);
-          }elseif( isset( $user_id->id ) ) {
-              $users[] = "App\User"::findOrFail($user_id->id);
-          }
-          
-      }
-
-      /**  send push notif with one signal */
+        $forex = Forex::findOrFail($id);
+        $forex->update(['close'=>true]);
      
-      $status = "close";
-      $url = "https://app.utsignal.com/#/farx";
-      $title      =   "Forex : ".$forex->pair;
-      $content    =   "Trading Info : T.T.:".$forex->time_expire." min ".$status;
-      
-      return app('App\Http\Controllers\FCM\FcmController')
-       ->send_notif_with_php($users , $title , $content, $url);
+        $status = "close";
+        $this->send_fcm($forex, $status);
 
+        $this->update_event();
 
+        return response()->json('بسته شد',200, array($this->header),JSON_UNESCAPED_UNICODE);
 
-
-
-
-
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
-            $query->select('id','name');
-        }))->latest('updated_at')->get();
-        event(new \App\Events\ForexNotifEvent($Forex));
-
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json('بسته شد',200, array($header),JSON_UNESCAPED_UNICODE);
     }
+
     /*
     |--------------------------------------------------------------------------
     | Forex Delete
     |--------------------------------------------------------------------------
     */
     public function forexDelete(Request $request,$id){
-        $forex = 'App\Forex'::destroy($id);
-       
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json('عملیات حذف با موفقیت انجام شد',200, array($header),JSON_UNESCAPED_UNICODE);
+        $forex = Forex::destroy($id);
+
+        return response()->json('عملیات حذف با موفقیت انجام شد',200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
-    /*
-    |--------------------------------------------------------------------------
-    | Forex Event
-    |--------------------------------------------------------------------------
-    */
-    public function forexEvent(){
-        $Forex = 'App\Forex'::latest()->get();
-        event(new \App\Events\ForexNotifEvent($Forex));
-        return "Event has been sent!";
-       
-    }
+
     /*
     |--------------------------------------------------------------------------
     | close and expire Forex list
@@ -338,12 +253,12 @@ class ForexController extends Controller
     */
     public function close_expire_list(){
 
-        $Forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+        $Forex = Forex::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))->latest('updated_at')->get();
         // event(new \App\Events\ForexNotifEvent($Forex));
         
-        $forex = 'App\Forex'::with(array('forexCategory'=>function($query){
+        $forex = Forex::with(array('forexCategory'=>function($query){
             $query->select('id','name');
         }))
         ->where([
@@ -352,10 +267,9 @@ class ForexController extends Controller
         ->orWhere([
             ['close','=',1],
         ])->latest()->get();
-       
-        
-        $header = ['Content-Type' => 'application/json;charset=utf8'];
-        return response()->json($forex,200, array($header),JSON_UNESCAPED_UNICODE);
+
+        return response()->json($forex,200, array($this->header),JSON_UNESCAPED_UNICODE);
     }
 
+   
 }
