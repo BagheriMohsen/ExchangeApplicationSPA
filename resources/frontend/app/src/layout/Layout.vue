@@ -18,7 +18,7 @@
               >
             </v-checkbox>
             <v-card-actions center style="justify-content: center;">
-              
+
               <v-btn color="success" v-on:click="handleRead">
                 <a class="white--text" style="text-decoration: none" href="http://www.sarafi.com"> {{items.read}}</a>
               </v-btn>
@@ -150,7 +150,7 @@ export default {
           .catch(err => console.log(err));
         this.$emit('checkToken');
       }
-      
+
     },
     handleRead(){
       this.tutorialDialog = false;
@@ -162,7 +162,7 @@ export default {
         this.$emit('checkToken');
         window.location.href = 'http://www.sarafi.com';
       }
-      
+
     },
     checkUserGuide(){
       if(this.user.guide_check == '1'){

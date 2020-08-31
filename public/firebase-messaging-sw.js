@@ -29,13 +29,26 @@ messaging.setBackgroundMessageHandler(function(payload) {
         notificationOptions);
 });
 
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
+
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-    "/precache-manifest.42ac8631d6422fa133b42da8789b05b1.js"
+    "/precache-manifest.128c74a3c4bd62d6653c7dd70484d52c.js"
 );
 
-workbox.core.setCacheNameDetails({ prefix: "unique-app" });
+workbox.core.setCacheNameDetails({prefix: "unique-app"});
 
 self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
@@ -50,50 +63,3 @@ self.addEventListener('message', (event) => {
  */
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-
-
-
-
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
-
-importScripts(
-    "/precache-manifest.0fea193d60b3d12d694150d799edea27.js"
-);
-
-workbox.core.setCacheNameDetails({ prefix: "unique-app" });
-
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
-    }
-});
-
-/**
- * The workboxSW.precacheAndRoute() method efficiently caches and responds to
- * requests for URLs in the manifest.
- * See https://goo.gl/S9QRab
- */
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-
-// importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
-
-// importScripts(
-//   "/precache-manifest.72ed1c3d5d5ea023d27975068bcd43d1.js"
-// );
-
-// workbox.core.setCacheNameDetails({prefix: "unique-app"});
-
-// self.addEventListener('message', (event) => {
-//   if (event.data && event.data.type === 'SKIP_WAITING') {
-//     self.skipWaiting();
-//   }
-// });
-
-// /**
-//  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
-//  * requests for URLs in the manifest.
-//  * See https://goo.gl/S9QRab
-//  */
-// self.__precacheManifest = [].concat(self.__precacheManifest || []);
-// workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
