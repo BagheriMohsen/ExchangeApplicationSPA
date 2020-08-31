@@ -61,7 +61,7 @@
           .catch(err => console.log(err));
       },
       subscribe(){
-        let pusher = new Pusher('0b6db206a7be0ce7e956', { cluster: 'ap2' })
+        let pusher = new Pusher('2a06228c305044045305', { cluster: 'eu' })
         pusher.subscribe('ForexNotif')
         pusher.bind('App\\Events\\ForexNotifEvent', data => {
           this.notifs = data.Forex;

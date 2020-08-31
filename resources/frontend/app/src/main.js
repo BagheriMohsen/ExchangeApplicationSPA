@@ -15,7 +15,7 @@ import './registerServiceWorker'
 Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://signal.tipsy.ir/'
+axios.defaults.baseURL = 'http://localhost:8000/'
 Vue.prototype.$http = axios
 
 // export var OneSignal = window.OneSignal || [];

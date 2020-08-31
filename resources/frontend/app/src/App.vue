@@ -44,7 +44,7 @@ export default {
       this.deferredPrompt.prompt();
       this.deferredPrompt.userChoice.then((choiceResult)=>{
           if(choiceResult.outcome === 'accepted'){
-              console.log('hoora')
+            console.log('hoora')
           }
           this.deferredPrompt = null;
       })
